@@ -54,8 +54,10 @@ public class Window {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					LoginPage loginPage = new LoginPage();
+					loginPage.getFrame().setVisible(true);
 					Window window = new Window();
-					window.frame.setVisible(false);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -194,8 +196,6 @@ public class Window {
 		
 		JPanel overviewShadingPanel = new JPanel();
 		JButton overviewHoverButton = new JButton("");
-		overviewHoverButton.setDisabledIcon(new ImageIcon(Window.class.getResource("/SystemAssets/Images/transparentBackgroundColorButton.png")));
-		
 		overviewHoverButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
