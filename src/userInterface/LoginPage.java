@@ -32,7 +32,7 @@ public class LoginPage {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -43,7 +43,7 @@ public class LoginPage {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
@@ -61,7 +61,7 @@ public class LoginPage {
 		frame.setTitle("myLibrary");
 		frame.setBounds(100, 100, 800, 500);
 		frame.setUndecorated(true);
-
+		
 		Image icon = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/icon.png")).getImage();
 		frame.setIconImage(icon);
 
@@ -71,10 +71,6 @@ public class LoginPage {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		ImageIcon signin = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/sign.png"));
-		Image imagesg = signin.getImage();
-		Image newSignin = imagesg.getScaledInstance(800, 600, java.awt.Image.SCALE_SMOOTH);
-		signin = new ImageIcon(newSignin);
 
 		JLabel lblNewLabel_3_1_1 = new JLabel("details and start reading!");
 		lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -104,48 +100,6 @@ public class LoginPage {
 		lblNewLabel.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGrid.png")));
 		lblNewLabel.setBounds(0, 0, 284, 500);
 		frame.getContentPane().add(lblNewLabel);
-		ImageIcon facebook = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/facebook.png"));
-		Image imagef = facebook.getImage();
-		Image newFacebook = imagef.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
-		facebook = new ImageIcon(newFacebook);
-		ImageIcon google = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/google.png"));
-		Image imageg = google.getImage();
-		Image newGoogle = imageg.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
-		google = new ImageIcon(newGoogle);
-		ImageIcon linkedin = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/linkedin.png"));
-		Image imagel = linkedin.getImage();
-		Image newLinkedin = imagel.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
-		linkedin = new ImageIcon(newLinkedin);
-
-		JLabel lblNewLabel_8 = new JLabel("X");
-		lblNewLabel_8.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_8.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
-			}
-		});
-		lblNewLabel_8.setFont(new Font("Arial", Font.BOLD, 23));
-		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8.setForeground(new Color(14, 42, 71));
-		lblNewLabel_8.setBounds(768, 11, 22, 27);
-		frame.getContentPane().add(lblNewLabel_8);
-
-		JLabel lblNewLabel_7_1 = new JLabel("");
-		lblNewLabel_7_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_7_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				frame.setState(JFrame.ICONIFIED);
-			}
-		});
-		lblNewLabel_7_1.setOpaque(true);
-		lblNewLabel_7_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1.setForeground(Color.WHITE);
-		lblNewLabel_7_1.setFont(new Font("Arial", Font.BOLD, 24));
-		lblNewLabel_7_1.setBackground(new Color(14, 42, 71));
-		lblNewLabel_7_1.setBounds(740, 20, 17, 6);
-		frame.getContentPane().add(lblNewLabel_7_1);
 
 		JPanel panel = new JPanel();
 		panel.setBounds(283, 0, 517, 500);
@@ -156,7 +110,7 @@ public class LoginPage {
 
 		JPanel signinPanel = new JPanel();
 		signinPanel.setBounds(0, 0, 517, 500);
-		panel.add(signinPanel);
+		panel.add(signinPanel, "signinPanel");
 		signinPanel.setLayout(null);
 
 		JLabel lblNewLabel_1 = new JLabel("Sign in to myLibrary");
@@ -182,6 +136,12 @@ public class LoginPage {
 		emailLoginInput.setColumns(10);
 
 		JLabel lblNewLabel_5_1 = new JLabel("Don't have an account?");
+		lblNewLabel_5_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cards.show(panel, "signupPanel");
+			}
+		});
 		lblNewLabel_5_1.setBounds(137, 342, 249, 43);
 		signinPanel.add(lblNewLabel_5_1);
 		lblNewLabel_5_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -214,6 +174,36 @@ public class LoginPage {
 		TextPrompt emailLoginPlaceholder = new TextPrompt("Email ", emailLoginInput);
 		@SuppressWarnings("unused")
 		TextPrompt passwordLoginPlaceholder = new TextPrompt("Password ", passwordFieldLogin);
+		
+		JLabel lblNewLabel_7_1_1 = new JLabel("");
+		lblNewLabel_7_1_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.setState(JFrame.ICONIFIED);
+			}
+		});
+		lblNewLabel_7_1_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel_7_1_1.setOpaque(true);
+		lblNewLabel_7_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_1_1.setForeground(Color.WHITE);
+		lblNewLabel_7_1_1.setFont(new Font("Arial", Font.BOLD, 24));
+		lblNewLabel_7_1_1.setBackground(new Color(14, 42, 71));
+		lblNewLabel_7_1_1.setBounds(462, 25, 17, 6);
+		signinPanel.add(lblNewLabel_7_1_1);
+		
+		JLabel lblNewLabel_8_1 = new JLabel("X");
+		lblNewLabel_8_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
+		lblNewLabel_8_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel_8_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8_1.setForeground(new Color(14, 42, 71));
+		lblNewLabel_8_1.setFont(new Font("Arial", Font.BOLD, 23));
+		lblNewLabel_8_1.setBounds(485, 11, 22, 27);
+		signinPanel.add(lblNewLabel_8_1);
 
 		NameTextField = new JTextField();
 		NameTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -277,12 +267,48 @@ public class LoginPage {
 		signupPanel.add(lblNewLabel_5_2);
 
 		JLabel lblNewLabel_5_1_1 = new JLabel("Sign in instead");
+		lblNewLabel_5_1_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cards.show(panel, "signinPanel");
+			}
+		});
 		lblNewLabel_5_1_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lblNewLabel_5_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_5_1_1.setForeground(new Color(102, 102, 102));
 		lblNewLabel_5_1_1.setFont(new Font("Arial", Font.BOLD, 17));
 		lblNewLabel_5_1_1.setBounds(350, 446, 157, 43);
 		signupPanel.add(lblNewLabel_5_1_1);
+		
+		JLabel lblNewLabel_7_1_1_1 = new JLabel("");
+		lblNewLabel_7_1_1_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel_7_1_1_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				frame.setState(JFrame.ICONIFIED);
+			}
+		});
+		lblNewLabel_7_1_1_1.setOpaque(true);
+		lblNewLabel_7_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_7_1_1_1.setForeground(Color.WHITE);
+		lblNewLabel_7_1_1_1.setFont(new Font("Arial", Font.BOLD, 24));
+		lblNewLabel_7_1_1_1.setBackground(new Color(14, 42, 71));
+		lblNewLabel_7_1_1_1.setBounds(462, 25, 17, 6);
+		signupPanel.add(lblNewLabel_7_1_1_1);
+		
+		JLabel lblNewLabel_8_1_1 = new JLabel("X");
+		lblNewLabel_8_1_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblNewLabel_8_1_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.exit(0);
+			}
+		});
+		lblNewLabel_8_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_8_1_1.setForeground(new Color(14, 42, 71));
+		lblNewLabel_8_1_1.setFont(new Font("Arial", Font.BOLD, 23));
+		lblNewLabel_8_1_1.setBounds(485, 11, 22, 27);
+		signupPanel.add(lblNewLabel_8_1_1);
 
 		// cards.show(panel, "signupPanel");
 	}

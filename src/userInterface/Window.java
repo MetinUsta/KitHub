@@ -177,7 +177,7 @@ public class Window {
 		bookSuggestionsScrollPanel.setViewportView(bookSuggest);
 		bookSuggest.setCellRenderer(new BookRenderer());
 		
-		Image original1 = new ImageIcon(getClass().getResource("/AppIcons/kopya.png")).getImage();
+		Image original1 = new ImageIcon(getClass().getResource("/bookCovers/kopya.png")).getImage();
 		bookSuggestList.addElement(new Book(1, "calikusu", original1));
 		/*bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
 		bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
@@ -212,7 +212,7 @@ public class Window {
 		});
 		
 		overviewHoverButton.setBorder(null);
-		Image original = new ImageIcon(Window.class.getResource("/AppIcons/kissingCouple.png")).getImage();
+		Image original = new ImageIcon(Window.class.getResource("/bookCovers/kissingCouple.png")).getImage();
 		Image dimg = original.getScaledInstance(bookCoverPanel.getWidth(), bookCoverPanel.getHeight(), Image.SCALE_SMOOTH);
 		bookCoverPanel.setLayout(null);
 		
