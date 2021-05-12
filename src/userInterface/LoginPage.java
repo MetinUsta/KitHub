@@ -71,34 +71,27 @@ public class LoginPage {
 		Image newSignin = imagesg.getScaledInstance(800, 600, java.awt.Image.SCALE_SMOOTH);
 		signin = new ImageIcon(newSignin);
 		
-		JLabel lblNewLabel_7 = new JLabel("SIGN IN");
-		lblNewLabel_7.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_7.setForeground(new Color(255, 255, 255));
-		lblNewLabel_7.setFont(new Font("Arial", Font.BOLD, 24));
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7.setOpaque(true);
-		lblNewLabel_7.setBackground(new Color(6, 214, 160));
-		lblNewLabel_7.setBounds(446, 386, 172, 43);
-		frame.getContentPane().add(lblNewLabel_7);
+		JLabel signinLabel = new JLabel("SIGN IN");
+		signinLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		signinLabel.setForeground(new Color(255, 255, 255));
+		signinLabel.setFont(new Font("Arial", Font.BOLD, 24));
+		signinLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		signinLabel.setOpaque(true);
+		signinLabel.setBackground(new Color(6, 214, 160));
+		signinLabel.setBounds(446, 386, 172, 43);
+		frame.getContentPane().add(signinLabel);
 		
-		JLabel lblNewLabel_6 = new JLabel("Email");
-		lblNewLabel_6.setForeground(new Color(153, 153, 153));
-		lblNewLabel_6.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblNewLabel_6.setBounds(415, 248, 69, 20);
-		frame.getContentPane().add(lblNewLabel_6);
+		JLabel emailPlaceHolder = new JLabel("Email");
+		emailPlaceHolder.setForeground(new Color(153, 153, 153));
+		emailPlaceHolder.setFont(new Font("Arial", Font.PLAIN, 16));
+		emailPlaceHolder.setBounds(415, 248, 69, 20);
+		frame.getContentPane().add(emailPlaceHolder);
 		
-		JLabel lblNewLabel_6_1 = new JLabel("Password");
-		lblNewLabel_6_1.setForeground(new Color(153, 153, 153));
-		lblNewLabel_6_1.setFont(new Font("Arial", Font.PLAIN, 16));
-		lblNewLabel_6_1.setBounds(415, 301, 87, 20);
-		frame.getContentPane().add(lblNewLabel_6_1);
-		
-		JLabel lblNewLabel_3_1_1 = new JLabel("details and start reading!");
-		lblNewLabel_3_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3_1_1.setForeground(new Color(232, 232, 232));
-		lblNewLabel_3_1_1.setFont(new Font("Cooper Black", Font.PLAIN, 21));
-		lblNewLabel_3_1_1.setBounds(0, 302, 284, 77);
-		frame.getContentPane().add(lblNewLabel_3_1_1);
+		JLabel passwordPlaceHolder = new JLabel("Password");
+		passwordPlaceHolder.setForeground(new Color(153, 153, 153));
+		passwordPlaceHolder.setFont(new Font("Arial", Font.PLAIN, 16));
+		passwordPlaceHolder.setBounds(415, 301, 87, 20);
+		frame.getContentPane().add(passwordPlaceHolder);
 		
 		JLabel lblNewLabel_3_1 = new JLabel("Enter your personal");
 		lblNewLabel_3_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -106,6 +99,20 @@ public class LoginPage {
 		lblNewLabel_3_1.setFont(new Font("Cooper Black", Font.PLAIN, 23));
 		lblNewLabel_3_1.setBounds(10, 274, 261, 77);
 		frame.getContentPane().add(lblNewLabel_3_1);
+		
+		JLabel sideBarInfoLabel = new JLabel("details and start reading!");
+		sideBarInfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		sideBarInfoLabel.setForeground(new Color(232, 232, 232));
+		sideBarInfoLabel.setFont(new Font("Cooper Black", Font.PLAIN, 21));
+		sideBarInfoLabel.setBounds(0, 302, 284, 77);
+		frame.getContentPane().add(sideBarInfoLabel);
+		
+		/*JLabel lblNewLabel_3_1 = new JLabel("Enter your personal");
+		lblNewLabel_3_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_3_1.setForeground(new Color(232, 232, 232));
+		lblNewLabel_3_1.setFont(new Font("Cooper Black", Font.PLAIN, 23));
+		lblNewLabel_3_1.setBounds(10, 274, 261, 77);
+		frame.getContentPane().add(lblNewLabel_3_1);*/
 		
 		JLabel lblNewLabel_4 = new JLabel("");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -141,12 +148,12 @@ public class LoginPage {
 		textField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				lblNewLabel_6.setVisible(false);
+				emailPlaceHolder.setVisible(false);
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(textField.getText().compareTo("") == 0) {
-					lblNewLabel_6.setVisible(true);
+					emailPlaceHolder.setVisible(true);
 				}
 			}
 		});
@@ -159,12 +166,12 @@ public class LoginPage {
 		textField_1.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				lblNewLabel_6_1.setVisible(false);
+				passwordPlaceHolder.setVisible(false);
 			}
 			@Override
 			public void focusLost(FocusEvent e) {
 				if(textField_1.getText().compareTo("") == 0) {
-					lblNewLabel_6_1.setVisible(true);
+					passwordPlaceHolder.setVisible(true);
 				}
 			}
 		});
