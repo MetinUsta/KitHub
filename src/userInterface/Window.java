@@ -3,6 +3,7 @@ package userInterface;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -12,6 +13,9 @@ import java.awt.CardLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JLabel;
+
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
@@ -27,14 +31,14 @@ import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import javax.swing.border.LineBorder;
+
 import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.JTextArea;
 import java.awt.Cursor;
-import javax.swing.ListModel;
 
 public class Window {
-
+	
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -51,7 +55,7 @@ public class Window {
 			public void run() {
 				try {
 					Window window = new Window();
-					window.frame.setVisible(true);
+					window.frame.setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,6 +67,7 @@ public class Window {
 	 * Create the application.
 	 */
 	public Window() {
+		//login();
 		initialize();
 	}
 
