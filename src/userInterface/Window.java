@@ -3,10 +3,10 @@ package userInterface;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import java.awt.CardLayout;
@@ -14,8 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JLabel;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
@@ -26,7 +24,6 @@ import javax.swing.JButton;
 import javax.swing.JMenuBar;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
@@ -174,11 +171,18 @@ public class Window {
 		bookSuggest.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		bookSuggest.setBorder(new LineBorder(componentBorderColor, 2));
 		bookSuggest.setBackground(elevation1);
+		bookSuggest.setSelectionBackground(sideBarSelectionColor);
 		bookSuggestionsScrollPanel.setViewportView(bookSuggest);
-		bookSuggest.setCellRenderer(new BookRenderer());
+		//bookSuggest.setCellRenderer(new BookRenderer());
 		
 		Image original1 = new ImageIcon(getClass().getResource("/bookCovers/kopya.png")).getImage();
 		bookSuggestList.addElement(new Book(1, "calikusu", original1));
+		bookSuggestList.addElement(new Book(1, "calikusu", original1));
+		bookSuggestList.addElement(new Book(1, "calikusu", original1));
+		bookSuggestList.addElement(new Book(1, "calikusu", original1));
+		bookSuggestList.addElement(new Book(1, "calikusu", original1));
+		
+		bookSuggest.setCellRenderer(new BookListRenderer());
 		/*bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
 		bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
 		bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
@@ -668,9 +672,10 @@ public class Window {
 		takenBooksScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		takenBooksScroll.setBorder(null);
 		JList<Book> takenBooksList = new JList<>(takenBooks);
+		takenBooksList.setSelectionBackground(sideBarSelectionColor);
 		takenBooksScroll.setViewportView(takenBooksList);
 		takenBooksList.setVisibleRowCount(1);
-		takenBooksList.setCellRenderer(new BookRenderer());
+		takenBooksList.setCellRenderer(new BookListRenderer());
 		takenBooksList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		takenBooksList.setBackground(elevation1);
 		
@@ -683,7 +688,7 @@ public class Window {
 		btnReturnBook.setBackground(new Color(42, 42, 54));
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 492, 545, 200);
+		scrollPane_1.setBounds(10, 513, 545, 179);
 		panel_3.add(scrollPane_1);
 		
 		DefaultListModel<String> takenBooksModel = new DefaultListModel<>();
@@ -705,6 +710,12 @@ public class Window {
 		lblTakenBooks.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblTakenBooks.setBounds(122, 187, 320, 23);
 		panel_3.add(lblTakenBooks);
+		
+		JLabel lblPreviousComments = new JLabel("Previous Comments:");
+		lblPreviousComments.setForeground(Color.WHITE);
+		lblPreviousComments.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblPreviousComments.setBounds(10, 481, 320, 23);
+		panel_3.add(lblPreviousComments);
 		takenBooks.addElement(new Book(3, "1984", original1));
 		takenBooks.addElement(new Book(3, "1985", original1));
 		takenBooks.addElement(new Book(3, "1986", original1));
@@ -751,34 +762,6 @@ public class Window {
 	}
 }
 
-class BookRenderer extends JLabel implements ListCellRenderer<Book> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	//private Book listElement = new Book(1, "Calikusu", "../AppIcons/kopya.png");
-	
-    @Override
-    public Component getListCellRendererComponent(JList<? extends Book> list, Book listElement, int index,
-        boolean isSelected, boolean cellHasFocus) {
-    	
-        ImageIcon imageIcon = listElement.getBookCover();
-    	
-        /*setLayout(new BorderLayout());
-        add(this.labelFor, BorderLayout.PAGE_END);*/
-        setBorder(new LineBorder(new Color(56, 56, 61), 4));
-        setIcon(imageIcon);
-        String newText = listElement.getBookName();
-        setText(newText);
-        setForeground(new Color(255, 255, 255));
-        setHorizontalTextPosition(JLabel.CENTER);
-        setVerticalTextPosition(JLabel.BOTTOM);
-        return this;
-    }
-     
-}
-
 class Book{
 	private int bookId;
 	private String bookName;
@@ -788,7 +771,7 @@ class Book{
 		this.bookId = bookId;
 		this.bookName = bookName;
 		//Image original = new ImageIcon(getClass().getResource(path)).getImage();
-		Image dimg = original.getScaledInstance((int) (160*0.62), 160, Image.SCALE_SMOOTH);
+		Image dimg = original.getScaledInstance((int) (150*0.62), 150, Image.SCALE_SMOOTH);
 		//this.bookCover = new ImageIcon(getClass().getResource(path));
 		this.bookCover = new ImageIcon(dimg);
 	}
@@ -805,4 +788,36 @@ class Book{
 		return bookCover;
 	}
 	
+}
+
+class BookListRenderer extends DefaultListCellRenderer {
+	//private Book book;
+	
+	/*public MarioListRenderer(Book book) {
+		this.book = book;
+	}*/
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	Font font = new Font("helvitica", Font.BOLD, 14);
+
+    @Override
+    public Component getListCellRendererComponent(
+            JList<?> list, Object value, int index,
+            boolean isSelected, boolean cellHasFocus) {
+
+        JLabel label = (JLabel) super.getListCellRendererComponent(
+                list, value, index, isSelected, cellHasFocus);
+        label.setText(((Book) value).getBookName());
+        label.setIcon(((Book) value).getBookCover());
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
+        list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
+        label.setBorder(new LineBorder(new Color(56, 56, 61), 4));
+        label.setFont(font);
+        label.setForeground(Color.white);
+        return label;
+    }
 }
