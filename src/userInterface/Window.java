@@ -33,17 +33,20 @@ import javax.swing.JComboBox;
 import javax.swing.ListSelectionModel;
 import javax.swing.JTextArea;
 import java.awt.Cursor;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.BevelBorder;
 
 public class Window {
 	
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_2;
+	private JTextField donateFieldTitle;
+	private JTextField donateFieldAuthor;
+	private JTextField donateFieldPageCount;
+	private JTextField donateFieldEdition;
+	private JTextField donateFieldISBN;
+	private JTextField donateFieldPublisher;
+	private JTextField donateFieldPublishDate;
+	private JLabel personValueLastName;
 	/**
 	 * Launch the application.
 	 */
@@ -74,12 +77,35 @@ public class Window {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Color sideBarColor = new Color(22, 22, 24);
+		/*Color sideBarColor = new Color(22, 22, 24);
 		Color sideBarMenuColor = new Color(49, 49, 53);
 		Color sideBarSelectionColor = new Color(8, 168, 144);
 		Color componentBorderColor = new Color(95, 95, 100);
 		Color elevation1 = new Color(56, 56, 61);
-		Color backgroundColor = new Color(37, 37, 43);
+		Color backgroundColor = new Color(37, 37, 43);*/
+		
+		/*Color sideBarColor = new Color(27, 38, 44);
+		Color sideBarMenuColor = new Color(19, 59, 92);
+		Color sideBarSelectionColor = new Color(247, 164, 0);
+		Color componentBorderColor = new Color(58, 158, 253);
+		Color elevation1 = new Color(47, 59, 82);
+		Color backgroundColor = new Color(37, 46, 66);*/
+		
+		Color sideBarColor = new Color(39, 43, 47);
+		Color sideBarMenuColor = new Color(33, 37, 41);
+		Color sideBarSelectionColor = new Color(253, 65, 60);
+		Color componentBorderColor = new Color(34, 38, 41);
+		Color elevation1 = new Color(39, 43, 47);
+		Color backgroundColor = new Color(33, 37, 41);
+		Color textColor = new Color(253, 65, 60);
+		Color textColorLight = new Color(255, 255, 255);
+		Color buttonText = new Color(254, 188, 44);
+		Font systemText = new Font("Arial Rounded MT Bold", Font.PLAIN, 17);
+		Font info = new Font("Arial", Font.PLAIN, 15);
+		
+		MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, (Color) buttonText);
+		MatteBorder bottomLineTextField = new MatteBorder(0, 0, 3, 0, (Color) buttonText);
+		
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
 		frame = new JFrame();
@@ -98,7 +124,7 @@ public class Window {
 		CardLayout card = new CardLayout(0, 0);
 		contentPanel.setLayout(card);
 		
-		
+
 		JPanel bookLoanPanel = new JPanel();
 		bookLoanPanel.setBackground(backgroundColor);
 		contentPanel.add(bookLoanPanel, "bookLoan");
@@ -115,28 +141,29 @@ public class Window {
 		bookListScrollPane.setBorder(null);
 		bookListScrollPane.setBounds(10, 57, 317, 448);
 		bookListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		bookListScrollPane.setBorder(bottomLine);
 		
 		DefaultListModel<String> bookList = new DefaultListModel<>();
 		JList<String> list = new JList<>(bookList);
 		list.setSelectionBackground(Color.YELLOW);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setBorder(new LineBorder(componentBorderColor, 2));
+		//list.setBorder(bottomLine);
 		list.setBackground(elevation1);
 		
 		JScrollPane bookSuggestionsScrollPanel = new JScrollPane();
-		bookSuggestionsScrollPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		bookSuggestionsScrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		bookSuggestionsScrollPanel.setBorder(null);
+		bookSuggestionsScrollPanel.setBorder(bottomLine);
 		bookSuggestionsScrollPanel.setBounds(10, 516, 317, 200);
 		
 		JPanel bookReview = new JPanel();
-		bookReview.setBorder(new LineBorder(componentBorderColor, 2));
+		bookReview.setBorder(bottomLine);
 		bookReview.setBounds(337, 516, 545, 200);
 		bookReview.setBackground(elevation1);
 		
 		JPanel bookCoverPanel = new JPanel();
 		bookCoverPanel.setBounds(338, 11, 310, 494);
 		bookCoverPanel.setBackground(Color.GRAY);
+		//bookCoverPanel.setBorder(bottomLine);
 		
 		JPanel searchPanel = new JPanel();
 		searchPanel.setBounds(10, 11, 317, 34);
@@ -144,12 +171,13 @@ public class Window {
 		
 		JButton bookLoanButton = new JButton("Take Book");
 		bookLoanButton.setBorder(null);
-		bookLoanButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bookLoanButton.setForeground(Color.WHITE);
+		bookLoanButton.setFont(systemText);
+		bookLoanButton.setForeground(buttonText);
 		bookLoanButton.setBackground(elevation1);
 		bookLoanButton.setBounds(892, 445, 127, 60);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setBackground(Color.BLACK);
 		menuBar.setBorder(null);
 		searchPanel.add(menuBar);
 		
@@ -162,6 +190,9 @@ public class Window {
 		searchBar.setColumns(10);
 		
 		JComboBox<String> selectGenreList = new JComboBox<>();
+		selectGenreList.setPrototypeDisplayValue("---------------");
+		selectGenreList.setBorder(null);
+		selectGenreList.setBackground(Color.WHITE);
 		selectGenreList.addItem("India");
 		menuBar.add(selectGenreList);
 		
@@ -175,12 +206,16 @@ public class Window {
 		bookSuggestionsScrollPanel.setViewportView(bookSuggest);
 		//bookSuggest.setCellRenderer(new BookRenderer());
 		
-		Image original1 = new ImageIcon(getClass().getResource("/bookCovers/kopya.png")).getImage();
-		bookSuggestList.addElement(new Book(1, "calikusu", original1));
-		bookSuggestList.addElement(new Book(1, "calikusu", original1));
-		bookSuggestList.addElement(new Book(1, "calikusu", original1));
-		bookSuggestList.addElement(new Book(1, "calikusu", original1));
-		bookSuggestList.addElement(new Book(1, "calikusu", original1));
+		Image goodbye = new ImageIcon(getClass().getResource("/bookCovers/kopya.png")).getImage();
+		Image kissing = new ImageIcon(getClass().getResource("/bookCovers/kissingCouple.png")).getImage();
+		Image murder = new ImageIcon(getClass().getResource("/bookCovers/murder.png")).getImage();
+		Image umbrella = new ImageIcon(getClass().getResource("/bookCovers/umbrella.png")).getImage();
+		Image colorful = new ImageIcon(getClass().getResource("/bookCovers/colorful.png")).getImage();
+		bookSuggestList.addElement(new Book(1, "Elveda", goodbye));
+		bookSuggestList.addElement(new Book(1, "Mmhm...", kissing));
+		bookSuggestList.addElement(new Book(1, "Epstein", murder));
+		bookSuggestList.addElement(new Book(1, "Raindrops", umbrella));
+		bookSuggestList.addElement(new Book(1, "Lily", colorful));
 		
 		bookSuggest.setCellRenderer(new BookListRenderer());
 		/*bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
@@ -199,7 +234,9 @@ public class Window {
 		bookLoanPanel.add(bookCoverPanel);
 		
 		JPanel overviewShadingPanel = new JPanel();
+		overviewShadingPanel.setBorder(bottomLine);
 		JButton overviewHoverButton = new JButton("");
+		overviewHoverButton.setBorder(bottomLine);
 		overviewHoverButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -241,22 +278,25 @@ public class Window {
 		bookReview.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBorder(bottomLine);
 		scrollPane.setBounds(0, 0, 545, 200);
 		bookReview.add(scrollPane);
 		
 		DefaultListModel<String> reviewListModel = new DefaultListModel<>();
 		JList<String> reviewList = new JList<>(reviewListModel);
+		reviewList.setBorder(null);
 		reviewList.setSelectionForeground(Color.WHITE);
-		reviewList.setSelectionBackground(Color.DARK_GRAY);
+		reviewList.setSelectionBackground(textColor);
 		reviewList.setForeground(Color.WHITE);
 		reviewList.setBackground(elevation1);
 		scrollPane.setViewportView(reviewList);
-		reviewListModel.addElement("AAA");
-		reviewListModel.addElement("AAA");
-		reviewListModel.addElement("AAA");
+		reviewList.setCellRenderer(new CommentListRenderer());
+		reviewListModel.addElement("Will hit you right in the heart. —Bustle");
+		reviewListModel.addElement("Delightfully wicked fun! —Kirkus Reviews");
+		reviewListModel.addElement("Gosh awful narrator. Sorry. In its favor I could only stomach 3 pages. -Washington Post");
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(componentBorderColor, 2));
+		panel.setBorder(bottomLine);
 		panel.setBackground(elevation1);
 		panel.setBounds(658, 11, 224, 494);
 		bookLoanPanel.add(panel);
@@ -264,90 +304,90 @@ public class Window {
 		
 		JLabel bookInfoTitleLabel = new JLabel("Title:");
 		bookInfoTitleLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		bookInfoTitleLabel.setForeground(textColor);
+		bookInfoTitleLabel.setFont(systemText);
 		bookInfoTitleLabel.setBounds(10, 11, 60, 33);
 		panel.add(bookInfoTitleLabel);
 		
 		JLabel bookInfoTitleValue = new JLabel("Value");
-		bookInfoTitleValue.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleValue.setForeground(Color.WHITE);
-		bookInfoTitleValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		bookInfoTitleValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoTitleValue.setForeground(textColorLight);
+		bookInfoTitleValue.setFont(info);
 		bookInfoTitleValue.setBounds(119, 11, 82, 33);
 		panel.add(bookInfoTitleValue);
 		
 		JLabel bookInfoAuthorLabel = new JLabel("Author:");
-		bookInfoAuthorLabel.setForeground(Color.LIGHT_GRAY);
-		bookInfoAuthorLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		bookInfoAuthorLabel.setForeground(textColor);
+		bookInfoAuthorLabel.setFont(systemText);
 		bookInfoAuthorLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoAuthorLabel.setBounds(10, 55, 60, 33);
 		panel.add(bookInfoAuthorLabel);
 		
 		JLabel bookInfoAuthorValue = new JLabel("Value");
-		bookInfoAuthorValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		bookInfoAuthorValue.setForeground(Color.WHITE);
-		bookInfoAuthorValue.setHorizontalAlignment(SwingConstants.LEFT);
+		bookInfoAuthorValue.setFont(info);
+		bookInfoAuthorValue.setForeground(textColorLight);
+		bookInfoAuthorValue.setHorizontalAlignment(SwingConstants.RIGHT);
 		bookInfoAuthorValue.setBounds(119, 55, 82, 33);
 		panel.add(bookInfoAuthorValue);
 		
 		JLabel bookInfoPublishDateLabel = new JLabel("Publish Date:");
 		bookInfoPublishDateLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoPublishDateLabel.setForeground(Color.LIGHT_GRAY);
-		bookInfoPublishDateLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		bookInfoPublishDateLabel.setForeground(textColor);
+		bookInfoPublishDateLabel.setFont(systemText);
 		bookInfoPublishDateLabel.setBounds(10, 99, 112, 33);
 		panel.add(bookInfoPublishDateLabel);
 		
 		JLabel bookInfoPublishDateValue = new JLabel("Value");
-		bookInfoPublishDateValue.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoPublishDateValue.setForeground(Color.WHITE);
-		bookInfoPublishDateValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		bookInfoPublishDateValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoPublishDateValue.setForeground(textColorLight);
+		bookInfoPublishDateValue.setFont(info);
 		bookInfoPublishDateValue.setBounds(119, 99, 82, 33);
 		panel.add(bookInfoPublishDateValue);
 		
 		JLabel bookInfoPageCountLabel = new JLabel("Page Count:");
 		bookInfoPageCountLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoPageCountLabel.setForeground(Color.LIGHT_GRAY);
-		bookInfoPageCountLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		bookInfoPageCountLabel.setForeground(textColor);
+		bookInfoPageCountLabel.setFont(systemText);
 		bookInfoPageCountLabel.setBounds(10, 143, 112, 33);
 		panel.add(bookInfoPageCountLabel);
 		
 		JLabel bookInfoPageCountValue = new JLabel("Value");
-		bookInfoPageCountValue.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoPageCountValue.setForeground(Color.WHITE);
-		bookInfoPageCountValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		bookInfoPageCountValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoPageCountValue.setForeground(textColorLight);
+		bookInfoPageCountValue.setFont(info);
 		bookInfoPageCountValue.setBounds(119, 143, 82, 33);
 		panel.add(bookInfoPageCountValue);
 		
 		JLabel bookInfoEditionLabel = new JLabel("Edition:");
 		bookInfoEditionLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoEditionLabel.setForeground(Color.LIGHT_GRAY);
-		bookInfoEditionLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bookInfoEditionLabel.setBounds(10, 187, 60, 33);
+		bookInfoEditionLabel.setForeground(textColor);
+		bookInfoEditionLabel.setFont(systemText);
+		bookInfoEditionLabel.setBounds(10, 187, 82, 33);
 		panel.add(bookInfoEditionLabel);
 		
 		JLabel bookInfoEditiorValue = new JLabel("Value");
-		bookInfoEditiorValue.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoEditiorValue.setForeground(Color.WHITE);
-		bookInfoEditiorValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		bookInfoEditiorValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoEditiorValue.setForeground(textColorLight);
+		bookInfoEditiorValue.setFont(info);
 		bookInfoEditiorValue.setBounds(119, 187, 82, 33);
 		panel.add(bookInfoEditiorValue);
 		
 		JLabel bookInfoISBNLabel = new JLabel("ISBN:");
 		bookInfoISBNLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoISBNLabel.setForeground(Color.LIGHT_GRAY);
-		bookInfoISBNLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		bookInfoISBNLabel.setForeground(textColor);
+		bookInfoISBNLabel.setFont(systemText);
 		bookInfoISBNLabel.setBounds(10, 231, 60, 33);
 		panel.add(bookInfoISBNLabel);
 		
 		JLabel bookInfoISBNValue = new JLabel("Value");
-		bookInfoISBNValue.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoISBNValue.setForeground(Color.WHITE);
-		bookInfoISBNValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		bookInfoISBNValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoISBNValue.setForeground(textColorLight);
+		bookInfoISBNValue.setFont(info);
 		bookInfoISBNValue.setBounds(119, 231, 82, 33);
 		panel.add(bookInfoISBNValue);
 		
 		JPanel libraryInfoPanel = new JPanel();
-		libraryInfoPanel.setBorder(new LineBorder(componentBorderColor, 2));
+		libraryInfoPanel.setBorder(bottomLine);
 		libraryInfoPanel.setBackground(elevation1);
 		libraryInfoPanel.setBounds(892, 259, 303, 163);
 		bookLoanPanel.add(libraryInfoPanel);
@@ -355,76 +395,76 @@ public class Window {
 		
 		JLabel libraryInfoNameLabel = new JLabel("Name:");
 		libraryInfoNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		libraryInfoNameLabel.setForeground(Color.LIGHT_GRAY);
-		libraryInfoNameLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		libraryInfoNameLabel.setForeground(textColor);
+		libraryInfoNameLabel.setFont(systemText);
 		libraryInfoNameLabel.setBounds(10, 11, 60, 33);
 		libraryInfoPanel.add(libraryInfoNameLabel);
 		
 		JLabel libraryInfoNameValue = new JLabel("Value");
 		libraryInfoNameValue.setHorizontalAlignment(SwingConstants.LEFT);
-		libraryInfoNameValue.setForeground(Color.WHITE);
-		libraryInfoNameValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		libraryInfoNameValue.setForeground(textColorLight);
+		libraryInfoNameValue.setFont(info);
 		libraryInfoNameValue.setBounds(119, 11, 82, 33);
 		libraryInfoPanel.add(libraryInfoNameValue);
 		
 		JLabel libraryInfoPhoneLabel = new JLabel("Phone:");
 		libraryInfoPhoneLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		libraryInfoPhoneLabel.setForeground(Color.LIGHT_GRAY);
-		libraryInfoPhoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		libraryInfoPhoneLabel.setForeground(textColor);
+		libraryInfoPhoneLabel.setFont(systemText);
 		libraryInfoPhoneLabel.setBounds(10, 55, 60, 33);
 		libraryInfoPanel.add(libraryInfoPhoneLabel);
 		
 		JLabel libraryInfoPhoneValue = new JLabel("Value");
 		libraryInfoPhoneValue.setHorizontalAlignment(SwingConstants.LEFT);
-		libraryInfoPhoneValue.setForeground(Color.WHITE);
-		libraryInfoPhoneValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		libraryInfoPhoneValue.setForeground(textColorLight);
+		libraryInfoPhoneValue.setFont(info);
 		libraryInfoPhoneValue.setBounds(119, 55, 82, 33);
 		libraryInfoPanel.add(libraryInfoPhoneValue);
 		
 		JLabel libraryInfoAddressLabel = new JLabel("Address");
 		libraryInfoAddressLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		libraryInfoAddressLabel.setForeground(Color.LIGHT_GRAY);
-		libraryInfoAddressLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		libraryInfoAddressLabel.setForeground(textColor);
+		libraryInfoAddressLabel.setFont(systemText);
 		libraryInfoAddressLabel.setBounds(10, 99, 112, 33);
 		libraryInfoPanel.add(libraryInfoAddressLabel);
 		
 		JLabel libraryInfoAddressValue = new JLabel("Value");
 		libraryInfoAddressValue.setHorizontalAlignment(SwingConstants.LEFT);
-		libraryInfoAddressValue.setForeground(Color.WHITE);
-		libraryInfoAddressValue.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		libraryInfoAddressValue.setForeground(textColorLight);
+		libraryInfoAddressValue.setFont(info);
 		libraryInfoAddressValue.setBounds(119, 99, 82, 33);
 		libraryInfoPanel.add(libraryInfoAddressValue);
 		
 		JButton bookLocationButton = new JButton("Find Location");
 		bookLocationButton.setBorder(null);
-		bookLocationButton.setForeground(Color.WHITE);
-		bookLocationButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		bookLocationButton.setForeground(buttonText);
+		bookLocationButton.setFont(systemText);
 		bookLocationButton.setBounds(1068, 445, 127, 60);
 		bookLocationButton.setBackground(elevation1);
 		bookLoanPanel.add(bookLocationButton);
 		
 		JScrollPane librarySelectionScrollPanel = new JScrollPane();
-		librarySelectionScrollPanel.setBorder(null);
+		librarySelectionScrollPanel.setBorder(bottomLine);
 		librarySelectionScrollPanel.setBounds(892, 34, 303, 214);
 		bookLoanPanel.add(librarySelectionScrollPanel);
 		
 		DefaultListModel<String> libraryList = new DefaultListModel<>();
 		JList<String> librarySelectionList = new JList<>(libraryList);
-		librarySelectionList.setBorder(new LineBorder(componentBorderColor, 2));
+		//librarySelectionList.setBorder(new LineBorder(componentBorderColor, 2));
 		librarySelectionList.setBackground(elevation1);
 		librarySelectionScrollPanel.setViewportView(librarySelectionList);
 		
 		JLabel librarySelectLabel = new JLabel("Choose a library from the below list:");
-		librarySelectLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		librarySelectLabel.setFont(systemText);
 		librarySelectLabel.setForeground(Color.WHITE);
 		librarySelectLabel.setBounds(892, 9, 303, 24);
 		bookLoanPanel.add(librarySelectLabel);
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setLineWrap(true);
-		textArea.setFont(new Font("Monospaced", Font.PLAIN, 16));
+		textArea.setFont(info);
 		textArea.setForeground(Color.WHITE);
-		textArea.setBorder(new LineBorder(componentBorderColor, 2));
+		textArea.setBorder(bottomLine);
 		textArea.setBackground(elevation1);
 		textArea.setBounds(892, 516, 303, 200);
 		bookLoanPanel.add(textArea);
@@ -494,116 +534,125 @@ public class Window {
 		
 		DefaultListModel<String> librarySelectionForm = new DefaultListModel<>();
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(backgroundColor);
-		panel_1.setBounds(247, 204, 726, 330);
-		bookDonationPanel.add(panel_1);
-		panel_1.setLayout(null);
+		JPanel panelMiddle = new JPanel();
+		panelMiddle.setBorder(bottomLine);
+		panelMiddle.setBackground(elevation1);
+		panelMiddle.setBounds(247, 190, 726, 358);
+		bookDonationPanel.add(panelMiddle);
+		panelMiddle.setLayout(null);
 		
-		JScrollPane librarySelectionScrollPanel_1 = new JScrollPane();
-		librarySelectionScrollPanel_1.setBounds(413, 38, 303, 214);
-		panel_1.add(librarySelectionScrollPanel_1);
-		librarySelectionScrollPanel_1.setBorder(null);
+		JScrollPane libraryDonationScrollPanel = new JScrollPane();
+		libraryDonationScrollPanel.setBounds(413, 38, 303, 214);
+		panelMiddle.add(libraryDonationScrollPanel);
+		libraryDonationScrollPanel.setBorder(bottomLine);
 		JList<String> librarySelectionList_1 = new JList<String>(librarySelectionForm);
 		librarySelectionList_1.setBackground(new Color(56, 56, 61));
-		librarySelectionScrollPanel_1.setViewportView(librarySelectionList_1);
+		libraryDonationScrollPanel.setViewportView(librarySelectionList_1);
 		
-		JLabel librarySelectLabel_1 = new JLabel("Choose a library from the below list:");
-		librarySelectLabel_1.setBounds(413, 11, 303, 24);
-		panel_1.add(librarySelectLabel_1);
-		librarySelectLabel_1.setForeground(Color.WHITE);
-		librarySelectLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel infoText = new JLabel("Choose a library from the below list:");
+		infoText.setBounds(413, 11, 303, 24);
+		panelMiddle.add(infoText);
+		infoText.setForeground(Color.WHITE);
+		infoText.setFont(systemText);
 		
-		JButton bookLoanButton_1 = new JButton("Donate Book");
-		bookLoanButton_1.setBounds(515, 263, 127, 60);
-		panel_1.add(bookLoanButton_1);
-		bookLoanButton_1.setForeground(Color.WHITE);
-		bookLoanButton_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		bookLoanButton_1.setBorder(null);
-		bookLoanButton_1.setBackground(new Color(56, 56, 61));
+		JButton bookDonateButton = new JButton("Donate Book");
+		bookDonateButton.setBounds(515, 263, 127, 60);
+		panelMiddle.add(bookDonateButton);
+		bookDonateButton.setForeground(buttonText);
+		bookDonateButton.setFont(systemText);
+		bookDonateButton.setBorder(bottomLine);
+		bookDonateButton.setBackground(backgroundColor);
 		
-		JLabel bookInfoTitleLabel_1 = new JLabel("Title:");
-		bookInfoTitleLabel_1.setBounds(10, 11, 97, 33);
-		panel_1.add(bookInfoTitleLabel_1);
-		bookInfoTitleLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel_1.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField = new JTextField();
-		textField.setBounds(171, 19, 183, 25);
-		panel_1.add(textField);
-		textField.setColumns(10);
+		JLabel bookDonateTitleLabel = new JLabel("Title:");
+		bookDonateTitleLabel.setBounds(10, 11, 97, 33);
+		panelMiddle.add(bookDonateTitleLabel);
+		bookDonateTitleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonateTitleLabel.setForeground(textColor);
+		bookDonateTitleLabel.setFont(systemText);
 		
-		JLabel bookInfoTitleLabel_1_1 = new JLabel("Author:");
-		bookInfoTitleLabel_1_1.setBounds(10, 55, 97, 33);
-		panel_1.add(bookInfoTitleLabel_1_1);
-		bookInfoTitleLabel_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel_1_1.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		donateFieldTitle = new JTextField();
+		donateFieldTitle.setBorder(bottomLineTextField);
+		donateFieldTitle.setBounds(171, 19, 183, 25);
+		panelMiddle.add(donateFieldTitle);
+		donateFieldTitle.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(171, 63, 183, 25);
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
+		JLabel bookDonateAuthorLabel = new JLabel("Author:");
+		bookDonateAuthorLabel.setBounds(10, 55, 97, 33);
+		panelMiddle.add(bookDonateAuthorLabel);
+		bookDonateAuthorLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonateAuthorLabel.setForeground(textColor);
+		bookDonateAuthorLabel.setFont(systemText);
 		
-		JLabel bookInfoTitleLabel_1_1_1_1 = new JLabel("Page Count:");
-		bookInfoTitleLabel_1_1_1_1.setBounds(10, 143, 97, 33);
-		panel_1.add(bookInfoTitleLabel_1_1_1_1);
-		bookInfoTitleLabel_1_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel_1_1_1_1.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel_1_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		donateFieldAuthor = new JTextField();
+		donateFieldAuthor.setBorder(bottomLineTextField);
+		donateFieldAuthor.setBounds(171, 63, 183, 25);
+		panelMiddle.add(donateFieldAuthor);
+		donateFieldAuthor.setColumns(10);
 		
-		JLabel bookInfoTitleLabel_1_1_1 = new JLabel("Publish Date:");
-		bookInfoTitleLabel_1_1_1.setBounds(10, 99, 97, 33);
-		panel_1.add(bookInfoTitleLabel_1_1_1);
-		bookInfoTitleLabel_1_1_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel_1_1_1.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		JLabel bookDonatePageLabel = new JLabel("Page Count:");
+		bookDonatePageLabel.setBounds(10, 143, 118, 33);
+		panelMiddle.add(bookDonatePageLabel);
+		bookDonatePageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonatePageLabel.setForeground(textColor);
+		bookDonatePageLabel.setFont(systemText);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(171, 107, 183, 25);
-		panel_1.add(textField_2);
-		textField_2.setColumns(10);
+		JLabel bookDonatePublishDateLabel = new JLabel("Publish Date:");
+		bookDonatePublishDateLabel.setBounds(10, 99, 118, 33);
+		panelMiddle.add(bookDonatePublishDateLabel);
+		bookDonatePublishDateLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonatePublishDateLabel.setForeground(textColor);
+		bookDonatePublishDateLabel.setFont(systemText);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(171, 151, 183, 25);
-		panel_1.add(textField_3);
-		textField_3.setColumns(10);
+		donateFieldPublishDate = new JTextField();
+		donateFieldPublishDate.setBorder(bottomLineTextField);
+		donateFieldPublishDate.setBounds(171, 107, 183, 25);
+		panelMiddle.add(donateFieldPublishDate);
+		donateFieldPublishDate.setColumns(10);
 		
-		JLabel bookInfoTitleLabel_1_1_1_2 = new JLabel("Edition:");
-		bookInfoTitleLabel_1_1_1_2.setBounds(10, 187, 97, 33);
-		panel_1.add(bookInfoTitleLabel_1_1_1_2);
-		bookInfoTitleLabel_1_1_1_2.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel_1_1_1_2.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel_1_1_1_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		donateFieldPageCount = new JTextField();
+		donateFieldPageCount.setBorder(bottomLineTextField);
+		donateFieldPageCount.setBounds(171, 151, 183, 25);
+		panelMiddle.add(donateFieldPageCount);
+		donateFieldPageCount.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setBounds(171, 195, 183, 25);
-		panel_1.add(textField_4);
-		textField_4.setColumns(10);
+		JLabel bookDonateEditionLabel = new JLabel("Edition:");
+		bookDonateEditionLabel.setBounds(10, 187, 97, 33);
+		panelMiddle.add(bookDonateEditionLabel);
+		bookDonateEditionLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonateEditionLabel.setForeground(textColor);
+		bookDonateEditionLabel.setFont(systemText);
 		
-		textField_5 = new JTextField();
-		textField_5.setBounds(171, 239, 183, 25);
-		panel_1.add(textField_5);
-		textField_5.setColumns(10);
+		donateFieldEdition = new JTextField();
+		donateFieldEdition.setBorder(bottomLineTextField);
+		donateFieldEdition.setBounds(171, 195, 183, 25);
+		panelMiddle.add(donateFieldEdition);
+		donateFieldEdition.setColumns(10);
 		
-		JLabel bookInfoTitleLabel_1_1_1_3 = new JLabel("ISBN");
-		bookInfoTitleLabel_1_1_1_3.setBounds(10, 231, 97, 33);
-		panel_1.add(bookInfoTitleLabel_1_1_1_3);
-		bookInfoTitleLabel_1_1_1_3.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel_1_1_1_3.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel_1_1_1_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		donateFieldISBN = new JTextField();
+		donateFieldISBN.setBorder(bottomLineTextField);
+		donateFieldISBN.setBounds(171, 239, 183, 25);
+		panelMiddle.add(donateFieldISBN);
+		donateFieldISBN.setColumns(10);
 		
-		JLabel bookInfoTitleLabel_1_1_1_4 = new JLabel("Publisher");
-		bookInfoTitleLabel_1_1_1_4.setBounds(10, 275, 97, 33);
-		panel_1.add(bookInfoTitleLabel_1_1_1_4);
-		bookInfoTitleLabel_1_1_1_4.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel_1_1_1_4.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel_1_1_1_4.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		JLabel bookDonateISBNLabel = new JLabel("ISBN:");
+		bookDonateISBNLabel.setBounds(10, 231, 97, 33);
+		panelMiddle.add(bookDonateISBNLabel);
+		bookDonateISBNLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonateISBNLabel.setForeground(textColor);
+		bookDonateISBNLabel.setFont(systemText);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(171, 283, 183, 25);
-		panel_1.add(textField_6);
-		textField_6.setColumns(10);
+		JLabel bookDonatePublisherLabel = new JLabel("Publisher:");
+		bookDonatePublisherLabel.setBounds(10, 275, 97, 33);
+		panelMiddle.add(bookDonatePublisherLabel);
+		bookDonatePublisherLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonatePublisherLabel.setForeground(textColor);
+		bookDonatePublisherLabel.setFont(systemText);
+		
+		donateFieldPublisher = new JTextField();
+		donateFieldPublisher.setBorder(bottomLineTextField);
+		donateFieldPublisher.setBounds(171, 283, 183, 25);
+		panelMiddle.add(donateFieldPublisher);
+		donateFieldPublisher.setColumns(10);
 		
 		JPanel profilePanel = new JPanel();
 		profilePanel.setBackground(backgroundColor);
@@ -612,63 +661,64 @@ public class Window {
 		
 		DefaultListModel<Book> takenBooks = new DefaultListModel<>();
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(elevation1);
-		panel_3.setBounds(279, 25, 565, 703);
-		profilePanel.add(panel_3);
-		panel_3.setLayout(null);
+		JPanel profilePanelMiddle = new JPanel();
+		profilePanelMiddle.setBackground(elevation1);
+		profilePanelMiddle.setBounds(279, 15, 565, 703);
+		profilePanel.add(profilePanelMiddle);
+		profilePanelMiddle.setLayout(null);
+		profilePanelMiddle.setBorder(bottomLine);
 		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(122, 35, 320, 152);
-		panel_3.add(panel_2);
-		panel_2.setBackground(elevation1);
-		panel_2.setLayout(null);
+		JPanel personalInfoPanel = new JPanel();
+		personalInfoPanel.setBounds(122, 35, 320, 152);
+		profilePanelMiddle.add(personalInfoPanel);
+		personalInfoPanel.setBackground(elevation1);
+		personalInfoPanel.setLayout(null);
 		
-		JLabel bookInfoTitleLabel_2 = new JLabel("Name:");
-		bookInfoTitleLabel_2.setBounds(10, 11, 99, 33);
-		panel_2.add(bookInfoTitleLabel_2);
-		bookInfoTitleLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleLabel_2.setForeground(Color.LIGHT_GRAY);
-		bookInfoTitleLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		JLabel personLabelName = new JLabel("Name:");
+		personLabelName.setBounds(10, 11, 99, 33);
+		personalInfoPanel.add(personLabelName);
+		personLabelName.setHorizontalAlignment(SwingConstants.LEFT);
+		personLabelName.setForeground(textColor);
+		personLabelName.setFont(systemText);
 		
-		JLabel bookInfoTitleValue_1 = new JLabel("Value");
-		bookInfoTitleValue_1.setBounds(119, 11, 82, 33);
-		panel_2.add(bookInfoTitleValue_1);
-		bookInfoTitleValue_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoTitleValue_1.setForeground(Color.WHITE);
-		bookInfoTitleValue_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JLabel personValueName = new JLabel("Value");
+		personValueName.setBounds(119, 11, 82, 33);
+		personalInfoPanel.add(personValueName);
+		personValueName.setHorizontalAlignment(SwingConstants.LEFT);
+		personValueName.setForeground(textColorLight);
+		personValueName.setFont(info);
 		
-		JLabel bookInfoAuthorLabel_1 = new JLabel("Last Name:");
-		bookInfoAuthorLabel_1.setBounds(10, 55, 112, 33);
-		panel_2.add(bookInfoAuthorLabel_1);
-		bookInfoAuthorLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoAuthorLabel_1.setForeground(Color.LIGHT_GRAY);
-		bookInfoAuthorLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		JLabel personLabelLastName = new JLabel("Last Name:");
+		personLabelLastName.setBounds(10, 55, 112, 33);
+		personalInfoPanel.add(personLabelLastName);
+		personLabelLastName.setHorizontalAlignment(SwingConstants.LEFT);
+		personLabelLastName.setForeground(textColor);
+		personLabelLastName.setFont(systemText);
 		
-		JLabel bookInfoAuthorValue_1 = new JLabel("Value");
-		bookInfoAuthorValue_1.setBounds(119, 55, 82, 33);
-		panel_2.add(bookInfoAuthorValue_1);
-		bookInfoAuthorValue_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoAuthorValue_1.setForeground(Color.WHITE);
-		bookInfoAuthorValue_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		personValueLastName = new JLabel("Value");
+		personValueLastName.setBounds(119, 55, 82, 33);
+		personalInfoPanel.add(personValueLastName);
+		personValueLastName.setHorizontalAlignment(SwingConstants.LEFT);
+		personValueLastName.setForeground(textColorLight);
+		personValueLastName.setFont(info);
 		
-		JLabel bookInfoPublishDateLabel_1 = new JLabel("Email:");
-		bookInfoPublishDateLabel_1.setBounds(10, 99, 112, 33);
-		panel_2.add(bookInfoPublishDateLabel_1);
-		bookInfoPublishDateLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoPublishDateLabel_1.setForeground(Color.LIGHT_GRAY);
-		bookInfoPublishDateLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		JLabel personLabelEmail = new JLabel("Email:");
+		personLabelEmail.setBounds(10, 99, 112, 33);
+		personalInfoPanel.add(personLabelEmail);
+		personLabelEmail.setHorizontalAlignment(SwingConstants.LEFT);
+		personLabelEmail.setForeground(textColor);
+		personLabelEmail.setFont(systemText);
 		
-		JLabel bookInfoPublishDateValue_1 = new JLabel("Value");
-		bookInfoPublishDateValue_1.setBounds(119, 99, 82, 33);
-		panel_2.add(bookInfoPublishDateValue_1);
-		bookInfoPublishDateValue_1.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoPublishDateValue_1.setForeground(Color.WHITE);
-		bookInfoPublishDateValue_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		JLabel personValueEmail = new JLabel("Value");
+		personValueEmail.setBounds(119, 99, 82, 33);
+		personalInfoPanel.add(personValueEmail);
+		personValueEmail.setHorizontalAlignment(SwingConstants.LEFT);
+		personValueEmail.setForeground(textColorLight);
+		personValueEmail.setFont(info);
 		
 		JScrollPane takenBooksScroll = new JScrollPane();
 		takenBooksScroll.setBounds(122, 210, 320, 200);
-		panel_3.add(takenBooksScroll);
+		profilePanelMiddle.add(takenBooksScroll);
 		takenBooksScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		takenBooksScroll.setBorder(null);
 		JList<Book> takenBooksList = new JList<>(takenBooks);
@@ -681,50 +731,56 @@ public class Window {
 		
 		JButton btnReturnBook = new JButton("Return Book");
 		btnReturnBook.setBounds(218, 421, 127, 60);
-		panel_3.add(btnReturnBook);
-		btnReturnBook.setForeground(Color.WHITE);
-		btnReturnBook.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnReturnBook.setBorder(null);
-		btnReturnBook.setBackground(new Color(42, 42, 54));
+		profilePanelMiddle.add(btnReturnBook);
+		btnReturnBook.setForeground(buttonText);
+		btnReturnBook.setFont(systemText);
+		btnReturnBook.setBorder(bottomLine);
+		btnReturnBook.setBackground(backgroundColor);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 513, 545, 179);
-		panel_3.add(scrollPane_1);
+		JScrollPane preCommetsScrollPane = new JScrollPane();
+		preCommetsScrollPane.setBounds(10, 513, 545, 167);
+		preCommetsScrollPane.setBorder(bottomLine);
+		profilePanelMiddle.add(preCommetsScrollPane);
 		
 		DefaultListModel<String> takenBooksModel = new DefaultListModel<>();
 		JList<String> reviewList_1 = new JList<String>(takenBooksModel);
 		reviewList_1.setSelectionForeground(Color.WHITE);
-		reviewList_1.setSelectionBackground(Color.DARK_GRAY);
+		reviewList_1.setSelectionBackground(textColor);
 		reviewList_1.setForeground(Color.WHITE);
 		reviewList_1.setBackground(new Color(56, 56, 61));
-		scrollPane_1.setViewportView(reviewList_1);
+		reviewList_1.setCellRenderer(new CommentListRenderer());
+		preCommetsScrollPane.setViewportView(reviewList_1);
+		
+		takenBooksModel.addElement("A tensely written, shocking book that will hold readers on the edge of their seats to the very last page.");
+		takenBooksModel.addElement("Both compelling and addictive, The Favorite Daughter is a roller coaster of a ride that will have you twisting and turning.");
+		takenBooksModel.addElement("Will hit you right in the heart.");
 		
 		JLabel lblNewLabel = new JLabel("Personal Info:");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblNewLabel.setFont(systemText);
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBounds(122, 11, 320, 23);
-		panel_3.add(lblNewLabel);
+		profilePanelMiddle.add(lblNewLabel);
 		
-		JLabel lblTakenBooks = new JLabel("Taken Books:");
-		lblTakenBooks.setForeground(Color.WHITE);
-		lblTakenBooks.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblTakenBooks.setBounds(122, 187, 320, 23);
-		panel_3.add(lblTakenBooks);
+		JLabel infoTextTakenBooks = new JLabel("Taken Books:");
+		infoTextTakenBooks.setForeground(Color.WHITE);
+		infoTextTakenBooks.setFont(systemText);
+		infoTextTakenBooks.setBounds(122, 187, 320, 23);
+		profilePanelMiddle.add(infoTextTakenBooks);
 		
-		JLabel lblPreviousComments = new JLabel("Previous Comments:");
-		lblPreviousComments.setForeground(Color.WHITE);
-		lblPreviousComments.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblPreviousComments.setBounds(10, 481, 320, 23);
-		panel_3.add(lblPreviousComments);
-		takenBooks.addElement(new Book(3, "1984", original1));
-		takenBooks.addElement(new Book(3, "1985", original1));
-		takenBooks.addElement(new Book(3, "1986", original1));
-		takenBooks.addElement(new Book(3, "1987", original1));
-		takenBooks.addElement(new Book(3, "1988", original1));
-		takenBooks.addElement(new Book(3, "1989", original1));
-		takenBooks.addElement(new Book(3, "1990", original1));
-		takenBooks.addElement(new Book(3, "1991", original1));
-		takenBooks.addElement(new Book(3, "1992", original1));
+		JLabel infoTextPreComments = new JLabel("Previous Comments:");
+		infoTextPreComments.setForeground(Color.WHITE);
+		infoTextPreComments.setFont(systemText);
+		infoTextPreComments.setBounds(10, 481, 320, 23);
+		profilePanelMiddle.add(infoTextPreComments);
+		takenBooks.addElement(new Book(3, "1984", goodbye));
+		takenBooks.addElement(new Book(3, "1985", colorful));
+		takenBooks.addElement(new Book(3, "1986", murder));
+		takenBooks.addElement(new Book(3, "1987", umbrella));
+		takenBooks.addElement(new Book(3, "1988", kissing));
+		takenBooks.addElement(new Book(3, "1989", goodbye));
+		takenBooks.addElement(new Book(3, "1990", colorful));
+		takenBooks.addElement(new Book(3, "1991", murder));
+		takenBooks.addElement(new Book(3, "1992", umbrella));
 		
 		JPanel[] selectionList = {bookLoanSidemenuSelection, bookDonationSidemenuSelection, profileSidemenuSelection};
 		JPanel[] barList = {bookLoanSidemenuBar, bookDonationSidemenuBar, profileSidemenuBar};
@@ -815,7 +871,41 @@ class BookListRenderer extends DefaultListCellRenderer {
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
-        label.setBorder(new LineBorder(new Color(56, 56, 61), 4));
+        label.setBorder(new LineBorder(new Color(39, 43, 47), 4));
+        label.setFont(font);
+        label.setForeground(Color.white);
+        return label;
+    }
+}
+
+class CommentListRenderer extends DefaultListCellRenderer {
+	Color commentLine = new Color(253, 65, 60);
+	MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, (Color) commentLine);
+	//private Book book;
+	
+	/*public MarioListRenderer(Book book) {
+		this.book = book;
+	}*/
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	Font font = new Font("helvitica", Font.BOLD, 14);
+
+    @Override
+    public Component getListCellRendererComponent(
+            JList<?> list, Object value, int index,
+            boolean isSelected, boolean cellHasFocus) {
+
+        JLabel label = (JLabel) super.getListCellRendererComponent(
+                list, value, index, isSelected, cellHasFocus);
+        label.setText((String) value);
+        //label.setIcon(((Book) value).getBookCover());
+        label.setHorizontalTextPosition(JLabel.LEFT);
+        //label.setVerticalTextPosition(JLabel.BOTTOM);
+        //list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
+        label.setBorder(bottomLine);
         label.setFont(font);
         label.setForeground(Color.white);
         return label;
