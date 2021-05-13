@@ -34,6 +34,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JTextArea;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 public class Window {
 	
@@ -50,6 +51,8 @@ public class Window {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		javax.swing.UIManager.put("ScrollBar.thumb", new javax.swing.plaf.ColorUIResource(33,129,176));
+		javax.swing.UIManager.put("Button.foreground", new javax.swing.plaf.ColorUIResource(0,0,0));
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -203,7 +206,32 @@ public class Window {
 		bookSuggest.setBackground(elevation1);
 		bookSuggest.setSelectionBackground(sideBarSelectionColor);
 		bookSuggestionsScrollPanel.setViewportView(bookSuggest);
-		//bookSuggest.setCellRenderer(new BookRenderer());
+		bookSuggestionsScrollPanel.getHorizontalScrollBar().setBackground(backgroundColor);
+		/*bookSuggestionsScrollPanel.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
+		
+			protected JButton createDecreaseButton(int orientation) {
+	        	JButton button = super.createDecreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+
+	    	@Override
+	    	protected JButton createIncreaseButton(int orientation) {
+	        	JButton button = super.createIncreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+		
+			@Override
+			protected void configureScrollBarColors() {
+				this.thumbColor = textColor;
+				this.scrollBarWidth = 8;
+			}
+		});*/
 		
 		Image goodbye = new ImageIcon(getClass().getResource("/bookCovers/kopya.png")).getImage();
 		Image kissing = new ImageIcon(getClass().getResource("/bookCovers/kissingCouple.png")).getImage();
@@ -280,6 +308,32 @@ public class Window {
 		scrollPane.setBorder(bottomLine);
 		scrollPane.setBounds(0, 0, 545, 200);
 		bookReview.add(scrollPane);
+		scrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
+		/*scrollPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
+		
+			protected JButton createDecreaseButton(int orientation) {
+	        	JButton button = super.createDecreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+
+	    	@Override
+	    	protected JButton createIncreaseButton(int orientation) {
+	        	JButton button = super.createIncreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+		
+			@Override
+			protected void configureScrollBarColors() {
+				this.thumbColor = textColor;
+				this.scrollBarWidth = 8;
+			}
+		});*/
 		
 		DefaultListModel<String> reviewListModel = new DefaultListModel<>();
 		JList<String> reviewList = new JList<>(reviewListModel);
@@ -583,6 +637,32 @@ public class Window {
 		JList<String> librarySelectionList_1 = new JList<String>(librarySelectionForm);
 		librarySelectionList_1.setBackground(new Color(56, 56, 61));
 		libraryDonationScrollPanel.setViewportView(librarySelectionList_1);
+		libraryDonationScrollPanel.getVerticalScrollBar().setBackground(backgroundColor);
+		/*libraryDonationScrollPanel.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+		
+			protected JButton createDecreaseButton(int orientation) {
+	        	JButton button = super.createDecreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+
+	    	@Override
+	    	protected JButton createIncreaseButton(int orientation) {
+	        	JButton button = super.createIncreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+		
+			@Override
+			protected void configureScrollBarColors() {
+				this.thumbColor = textColor;
+				this.scrollBarWidth = 8;
+			}
+		});*/
 		
 		JLabel infoText = new JLabel("Choose a library from the below list:");
 		infoText.setBounds(413, 11, 303, 24);
@@ -756,6 +836,33 @@ public class Window {
 		profilePanelMiddle.add(takenBooksScroll);
 		takenBooksScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		takenBooksScroll.setBorder(null);
+		takenBooksScroll.getHorizontalScrollBar().setBackground(backgroundColor);
+		/*takenBooksScroll.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
+		
+			protected JButton createDecreaseButton(int orientation) {
+	        	JButton button = super.createDecreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+
+	    	@Override
+	    	protected JButton createIncreaseButton(int orientation) {
+	        	JButton button = super.createIncreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+		
+			@Override
+			protected void configureScrollBarColors() {
+				this.thumbColor = textColor;
+				this.scrollBarWidth = 8;
+			}
+		});*/
+		
 		JList<Book> takenBooksList = new JList<>(takenBooks);
 		takenBooksList.setSelectionBackground(sideBarSelectionColor);
 		takenBooksScroll.setViewportView(takenBooksList);
@@ -776,6 +883,32 @@ public class Window {
 		preCommetsScrollPane.setBounds(10, 513, 545, 167);
 		preCommetsScrollPane.setBorder(bottomLine);
 		profilePanelMiddle.add(preCommetsScrollPane);
+		preCommetsScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
+		/*preCommetsScrollPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
+		
+			protected JButton createDecreaseButton(int orientation) {
+	        	JButton button = super.createDecreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+
+	    	@Override
+	    	protected JButton createIncreaseButton(int orientation) {
+	        	JButton button = super.createIncreaseButton(orientation);
+	        	button.setBackground(buttonText);
+	        	button.setForeground(backgroundColor);
+	        	button.setBorder(null);
+	        	return button;
+	    	}
+		
+			@Override
+			protected void configureScrollBarColors() {
+				this.thumbColor = textColor;
+				this.scrollBarWidth = 8;
+			}
+		});*/
 		
 		DefaultListModel<String> takenBooksModel = new DefaultListModel<>();
 		JList<String> reviewList_1 = new JList<String>(takenBooksModel);
