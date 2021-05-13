@@ -34,7 +34,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JTextArea;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
-import javax.swing.border.BevelBorder;
 
 public class Window {
 	
@@ -497,13 +496,13 @@ public class Window {
 		textArea.setBounds(892, 516, 303, 151);
 		bookLoanPanel.add(textArea);
 		
-		JButton bookLoanButton_1 = new JButton("Comment");
-		bookLoanButton_1.setForeground(new Color(254, 188, 44));
-		bookLoanButton_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
-		bookLoanButton_1.setBorder(bottomLine);
-		bookLoanButton_1.setBackground(new Color(39, 43, 47));
-		bookLoanButton_1.setBounds(994, 672, 98, 44);
-		bookLoanPanel.add(bookLoanButton_1);
+		JButton commentButton = new JButton("Comment");
+		commentButton.setForeground(new Color(254, 188, 44));
+		commentButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		commentButton.setBorder(bottomLine);
+		commentButton.setBackground(new Color(39, 43, 47));
+		commentButton.setBounds(994, 672, 98, 44);
+		bookLoanPanel.add(commentButton);
 		frame.getContentPane().setLayout(null);
 		sideBarPanel.setLayout(null);
 		frame.getContentPane().add(sideBarPanel);
