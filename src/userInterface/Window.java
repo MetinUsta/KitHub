@@ -386,6 +386,34 @@ public class Window {
 		bookInfoISBNValue.setBounds(119, 231, 82, 33);
 		panel.add(bookInfoISBNValue);
 		
+		JLabel bookInfoGenresLabel = new JLabel("Genres:");
+		bookInfoGenresLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookInfoGenresLabel.setForeground(new Color(253, 65, 60));
+		bookInfoGenresLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		bookInfoGenresLabel.setBounds(10, 275, 82, 33);
+		panel.add(bookInfoGenresLabel);
+		
+		JLabel bookInfoGenresValue = new JLabel("Value");
+		bookInfoGenresValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoGenresValue.setForeground(Color.WHITE);
+		bookInfoGenresValue.setFont(new Font("Arial", Font.PLAIN, 15));
+		bookInfoGenresValue.setBounds(119, 275, 82, 33);
+		panel.add(bookInfoGenresValue);
+		
+		JLabel bookInfoPublisherLabel = new JLabel("Publisher:");
+		bookInfoPublisherLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookInfoPublisherLabel.setForeground(new Color(253, 65, 60));
+		bookInfoPublisherLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		bookInfoPublisherLabel.setBounds(10, 319, 99, 33);
+		panel.add(bookInfoPublisherLabel);
+		
+		JLabel bookInfoPublisherValue = new JLabel("Value");
+		bookInfoPublisherValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoPublisherValue.setForeground(Color.WHITE);
+		bookInfoPublisherValue.setFont(new Font("Arial", Font.PLAIN, 15));
+		bookInfoPublisherValue.setBounds(119, 319, 82, 33);
+		panel.add(bookInfoPublisherValue);
+		
 		JPanel libraryInfoPanel = new JPanel();
 		libraryInfoPanel.setBorder(bottomLine);
 		libraryInfoPanel.setBackground(elevation1);
@@ -466,8 +494,16 @@ public class Window {
 		textArea.setForeground(Color.WHITE);
 		textArea.setBorder(bottomLine);
 		textArea.setBackground(elevation1);
-		textArea.setBounds(892, 516, 303, 200);
+		textArea.setBounds(892, 516, 303, 151);
 		bookLoanPanel.add(textArea);
+		
+		JButton bookLoanButton_1 = new JButton("Comment");
+		bookLoanButton_1.setForeground(new Color(254, 188, 44));
+		bookLoanButton_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		bookLoanButton_1.setBorder(bottomLine);
+		bookLoanButton_1.setBackground(new Color(39, 43, 47));
+		bookLoanButton_1.setBounds(994, 672, 98, 44);
+		bookLoanPanel.add(bookLoanButton_1);
 		frame.getContentPane().setLayout(null);
 		sideBarPanel.setLayout(null);
 		frame.getContentPane().add(sideBarPanel);
