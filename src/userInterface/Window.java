@@ -516,7 +516,7 @@ public class Window {
 		bookLoanPanel.add(textArea);
 		
 		JButton commentButton = new JButton("Comment");
-		commentButton.setForeground(new Color(254, 188, 44));
+		commentButton.setForeground(buttonText);
 		commentButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
 		commentButton.setBorder(bottomLine);
 		commentButton.setBackground(new Color(39, 43, 47));
@@ -853,10 +853,7 @@ public class Window {
 		MouseAdapter select = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("Clicked");
-				System.out.println(e.getSource().toString());
 				if(e.getSource() == bookLoanSidemenuBar) {
-					System.out.println("deneme");
 					card.show(contentPanel, "bookLoan");
 					bookLoanSidemenuSelection.setBackground(sideBarSelectionColor);
 				}
@@ -869,9 +866,7 @@ public class Window {
 					profileSidemenuSelection.setBackground(sideBarSelectionColor);
 				}
 				for(int i = 0;i<3;i++) {
-					//System.out.println(selectionList[i]);
 					if(e.getSource() != barList[i]) {
-						System.out.println("Not equal" + selectionList[i]);
 						selectionList[i].setBackground(sideBarMenuColor);
 					}
 				}

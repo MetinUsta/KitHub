@@ -21,7 +21,7 @@ import javax.swing.SwingUtilities;
 public class LoginPage {
 
 	private JFrame frame;
-	private final JLabel lblNewLabel = new JLabel("");
+	private final JLabel sideBarIcon = new JLabel("");
 	private JTextField emailLoginInput;
 	private JTextField NameTextField;
 	private JTextField LastNameTextField;
@@ -78,9 +78,9 @@ public class LoginPage {
 		frame.getContentPane().setLayout(null);
 		
 		
-		lblNewLabel.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
-		lblNewLabel.setBounds(0, 0, 284, 500);
-		frame.getContentPane().add(lblNewLabel);
+		sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
+		sideBarIcon.setBounds(0, 0, 284, 500);
+		frame.getContentPane().add(sideBarIcon);
 		
 		
 		
@@ -97,19 +97,19 @@ public class LoginPage {
 		panel.add(signinPanel, "signinPanel");
 		signinPanel.setLayout(null);
 
-		JLabel lblNewLabel_1 = new JLabel("Sign in to myLibrary");
-		lblNewLabel_1.setBounds(94, 85, 328, 77);
-		signinPanel.add(lblNewLabel_1);
-		lblNewLabel_1.setForeground(new Color(6, 214, 160));
-		lblNewLabel_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 27));
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel infoTextSignIn = new JLabel("Sign in to myLibrary");
+		infoTextSignIn.setBounds(94, 85, 328, 77);
+		signinPanel.add(infoTextSignIn);
+		infoTextSignIn.setForeground(new Color(253, 65, 60));
+		infoTextSignIn.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 27));
+		infoTextSignIn.setHorizontalAlignment(SwingConstants.CENTER);
 
-		JLabel lblNewLabel_5 = new JLabel("Enter your details:");
-		lblNewLabel_5.setBounds(165, 152, 181, 43);
-		signinPanel.add(lblNewLabel_5);
-		lblNewLabel_5.setForeground(Color.WHITE);
-		lblNewLabel_5.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		JLabel infoTextDetails = new JLabel("Enter your details:");
+		infoTextDetails.setBounds(165, 152, 181, 43);
+		signinPanel.add(infoTextDetails);
+		infoTextDetails.setForeground(Color.WHITE);
+		infoTextDetails.setFont(new Font("Arial", Font.BOLD, 15));
+		infoTextDetails.setHorizontalAlignment(SwingConstants.CENTER);
 
 		emailLoginInput = new JTextField();
 		emailLoginInput.setBounds(137, 206, 249, 32);
@@ -119,22 +119,22 @@ public class LoginPage {
 		emailLoginInput.setForeground(Color.GRAY);
 		emailLoginInput.setColumns(10);
 
-		JLabel lblNewLabel_5_1 = new JLabel("Don't have an account?");
-		lblNewLabel_5_1.addMouseListener(new MouseAdapter() {
+		JLabel infoTextAccount = new JLabel("Don't have an account?");
+		infoTextAccount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				cards.show(panel, "signupPanel");
 			}
 		});
-		lblNewLabel_5_1.setBounds(137, 342, 249, 43);
-		signinPanel.add(lblNewLabel_5_1);
-		lblNewLabel_5_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_5_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5_1.setForeground(Color.WHITE);
-		lblNewLabel_5_1.setFont(new Font("Arial", Font.BOLD, 17));
+		infoTextAccount.setBounds(137, 342, 249, 43);
+		signinPanel.add(infoTextAccount);
+		infoTextAccount.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		infoTextAccount.setHorizontalAlignment(SwingConstants.CENTER);
+		infoTextAccount.setForeground(Color.WHITE);
+		infoTextAccount.setFont(new Font("Arial", Font.BOLD, 17));
 
-		JLabel lblNewLabel_7 = new JLabel("SIGN IN");
-		lblNewLabel_7.addMouseListener(new MouseAdapter() {
+		JLabel signInButton = new JLabel("SIGN IN");
+		signInButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(!verified){
@@ -145,14 +145,14 @@ public class LoginPage {
 				}
 			}
 		});
-		lblNewLabel_7.setBounds(174, 302, 172, 43);
-		signinPanel.add(lblNewLabel_7);
-		lblNewLabel_7.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_7.setForeground(new Color(255, 255, 255));
-		lblNewLabel_7.setFont(new Font("Arial", Font.BOLD, 24));
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7.setOpaque(true);
-		lblNewLabel_7.setBackground(new Color(6, 214, 160));
+		signInButton.setBounds(174, 302, 172, 43);
+		signinPanel.add(signInButton);
+		signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		signInButton.setForeground(new Color(255, 255, 255));
+		signInButton.setFont(new Font("Arial", Font.BOLD, 24));
+		signInButton.setHorizontalAlignment(SwingConstants.CENTER);
+		signInButton.setOpaque(true);
+		signInButton.setBackground(new Color(253, 65, 60));
 
 		passwordFieldLogin = new JPasswordField();
 		passwordFieldLogin.setBackground(new Color(244, 244, 244));
@@ -171,35 +171,35 @@ public class LoginPage {
 		@SuppressWarnings("unused")
 		TextPrompt passwordLoginPlaceholder = new TextPrompt("Password ", passwordFieldLogin);
 		
-		JLabel lblNewLabel_7_1_1 = new JLabel("");
-		lblNewLabel_7_1_1.addMouseListener(new MouseAdapter() {
+		JLabel iconifyButton = new JLabel("");
+		iconifyButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				frame.setState(JFrame.ICONIFIED);
 			}
 		});
-		lblNewLabel_7_1_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_7_1_1.setOpaque(true);
-		lblNewLabel_7_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1_1.setForeground(Color.WHITE);
-		lblNewLabel_7_1_1.setFont(new Font("Arial", Font.BOLD, 24));
-		lblNewLabel_7_1_1.setBackground(Color.WHITE);
-		lblNewLabel_7_1_1.setBounds(462, 25, 17, 6);
-		signinPanel.add(lblNewLabel_7_1_1);
+		iconifyButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		iconifyButton.setOpaque(true);
+		iconifyButton.setHorizontalAlignment(SwingConstants.CENTER);
+		iconifyButton.setForeground(Color.WHITE);
+		iconifyButton.setFont(new Font("Arial", Font.BOLD, 24));
+		iconifyButton.setBackground(Color.WHITE);
+		iconifyButton.setBounds(462, 25, 17, 6);
+		signinPanel.add(iconifyButton);
 		
-		JLabel lblNewLabel_8_1 = new JLabel("X");
-		lblNewLabel_8_1.addMouseListener(new MouseAdapter() {
+		JLabel closeButton = new JLabel("X");
+		closeButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
 			}
 		});
-		lblNewLabel_8_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_8_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8_1.setForeground(Color.WHITE);
-		lblNewLabel_8_1.setFont(new Font("Arial", Font.BOLD, 23));
-		lblNewLabel_8_1.setBounds(485, 11, 22, 27);
-		signinPanel.add(lblNewLabel_8_1);
+		closeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		closeButton.setHorizontalAlignment(SwingConstants.CENTER);
+		closeButton.setForeground(Color.WHITE);
+		closeButton.setFont(new Font("Arial", Font.BOLD, 23));
+		closeButton.setBounds(485, 11, 22, 27);
+		signinPanel.add(closeButton);
 		
 		JPanel colorOptionsPanel = new JPanel();
 		colorOptionsPanel.setLayout(null);
@@ -214,6 +214,7 @@ public class LoginPage {
 		ImageIcon yesilsari = scaleColorOption("/SystemAssets/ColorOptions/yesilsari.png");
 		
 		JLabel turuncusariIcon = new JLabel("");
+		turuncusariIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		turuncusariIcon.setIcon(turuncusari);
 		turuncusariIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		turuncusariIcon.setBounds(10, 11, 60, 41);
@@ -247,27 +248,55 @@ public class LoginPage {
 		turuncumaviIcon.setBounds(290, 11, 60, 41);
 		colorOptionsPanel.add(turuncumaviIcon);
 		
+		JLabel infoTextSignUp = new JLabel("Sign up to myLibrary");
+		JLabel signUpButton = new JLabel("SIGN UP");
+		
 		MouseAdapter colorChooser = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(e.getSource() == turkuazsomonIcon) {
-					System.out.println("test");
+					infoTextSignIn.setForeground(new Color(54, 199, 208));
+					signInButton.setBackground(new Color(54, 199, 208));
+					infoTextSignUp.setForeground(new Color(54, 199, 208));
+					signUpButton.setBackground(new Color(54, 199, 208));
+					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridCyan.png")));
 					setTextColor(54, 199, 208);
 					setButtonText(255, 164, 142);
+					
 				}
 				if(e.getSource() == yesilsariIcon) {
+					infoTextSignIn.setForeground(new Color(63, 139, 76));
+					signInButton.setBackground(new Color(63, 139, 76));
+					infoTextSignUp.setForeground(new Color(63, 139, 76));
+					signUpButton.setBackground(new Color(63, 139, 76));
+					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridGreen.png")));
 					setTextColor(63, 139, 76);
 					setButtonText(198, 192, 19);
 				}
 				if(e.getSource() == moryesilIcon) {
+					infoTextSignIn.setForeground(new Color(187, 134, 252));
+					signInButton.setBackground(new Color(187, 134, 252));
+					infoTextSignUp.setForeground(new Color(187, 134, 252));
+					signUpButton.setBackground(new Color(187, 134, 252));
+					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridPurple.png")));
 					setTextColor(187, 134, 252);
 					setButtonText(3, 218, 196);
 				}
 				if(e.getSource() == turuncumaviIcon) {
+					infoTextSignIn.setForeground(new Color(253, 65, 60));
+					signInButton.setBackground(new Color(253, 65, 60));
+					infoTextSignUp.setForeground(new Color(253, 65, 60));
+					signUpButton.setBackground(new Color(253, 65, 60));
+					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
 					setTextColor(253, 65, 60);
 					setButtonText(2, 129, 255);
 				}
 				if(e.getSource() == turuncusariIcon) {
+					infoTextSignIn.setForeground(new Color(253, 65, 60));
+					signInButton.setBackground(new Color(253, 65, 60));
+					infoTextSignUp.setForeground(new Color(253, 65, 60));
+					signUpButton.setBackground(new Color(253, 65, 60));
+					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
 					setTextColor(253, 65, 60);
 					setButtonText(254, 188, 44);
 				}
@@ -301,14 +330,14 @@ public class LoginPage {
 		passwordField.setBounds(122, 307, 217, 33);
 		signupPanel.add(passwordField);
 
-		JLabel lblNewLabel_7_2 = new JLabel("SIGN UP");
-		lblNewLabel_7_2.setOpaque(true);
-		lblNewLabel_7_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_2.setForeground(Color.WHITE);
-		lblNewLabel_7_2.setFont(new Font("Arial", Font.BOLD, 24));
-		lblNewLabel_7_2.setBackground(new Color(6, 214, 160));
-		lblNewLabel_7_2.setBounds(146, 351, 172, 43);
-		signupPanel.add(lblNewLabel_7_2);
+		
+		signUpButton.setOpaque(true);
+		signUpButton.setHorizontalAlignment(SwingConstants.CENTER);
+		signUpButton.setForeground(Color.WHITE);
+		signUpButton.setFont(new Font("Arial", Font.BOLD, 24));
+		signUpButton.setBackground(new Color(6, 214, 160));
+		signUpButton.setBounds(146, 351, 172, 43);
+		signupPanel.add(signUpButton);
 		
 		
 		
@@ -329,63 +358,63 @@ public class LoginPage {
 		@SuppressWarnings("unused")
 		TextPrompt passwordPlaceholder = new TextPrompt("Password ", passwordField);
 
-		JLabel lblNewLabel_1_1 = new JLabel("Sign up to myLibrary");
-		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_1.setForeground(new Color(6, 214, 160));
-		lblNewLabel_1_1.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 27));
-		lblNewLabel_1_1.setBounds(66, 66, 328, 77);
-		signupPanel.add(lblNewLabel_1_1);
+		
+		infoTextSignUp.setHorizontalAlignment(SwingConstants.CENTER);
+		infoTextSignUp.setForeground(new Color(6, 214, 160));
+		infoTextSignUp.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 27));
+		infoTextSignUp.setBounds(66, 66, 328, 77);
+		signupPanel.add(infoTextSignUp);
 
-		JLabel lblNewLabel_5_2 = new JLabel("Enter your details:");
-		lblNewLabel_5_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5_2.setForeground(Color.WHITE);
-		lblNewLabel_5_2.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel_5_2.setBounds(140, 125, 181, 43);
-		signupPanel.add(lblNewLabel_5_2);
+		JLabel infoTextNewDetails = new JLabel("Enter your details:");
+		infoTextNewDetails.setHorizontalAlignment(SwingConstants.CENTER);
+		infoTextNewDetails.setForeground(Color.WHITE);
+		infoTextNewDetails.setFont(new Font("Arial", Font.BOLD, 15));
+		infoTextNewDetails.setBounds(140, 125, 181, 43);
+		signupPanel.add(infoTextNewDetails);
 
-		JLabel lblNewLabel_5_1_1 = new JLabel("Sign in instead");
-		lblNewLabel_5_1_1.addMouseListener(new MouseAdapter() {
+		JLabel returnButton = new JLabel("Sign in instead");
+		returnButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				cards.show(panel, "signinPanel");
 			}
 		});
-		lblNewLabel_5_1_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_5_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_5_1_1.setForeground(Color.WHITE);
-		lblNewLabel_5_1_1.setFont(new Font("Arial", Font.BOLD, 17));
-		lblNewLabel_5_1_1.setBounds(350, 446, 157, 43);
-		signupPanel.add(lblNewLabel_5_1_1);
+		returnButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		returnButton.setHorizontalAlignment(SwingConstants.CENTER);
+		returnButton.setForeground(Color.WHITE);
+		returnButton.setFont(new Font("Arial", Font.BOLD, 17));
+		returnButton.setBounds(350, 446, 157, 43);
+		signupPanel.add(returnButton);
 		
-		JLabel lblNewLabel_7_1_1_1 = new JLabel("");
-		lblNewLabel_7_1_1_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_7_1_1_1.addMouseListener(new MouseAdapter() {
+		JLabel iconifyButtonSignUp = new JLabel("");
+		iconifyButtonSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		iconifyButtonSignUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				frame.setState(JFrame.ICONIFIED);
 			}
 		});
-		lblNewLabel_7_1_1_1.setOpaque(true);
-		lblNewLabel_7_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_7_1_1_1.setForeground(Color.WHITE);
-		lblNewLabel_7_1_1_1.setFont(new Font("Arial", Font.BOLD, 24));
-		lblNewLabel_7_1_1_1.setBackground(Color.WHITE);
-		lblNewLabel_7_1_1_1.setBounds(462, 25, 17, 6);
-		signupPanel.add(lblNewLabel_7_1_1_1);
+		iconifyButtonSignUp.setOpaque(true);
+		iconifyButtonSignUp.setHorizontalAlignment(SwingConstants.CENTER);
+		iconifyButtonSignUp.setForeground(Color.WHITE);
+		iconifyButtonSignUp.setFont(new Font("Arial", Font.BOLD, 24));
+		iconifyButtonSignUp.setBackground(Color.WHITE);
+		iconifyButtonSignUp.setBounds(462, 25, 17, 6);
+		signupPanel.add(iconifyButtonSignUp);
 		
-		JLabel lblNewLabel_8_1_1 = new JLabel("X");
-		lblNewLabel_8_1_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		lblNewLabel_8_1_1.addMouseListener(new MouseAdapter() {
+		JLabel closeButtonSignUp = new JLabel("X");
+		closeButtonSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		closeButtonSignUp.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.exit(0);
 			}
 		});
-		lblNewLabel_8_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_8_1_1.setForeground(Color.WHITE);
-		lblNewLabel_8_1_1.setFont(new Font("Arial", Font.BOLD, 23));
-		lblNewLabel_8_1_1.setBounds(485, 11, 22, 27);
-		signupPanel.add(lblNewLabel_8_1_1);
+		closeButtonSignUp.setHorizontalAlignment(SwingConstants.CENTER);
+		closeButtonSignUp.setForeground(Color.WHITE);
+		closeButtonSignUp.setFont(new Font("Arial", Font.BOLD, 23));
+		closeButtonSignUp.setBounds(485, 11, 22, 27);
+		signupPanel.add(closeButtonSignUp);
 		
 		
 
