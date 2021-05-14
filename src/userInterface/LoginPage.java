@@ -249,7 +249,9 @@ public class LoginPage {
 		colorOptionsPanel.add(turuncumaviIcon);
 		
 		JLabel infoTextSignUp = new JLabel("Sign up to myLibrary");
+		infoTextSignUp.setForeground(textColor);
 		JLabel signUpButton = new JLabel("SIGN UP");
+		signUpButton.setBackground(textColor);
 		
 		MouseAdapter colorChooser = new MouseAdapter() {
 			@Override
@@ -335,7 +337,7 @@ public class LoginPage {
 		signUpButton.setHorizontalAlignment(SwingConstants.CENTER);
 		signUpButton.setForeground(Color.WHITE);
 		signUpButton.setFont(new Font("Arial", Font.BOLD, 24));
-		signUpButton.setBackground(new Color(6, 214, 160));
+		//signUpButton.setBackground(new Color(6, 214, 160));
 		signUpButton.setBounds(146, 351, 172, 43);
 		signupPanel.add(signUpButton);
 		
@@ -360,7 +362,7 @@ public class LoginPage {
 
 		
 		infoTextSignUp.setHorizontalAlignment(SwingConstants.CENTER);
-		infoTextSignUp.setForeground(new Color(6, 214, 160));
+		//infoTextSignUp.setForeground(new Color(6, 214, 160));
 		infoTextSignUp.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 27));
 		infoTextSignUp.setBounds(66, 66, 328, 77);
 		signupPanel.add(infoTextSignUp);
