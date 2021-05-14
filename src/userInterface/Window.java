@@ -1,7 +1,6 @@
 package userInterface;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -26,7 +25,6 @@ import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 
 import java.awt.Font;
 import javax.swing.border.LineBorder;
@@ -37,8 +35,6 @@ import javax.swing.JTextArea;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
-
-import java.util.concurrent.TimeUnit;
 
 public class Window {
 	
@@ -142,6 +138,8 @@ public class Window {
 		CardLayout card = new CardLayout(0, 0);
 		contentPanel.setLayout(card);
 		
+		
+		
 
 		JPanel bookLoanPanel = new JPanel();
 		bookLoanPanel.setBackground(backgroundColor);
@@ -149,6 +147,10 @@ public class Window {
 		
 		JPanel bookDonationPanel = new JPanel();
 		contentPanel.add(bookDonationPanel, "bookDonation");
+		
+		JPanel mainPagePanel = new JPanel();
+		contentPanel.add(mainPagePanel, "mainPage");
+		card.show(contentPanel, "mainPage");
 		//a.show(contentPanel, "name_180929098874800");
 		//contentPanel.show(true);
 		//bookLoanPanel.setVisible(false);
@@ -529,7 +531,7 @@ public class Window {
 		JPanel bookLoanSidemenuBar = new JPanel();
 		bookLoanSidemenuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bookLoanSidemenuBar.setBackground(sideBarMenuColor);
-		bookLoanSidemenuBar.setBounds(16, 158, 125, 89);
+		bookLoanSidemenuBar.setBounds(16, 214, 125, 89);
 		sideBarPanel.add(bookLoanSidemenuBar);
 		bookLoanSidemenuBar.setLayout(null);
 		
@@ -543,7 +545,7 @@ public class Window {
 		bookDonationSidemenuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		bookDonationSidemenuBar.setLayout(null);
 		bookDonationSidemenuBar.setBackground(sideBarMenuColor);
-		bookDonationSidemenuBar.setBounds(16, 258, 125, 89);
+		bookDonationSidemenuBar.setBounds(16, 314, 125, 89);
 		sideBarPanel.add(bookDonationSidemenuBar);
 		
 		JLabel bookDonationSidemenuLabel = new JLabel("");
@@ -556,7 +558,7 @@ public class Window {
 		profileSidemenuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		profileSidemenuBar.setLayout(null);
 		profileSidemenuBar.setBackground(sideBarMenuColor);
-		profileSidemenuBar.setBounds(16, 626, 125, 89);
+		profileSidemenuBar.setBounds(16, 613, 125, 89);
 		sideBarPanel.add(profileSidemenuBar);
 		
 		JLabel profileSidemenuLabel = new JLabel("");
@@ -566,19 +568,37 @@ public class Window {
 		profileSidemenuBar.add(profileSidemenuLabel);
 		
 		JPanel bookLoanSidemenuSelection = new JPanel();
-		bookLoanSidemenuSelection.setBackground(sideBarSelectionColor);
-		bookLoanSidemenuSelection.setBounds(0, 158, 16, 89);
+		bookLoanSidemenuSelection.setBackground(sideBarMenuColor);
+		bookLoanSidemenuSelection.setBounds(0, 214, 16, 89);
 		sideBarPanel.add(bookLoanSidemenuSelection);
 		
 		JPanel bookDonationSidemenuSelection = new JPanel();
 		bookDonationSidemenuSelection.setBackground(sideBarMenuColor);
-		bookDonationSidemenuSelection.setBounds(0, 258, 16, 89);
+		bookDonationSidemenuSelection.setBounds(0, 314, 16, 89);
 		sideBarPanel.add(bookDonationSidemenuSelection);
 		
 		JPanel profileSidemenuSelection = new JPanel();
 		profileSidemenuSelection.setBackground(sideBarMenuColor);
-		profileSidemenuSelection.setBounds(0, 626, 16, 89);
+		profileSidemenuSelection.setBounds(0, 613, 16, 89);
 		sideBarPanel.add(profileSidemenuSelection);
+		
+		JPanel mainPageSidemenuBar = new JPanel();
+		mainPageSidemenuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mainPageSidemenuBar.setLayout(null);
+		mainPageSidemenuBar.setBackground(new Color(33, 37, 41));
+		mainPageSidemenuBar.setBounds(16, 114, 125, 89);
+		sideBarPanel.add(mainPageSidemenuBar);
+		
+		JLabel mainPageSidemenuLabel = new JLabel("");
+		mainPageSidemenuLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		mainPageSidemenuLabel.setBounds(33, 11, 64, 64);
+		mainPageSidemenuLabel.setIcon(new ImageIcon(Window.class.getResource("/SystemAssets/Icons/mainPageIcon.png")));
+		mainPageSidemenuBar.add(mainPageSidemenuLabel);
+		
+		JPanel mainPageSidemenuSelection = new JPanel();
+		mainPageSidemenuSelection.setBackground(sideBarSelectionColor);
+		mainPageSidemenuSelection.setBounds(0, 114, 16, 89);
+		sideBarPanel.add(mainPageSidemenuSelection);
 		frame.getContentPane().add(contentPanel);
 		
 		
@@ -837,6 +857,82 @@ public class Window {
 		infoTextPreComments.setBounds(10, 481, 320, 23);
 		profilePanelMiddle.add(infoTextPreComments);
 		
+		
+		mainPagePanel.setBackground(backgroundColor);
+		mainPagePanel.setLayout(null);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(buttonText);
+		panel_1.setBounds(0, 536, 1220, 165);
+		mainPagePanel.add(panel_1);
+		panel_1.setLayout(null);
+		
+		JLabel openQuoteLabel = new JLabel("");
+		openQuoteLabel.setOpaque(true);
+		openQuoteLabel.setBackground(buttonText);
+		openQuoteLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		openQuoteLabel.setIcon(new ImageIcon(Window.class.getResource("/SystemAssets/quoteIcon/colorlessQuoteOpen.png")));
+		openQuoteLabel.setBounds(47, 28, 49, 32);
+		panel_1.add(openQuoteLabel);
+		
+		JLabel closeQuoteLabel = new JLabel("");
+		closeQuoteLabel.setIcon(new ImageIcon(Window.class.getResource("/SystemAssets/quoteIcon/colorlessQuoteClose.png")));
+		closeQuoteLabel.setOpaque(true);
+		closeQuoteLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		closeQuoteLabel.setBackground(buttonText);
+		closeQuoteLabel.setBounds(1117, 112, 49, 32);
+		panel_1.add(closeQuoteLabel);
+		
+		JLabel quoteLabel = new JLabel("The two most important days in your life are the day you are born and the day you find out why");
+		quoteLabel.setForeground(Color.WHITE);
+		quoteLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 24));
+		quoteLabel.setBounds(54, 64, 1112, 42);
+		panel_1.add(quoteLabel);
+		
+		JLabel quoteBackgroundLabel = new JLabel("");
+		quoteBackgroundLabel.setBorder(new MatteBorder(4, 4, 4, 4, (Color) new Color(255, 255, 255)));
+		quoteBackgroundLabel.setOpaque(true);
+		quoteBackgroundLabel.setBackground(buttonText);
+		quoteBackgroundLabel.setIcon(null);
+		quoteBackgroundLabel.setBounds(35, 40, 1150, 90);
+		panel_1.add(quoteBackgroundLabel);
+		
+		JLabel infoTextOldBooks = new JLabel("Books you have read so far:");
+		infoTextOldBooks.setFont(systemText);
+		infoTextOldBooks.setForeground(Color.WHITE);
+		infoTextOldBooks.setBounds(10, 116, 232, 49);
+		mainPagePanel.add(infoTextOldBooks);
+		
+		JScrollPane oldBooksScrollPane = new JScrollPane();
+		oldBooksScrollPane.setBorder(null);
+		oldBooksScrollPane.setBounds(10, 163, 1176, 362);
+		mainPagePanel.add(oldBooksScrollPane);
+		
+		DefaultListModel<oldBook> oldBooksListModel = new DefaultListModel<>();
+		JList<oldBook> oldBooksList = new JList<>(oldBooksListModel);
+		oldBooksList.setSelectionBackground(textColor);
+		oldBooksList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		oldBooksList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		oldBooksList.setVisibleRowCount(1);
+		oldBooksList.setBackground(backgroundColor);
+		oldBooksScrollPane.setViewportView(oldBooksList);
+		oldBooksList.setCellRenderer(new oldBooksListRenderer());
+		oldBooksScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
+		ScrollBarColor scrollBaroldBooks = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		oldBooksScrollPane.getHorizontalScrollBar().setUI(scrollBaroldBooks);
+		
+		oldBooksListModel.addElement(new oldBook(3, "1984", goodbye));
+		oldBooksListModel.addElement(new oldBook(3, "1985", colorful));
+		oldBooksListModel.addElement(new oldBook(3, "1986", murder));
+		oldBooksListModel.addElement(new oldBook(3, "1987", umbrella));
+		oldBooksListModel.addElement(new oldBook(3, "1988", kissing));
+		oldBooksListModel.addElement(new oldBook(3, "1989", goodbye));
+		oldBooksListModel.addElement(new oldBook(3, "1990", colorful));
+		oldBooksListModel.addElement(new oldBook(3, "1991", murder));
+		oldBooksListModel.addElement(new oldBook(3, "1992", umbrella));
+		
+		
+
 		takenBooks.addElement(new Book(3, "1984", goodbye));
 		takenBooks.addElement(new Book(3, "1985", colorful));
 		takenBooks.addElement(new Book(3, "1986", murder));
@@ -847,12 +943,16 @@ public class Window {
 		takenBooks.addElement(new Book(3, "1991", murder));
 		takenBooks.addElement(new Book(3, "1992", umbrella));
 		
-		JPanel[] selectionList = {bookLoanSidemenuSelection, bookDonationSidemenuSelection, profileSidemenuSelection};
-		JPanel[] barList = {bookLoanSidemenuBar, bookDonationSidemenuBar, profileSidemenuBar};
+		JPanel[] selectionList = {mainPageSidemenuSelection, bookLoanSidemenuSelection, bookDonationSidemenuSelection, profileSidemenuSelection};
+		JPanel[] barList = {mainPageSidemenuBar, bookLoanSidemenuBar, bookDonationSidemenuBar, profileSidemenuBar};
 		
 		MouseAdapter select = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(e.getSource() == mainPageSidemenuBar) {
+					card.show(contentPanel, "mainPage");
+					mainPageSidemenuSelection.setBackground(sideBarSelectionColor);
+				}
 				if(e.getSource() == bookLoanSidemenuBar) {
 					card.show(contentPanel, "bookLoan");
 					bookLoanSidemenuSelection.setBackground(sideBarSelectionColor);
@@ -865,13 +965,14 @@ public class Window {
 					card.show(contentPanel, "profile");
 					profileSidemenuSelection.setBackground(sideBarSelectionColor);
 				}
-				for(int i = 0;i<3;i++) {
+				for(int i = 0;i<4;i++) {
 					if(e.getSource() != barList[i]) {
 						selectionList[i].setBackground(sideBarMenuColor);
 					}
 				}
 			}
 		};
+		mainPageSidemenuBar.addMouseListener(select);
 		bookLoanSidemenuBar.addMouseListener(select);
 		bookDonationSidemenuBar.addMouseListener(select);
 		profileSidemenuBar.addMouseListener(select);
@@ -960,6 +1061,66 @@ class BookListRenderer extends DefaultListCellRenderer {
                 list, value, index, isSelected, cellHasFocus);
         label.setText(((Book) value).getBookName());
         label.setIcon(((Book) value).getBookCover());
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
+        list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
+        label.setBorder(new LineBorder(new Color(39, 43, 47), 4));
+        label.setFont(font);
+        label.setForeground(Color.white);
+        return label;
+    }
+}
+
+class oldBook{
+	private int bookId;
+	private String bookName;
+	private ImageIcon bookCover;
+	
+	public oldBook(int bookId, String bookName, Image original) {
+		this.bookId = bookId;
+		this.bookName = bookName;
+		//Image original = new ImageIcon(getClass().getResource(path)).getImage();
+		Image dimg = original.getScaledInstance((int) (310*0.62), 310, Image.SCALE_SMOOTH);
+		//this.bookCover = new ImageIcon(getClass().getResource(path));
+		this.bookCover = new ImageIcon(dimg);
+	}
+
+	public int getBookId() {
+		return bookId;
+	}
+
+	public String getBookName() {
+		return bookName;
+	}
+
+	public ImageIcon getBookCover() {
+		return bookCover;
+	}
+	
+}
+
+class oldBooksListRenderer extends DefaultListCellRenderer {
+	//private Book book;
+	
+	/*public MarioListRenderer(Book book) {
+		this.book = book;
+	}*/
+	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	Font font = new Font("helvitica", Font.BOLD, 14);
+
+    @Override
+    public Component getListCellRendererComponent(
+            JList<?> list, Object value, int index,
+            boolean isSelected, boolean cellHasFocus) {
+
+        JLabel label = (JLabel) super.getListCellRendererComponent(
+                list, value, index, isSelected, cellHasFocus);
+        label.setText(((oldBook) value).getBookName());
+        label.setIcon(((oldBook) value).getBookCover());
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;

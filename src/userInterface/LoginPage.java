@@ -40,7 +40,7 @@ public class LoginPage {
 			public void run() {
 				try {
 					LoginPage window = new LoginPage();
-					//window.frame.setVisible(true);
+					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
