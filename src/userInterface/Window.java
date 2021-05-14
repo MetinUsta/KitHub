@@ -26,6 +26,8 @@ import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
 import java.awt.Font;
 import javax.swing.border.LineBorder;
 
@@ -35,6 +37,8 @@ import javax.swing.JTextArea;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+
+import java.util.concurrent.TimeUnit;
 
 public class Window {
 	
@@ -47,61 +51,68 @@ public class Window {
 	private JTextField donateFieldPublisher;
 	private JTextField donateFieldPublishDate;
 	private JLabel personValueLastName;
+	private Color sideBarColor = new Color(39, 43, 47);
+	private Color sideBarMenuColor = new Color(33, 37, 41);
+	
+	private Color componentBorderColor = new Color(34, 38, 41);
+	private Color elevation1 = new Color(39, 43, 47);
+	private Color backgroundColor = new Color(33, 37, 41);
+	private Color textColor = new Color(54, 199, 208);
+	//private static Color textColor = new Color(253, 65, 60);
+	private Color sideBarSelectionColor = textColor;
+	private Color textColorLight = new Color(255, 255, 255);
+	private Color buttonText = new Color(255, 164, 142);
+	//private static Color buttonText = new Color(254, 188, 44);
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		javax.swing.UIManager.put("ScrollBar.thumb", new javax.swing.plaf.ColorUIResource(33,129,176));
-		javax.swing.UIManager.put("Button.foreground", new javax.swing.plaf.ColorUIResource(0,0,0));
-		EventQueue.invokeLater(new Runnable() {
+	/*public static void main(String[] args) {
+		//javax.swing.UIManager.put("ScrollBar.thumb", new javax.swing.plaf.ColorUIResource(33,129,176));
+		//javax.swing.UIManager.put("Button.foreground", new javax.swing.plaf.ColorUIResource(0,0,0));
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				createAndShowGui();
 				try {
 					LoginPage loginPage = new LoginPage();
 					loginPage.getFrame().setVisible(true);
+					
+					boolean flag = true;
+					while(flag) {
+						flag = loginPage.isVerified();
+					}
 					Window window = new Window();
 					window.frame.setVisible(true);
+					createAndShowGui();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	}*/
+	
+	/*private static void createAndShowGui() {
+		  LoginPage loginPage = new LoginPage();
+		  Window window = new Window();
+		  window.frame.setVisible(false);
+		  loginPage.getFrame().setVisible(true);
 
+	      if (loginPage.isVerified()) {
+	    	  
+	    	  window.frame.setVisible(true);
+	      }
+	}*/
 	/**
 	 * Create the application.
 	 */
-	public Window() {
+	public Window(Color textColor, Color buttonText) {
+		this.textColor = textColor;
+		this.buttonText = buttonText;
+		this.sideBarSelectionColor = textColor;
 		//login();
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
-		/*Color sideBarColor = new Color(22, 22, 24);
-		Color sideBarMenuColor = new Color(49, 49, 53);
-		Color sideBarSelectionColor = new Color(8, 168, 144);
-		Color componentBorderColor = new Color(95, 95, 100);
-		Color elevation1 = new Color(56, 56, 61);
-		Color backgroundColor = new Color(37, 37, 43);*/
-		
-		/*Color sideBarColor = new Color(27, 38, 44);
-		Color sideBarMenuColor = new Color(19, 59, 92);
-		Color sideBarSelectionColor = new Color(247, 164, 0);
-		Color componentBorderColor = new Color(58, 158, 253);
-		Color elevation1 = new Color(47, 59, 82);
-		Color backgroundColor = new Color(37, 46, 66);*/
-		
-		Color sideBarColor = new Color(39, 43, 47);
-		Color sideBarMenuColor = new Color(33, 37, 41);
-		Color sideBarSelectionColor = new Color(253, 65, 60);
-		Color componentBorderColor = new Color(34, 38, 41);
-		Color elevation1 = new Color(39, 43, 47);
-		Color backgroundColor = new Color(33, 37, 41);
-		Color textColor = new Color(253, 65, 60);
-		Color textColorLight = new Color(255, 255, 255);
-		Color buttonText = new Color(254, 188, 44);
 		Font systemText = new Font("Arial Rounded MT Bold", Font.PLAIN, 17);
 		Font info = new Font("Arial", Font.PLAIN, 15);
 		
@@ -116,6 +127,11 @@ public class Window {
 		frame.setLocation(screenSize.width/2 - 1366/2, screenSize.height/2 - 768/2);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
+		
+		Image icon = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/icon.png")).getImage();
+		frame.setIconImage(icon);
+		frame.setTitle("Test");
+		//frame.setIconImage(null);
 		
 		JPanel sideBarPanel = new JPanel();
 		sideBarPanel.setBounds(0, 0, 141, 739);
@@ -204,34 +220,11 @@ public class Window {
 		bookSuggest.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		bookSuggest.setBorder(new LineBorder(componentBorderColor, 2));
 		bookSuggest.setBackground(elevation1);
-		bookSuggest.setSelectionBackground(sideBarSelectionColor);
+		bookSuggest.setSelectionBackground(textColor);
 		bookSuggestionsScrollPanel.setViewportView(bookSuggest);
 		bookSuggestionsScrollPanel.getHorizontalScrollBar().setBackground(backgroundColor);
-		/*bookSuggestionsScrollPanel.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
-		
-			protected JButton createDecreaseButton(int orientation) {
-	        	JButton button = super.createDecreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-
-	    	@Override
-	    	protected JButton createIncreaseButton(int orientation) {
-	        	JButton button = super.createIncreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-		
-			@Override
-			protected void configureScrollBarColors() {
-				this.thumbColor = textColor;
-				this.scrollBarWidth = 8;
-			}
-		});*/
+		ScrollBarColor scrollBarBookSuggest = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		bookSuggestionsScrollPanel.getHorizontalScrollBar().setUI(scrollBarBookSuggest);
 		
 		Image goodbye = new ImageIcon(getClass().getResource("/bookCovers/kopya.png")).getImage();
 		Image kissing = new ImageIcon(getClass().getResource("/bookCovers/kissingCouple.png")).getImage();
@@ -245,12 +238,6 @@ public class Window {
 		bookSuggestList.addElement(new Book(1, "Lily", colorful));
 		
 		bookSuggest.setCellRenderer(new BookListRenderer());
-		/*bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
-		bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
-		bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
-		bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
-		bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));
-		bookSuggestList.addElement(new Book(2, "1984", "/AppIcons/kissingCouple.png"));*/
 		
 		bookListScrollPane.setViewportView(list);
 		bookLoanPanel.setLayout(null);
@@ -261,7 +248,8 @@ public class Window {
 		bookLoanPanel.add(bookCoverPanel);
 		
 		JPanel overviewShadingPanel = new JPanel();
-		overviewShadingPanel.setBorder(bottomLine);
+		MatteBorder bottomLineCover = new MatteBorder(2, 2, 2, 2, (Color) buttonText);
+		overviewShadingPanel.setBorder(bottomLineCover);
 		JButton overviewHoverButton = new JButton("");
 		overviewHoverButton.setBorder(bottomLine);
 		overviewHoverButton.addMouseListener(new MouseAdapter() {
@@ -309,31 +297,8 @@ public class Window {
 		scrollPane.setBounds(0, 0, 545, 200);
 		bookReview.add(scrollPane);
 		scrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
-		/*scrollPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
-		
-			protected JButton createDecreaseButton(int orientation) {
-	        	JButton button = super.createDecreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-
-	    	@Override
-	    	protected JButton createIncreaseButton(int orientation) {
-	        	JButton button = super.createIncreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-		
-			@Override
-			protected void configureScrollBarColors() {
-				this.thumbColor = textColor;
-				this.scrollBarWidth = 8;
-			}
-		});*/
+		ScrollBarColor scrollBarComments = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		scrollPane.getHorizontalScrollBar().setUI(scrollBarComments);
 		
 		DefaultListModel<String> reviewListModel = new DefaultListModel<>();
 		JList<String> reviewList = new JList<>(reviewListModel);
@@ -343,7 +308,7 @@ public class Window {
 		reviewList.setForeground(Color.WHITE);
 		reviewList.setBackground(elevation1);
 		scrollPane.setViewportView(reviewList);
-		reviewList.setCellRenderer(new CommentListRenderer());
+		reviewList.setCellRenderer(new CommentListRenderer(textColor));
 		reviewListModel.addElement("Will hit you right in the heart. —Bustle");
 		reviewListModel.addElement("Delightfully wicked fun! —Kirkus Reviews");
 		reviewListModel.addElement("Gosh awful narrator. Sorry. In its favor I could only stomach 3 pages. -Washington Post");
@@ -441,8 +406,8 @@ public class Window {
 		
 		JLabel bookInfoGenresLabel = new JLabel("Genres:");
 		bookInfoGenresLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoGenresLabel.setForeground(new Color(253, 65, 60));
-		bookInfoGenresLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		bookInfoGenresLabel.setForeground(textColor);
+		bookInfoGenresLabel.setFont(systemText);
 		bookInfoGenresLabel.setBounds(10, 275, 82, 33);
 		panel.add(bookInfoGenresLabel);
 		
@@ -455,8 +420,8 @@ public class Window {
 		
 		JLabel bookInfoPublisherLabel = new JLabel("Publisher:");
 		bookInfoPublisherLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoPublisherLabel.setForeground(new Color(253, 65, 60));
-		bookInfoPublisherLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		bookInfoPublisherLabel.setForeground(textColor);
+		bookInfoPublisherLabel.setFont(systemText);
 		bookInfoPublisherLabel.setBounds(10, 319, 99, 33);
 		panel.add(bookInfoPublisherLabel);
 		
@@ -638,31 +603,8 @@ public class Window {
 		librarySelectionList_1.setBackground(new Color(56, 56, 61));
 		libraryDonationScrollPanel.setViewportView(librarySelectionList_1);
 		libraryDonationScrollPanel.getVerticalScrollBar().setBackground(backgroundColor);
-		/*libraryDonationScrollPanel.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-		
-			protected JButton createDecreaseButton(int orientation) {
-	        	JButton button = super.createDecreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-
-	    	@Override
-	    	protected JButton createIncreaseButton(int orientation) {
-	        	JButton button = super.createIncreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-		
-			@Override
-			protected void configureScrollBarColors() {
-				this.thumbColor = textColor;
-				this.scrollBarWidth = 8;
-			}
-		});*/
+		ScrollBarColor scrollBarDonation = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		libraryDonationScrollPanel.getVerticalScrollBar().setUI(scrollBarDonation);
 		
 		JLabel infoText = new JLabel("Choose a library from the below list:");
 		infoText.setBounds(413, 11, 303, 24);
@@ -837,34 +779,11 @@ public class Window {
 		takenBooksScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		takenBooksScroll.setBorder(null);
 		takenBooksScroll.getHorizontalScrollBar().setBackground(backgroundColor);
-		/*takenBooksScroll.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
-		
-			protected JButton createDecreaseButton(int orientation) {
-	        	JButton button = super.createDecreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-
-	    	@Override
-	    	protected JButton createIncreaseButton(int orientation) {
-	        	JButton button = super.createIncreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-		
-			@Override
-			protected void configureScrollBarColors() {
-				this.thumbColor = textColor;
-				this.scrollBarWidth = 8;
-			}
-		});*/
+		ScrollBarColor scrollBarTakenBooks = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		takenBooksScroll.getHorizontalScrollBar().setUI(scrollBarTakenBooks);
 		
 		JList<Book> takenBooksList = new JList<>(takenBooks);
-		takenBooksList.setSelectionBackground(sideBarSelectionColor);
+		takenBooksList.setSelectionBackground(textColor);
 		takenBooksScroll.setViewportView(takenBooksList);
 		takenBooksList.setVisibleRowCount(1);
 		takenBooksList.setCellRenderer(new BookListRenderer());
@@ -879,45 +798,22 @@ public class Window {
 		btnReturnBook.setBorder(bottomLine);
 		btnReturnBook.setBackground(backgroundColor);
 		
-		JScrollPane preCommetsScrollPane = new JScrollPane();
-		preCommetsScrollPane.setBounds(10, 513, 545, 167);
-		preCommetsScrollPane.setBorder(bottomLine);
-		profilePanelMiddle.add(preCommetsScrollPane);
-		preCommetsScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
-		/*preCommetsScrollPane.getHorizontalScrollBar().setUI(new BasicScrollBarUI() {
-		
-			protected JButton createDecreaseButton(int orientation) {
-	        	JButton button = super.createDecreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-
-	    	@Override
-	    	protected JButton createIncreaseButton(int orientation) {
-	        	JButton button = super.createIncreaseButton(orientation);
-	        	button.setBackground(buttonText);
-	        	button.setForeground(backgroundColor);
-	        	button.setBorder(null);
-	        	return button;
-	    	}
-		
-			@Override
-			protected void configureScrollBarColors() {
-				this.thumbColor = textColor;
-				this.scrollBarWidth = 8;
-			}
-		});*/
+		JScrollPane preCommentsScrollPane = new JScrollPane();
+		preCommentsScrollPane.setBounds(10, 513, 545, 167);
+		preCommentsScrollPane.setBorder(bottomLine);
+		profilePanelMiddle.add(preCommentsScrollPane);
+		preCommentsScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
+		ScrollBarColor scrollBarPreComment = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		preCommentsScrollPane.getHorizontalScrollBar().setUI(scrollBarPreComment);
 		
 		DefaultListModel<String> takenBooksModel = new DefaultListModel<>();
-		JList<String> reviewList_1 = new JList<String>(takenBooksModel);
-		reviewList_1.setSelectionForeground(Color.WHITE);
-		reviewList_1.setSelectionBackground(textColor);
-		reviewList_1.setForeground(Color.WHITE);
-		reviewList_1.setBackground(new Color(56, 56, 61));
-		reviewList_1.setCellRenderer(new CommentListRenderer());
-		preCommetsScrollPane.setViewportView(reviewList_1);
+		JList<String> preCommentsList = new JList<String>(takenBooksModel);
+		preCommentsList.setSelectionForeground(Color.WHITE);
+		preCommentsList.setSelectionBackground(textColor);
+		preCommentsList.setForeground(Color.WHITE);
+		preCommentsList.setBackground(new Color(56, 56, 61));
+		preCommentsList.setCellRenderer(new CommentListRenderer(textColor));
+		preCommentsScrollPane.setViewportView(preCommentsList);
 		
 		takenBooksModel.addElement("A tensely written, shocking book that will hold readers on the edge of their seats to the very last page.");
 		takenBooksModel.addElement("Both compelling and addictive, The Favorite Daughter is a roller coaster of a ride that will have you twisting and turning.");
@@ -940,6 +836,7 @@ public class Window {
 		infoTextPreComments.setFont(systemText);
 		infoTextPreComments.setBounds(10, 481, 320, 23);
 		profilePanelMiddle.add(infoTextPreComments);
+		
 		takenBooks.addElement(new Book(3, "1984", goodbye));
 		takenBooks.addElement(new Book(3, "1985", colorful));
 		takenBooks.addElement(new Book(3, "1986", murder));
@@ -983,6 +880,38 @@ public class Window {
 		bookLoanSidemenuBar.addMouseListener(select);
 		bookDonationSidemenuBar.addMouseListener(select);
 		profileSidemenuBar.addMouseListener(select);
+		frame.setVisible(false);
+	}
+
+	public Color getTextColor() {
+		return textColor;
+	}
+
+	public Color getButtonText() {
+		return buttonText;
+	}
+	
+	
+	
+	public void setTextColor(int r, int g, int b) {
+		Color newColor = new Color(r, g, b);
+		this.textColor = newColor;
+	}
+
+	public void setButtonText(int r, int g, int b) {
+		Color newColor = new Color(r, g, b);
+		this.buttonText = newColor;
+	}
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public ImageIcon scaleColorOption(String path) {
+		Image colorImage = new ImageIcon(Window.class.getResource(path)).getImage();
+		Image scaledColorImage = colorImage.getScaledInstance((int) (28*1.91), 28, Image.SCALE_SMOOTH);
+		ImageIcon scaledColorImageIcon = new ImageIcon(scaledColorImage);
+		return scaledColorImageIcon;
 	}
 }
 
@@ -1047,13 +976,15 @@ class BookListRenderer extends DefaultListCellRenderer {
 }
 
 class CommentListRenderer extends DefaultListCellRenderer {
-	Color commentLine = new Color(253, 65, 60);
+	
+	Color commentLine;
 	MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, (Color) commentLine);
 	//private Book book;
 	
-	/*public MarioListRenderer(Book book) {
-		this.book = book;
-	}*/
+	public CommentListRenderer(Color textColor) {
+		commentLine = textColor;
+		bottomLine = new MatteBorder(0, 0, 2, 0, (Color) commentLine);
+	}
 	
     /**
 	 * 
@@ -1069,13 +1000,45 @@ class CommentListRenderer extends DefaultListCellRenderer {
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
         label.setText((String) value);
-        //label.setIcon(((Book) value).getBookCover());
         label.setHorizontalTextPosition(JLabel.LEFT);
-        //label.setVerticalTextPosition(JLabel.BOTTOM);
-        //list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
         label.setBorder(bottomLine);
         label.setFont(font);
         label.setForeground(Color.white);
         return label;
     }
+}
+
+class ScrollBarColor extends BasicScrollBarUI{
+		Color textColor;
+		Color buttonText;
+		Color backgroundColor;
+		
+		ScrollBarColor(Color textColor, Color buttonText, Color backgroundColor){
+			this.textColor = textColor;
+			this.buttonText = buttonText;
+			this.backgroundColor = backgroundColor;
+		}
+	
+		protected JButton createDecreaseButton(int orientation) {
+        	JButton button = super.createDecreaseButton(orientation);
+        	button.setBackground(buttonText);
+        	button.setForeground(backgroundColor);
+        	button.setBorder(null);
+        	return button;
+    	}
+
+    	@Override
+    	protected JButton createIncreaseButton(int orientation) {
+        	JButton button = super.createIncreaseButton(orientation);
+        	button.setBackground(buttonText);
+        	button.setForeground(backgroundColor);
+        	button.setBorder(null);
+        	return button;
+    	}
+	
+		@Override
+		protected void configureScrollBarColors() {
+			this.thumbColor = textColor;
+			this.scrollBarWidth = 8;
+		}
 }

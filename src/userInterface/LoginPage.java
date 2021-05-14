@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class LoginPage {
 
@@ -27,22 +28,25 @@ public class LoginPage {
 	private JTextField EmailTextField;
 	private JPasswordField passwordField;
 	private JPasswordField passwordFieldLogin;
+	private boolean verified = false;
+	private Color textColor = new Color(253, 65, 60);
+	private Color buttonText = new Color(254, 188, 44);
 
 	/**
 	 * Launch the application.
 	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					LoginPage window = new LoginPage();
-					window.frame.setVisible(true);
+					//window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}*/
+	}
 
 	/**
 	 * Create the application.
@@ -130,6 +134,17 @@ public class LoginPage {
 		lblNewLabel_5_1.setFont(new Font("Arial", Font.BOLD, 17));
 
 		JLabel lblNewLabel_7 = new JLabel("SIGN IN");
+		lblNewLabel_7.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(!verified){
+					verified = true;
+					Window window = new Window(getTextColor(), getButtonText());
+					window.getFrame().setVisible(true);
+					frame.setVisible(false);
+				}
+			}
+		});
 		lblNewLabel_7.setBounds(174, 302, 172, 43);
 		signinPanel.add(lblNewLabel_7);
 		lblNewLabel_7.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -185,7 +200,86 @@ public class LoginPage {
 		lblNewLabel_8_1.setFont(new Font("Arial", Font.BOLD, 23));
 		lblNewLabel_8_1.setBounds(485, 11, 22, 27);
 		signinPanel.add(lblNewLabel_8_1);
-
+		
+		JPanel colorOptionsPanel = new JPanel();
+		colorOptionsPanel.setLayout(null);
+		colorOptionsPanel.setBackground(new Color(39, 43, 47));
+		colorOptionsPanel.setBounds(80, 385, 360, 61);
+		signinPanel.add(colorOptionsPanel);
+		
+		ImageIcon moryesil = scaleColorOption("/SystemAssets/ColorOptions/moryesil.png");
+		ImageIcon turkuazsomon = scaleColorOption("/SystemAssets/ColorOptions/turkuazsomon.png");
+		ImageIcon turuncumavi = scaleColorOption("/SystemAssets/ColorOptions/turuncumavi.png");
+		ImageIcon turuncusari = scaleColorOption("/SystemAssets/ColorOptions/turuncusari.png");
+		ImageIcon yesilsari = scaleColorOption("/SystemAssets/ColorOptions/yesilsari.png");
+		
+		JLabel turuncusariIcon = new JLabel("");
+		turuncusariIcon.setIcon(turuncusari);
+		turuncusariIcon.setHorizontalAlignment(SwingConstants.CENTER);
+		turuncusariIcon.setBounds(10, 11, 60, 41);
+		colorOptionsPanel.add(turuncusariIcon);
+		
+		JLabel turkuazsomonIcon = new JLabel("");
+		turkuazsomonIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		turkuazsomonIcon.setIcon(turkuazsomon);
+		turkuazsomonIcon.setHorizontalAlignment(SwingConstants.CENTER);
+		turkuazsomonIcon.setBounds(80, 11, 60, 41);
+		colorOptionsPanel.add(turkuazsomonIcon);
+		
+		JLabel yesilsariIcon = new JLabel("");
+		yesilsariIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		yesilsariIcon.setHorizontalAlignment(SwingConstants.CENTER);
+		yesilsariIcon.setIcon(yesilsari);
+		yesilsariIcon.setBounds(150, 11, 60, 41);
+		colorOptionsPanel.add(yesilsariIcon);
+		
+		JLabel moryesilIcon = new JLabel("");
+		moryesilIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		moryesilIcon.setHorizontalAlignment(SwingConstants.CENTER);
+		moryesilIcon.setIcon(moryesil);
+		moryesilIcon.setBounds(220, 11, 60, 41);
+		colorOptionsPanel.add(moryesilIcon);
+		
+		JLabel turuncumaviIcon = new JLabel("");
+		turuncumaviIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		turuncumaviIcon.setHorizontalAlignment(SwingConstants.CENTER);
+		turuncumaviIcon.setIcon(turuncumavi);
+		turuncumaviIcon.setBounds(290, 11, 60, 41);
+		colorOptionsPanel.add(turuncumaviIcon);
+		
+		MouseAdapter colorChooser = new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getSource() == turkuazsomonIcon) {
+					System.out.println("test");
+					setTextColor(54, 199, 208);
+					setButtonText(255, 164, 142);
+				}
+				if(e.getSource() == yesilsariIcon) {
+					setTextColor(63, 139, 76);
+					setButtonText(198, 192, 19);
+				}
+				if(e.getSource() == moryesilIcon) {
+					setTextColor(187, 134, 252);
+					setButtonText(3, 218, 196);
+				}
+				if(e.getSource() == turuncumaviIcon) {
+					setTextColor(253, 65, 60);
+					setButtonText(2, 129, 255);
+				}
+				if(e.getSource() == turuncusariIcon) {
+					setTextColor(253, 65, 60);
+					setButtonText(254, 188, 44);
+				}
+			}
+		};
+		
+		turkuazsomonIcon.addMouseListener(colorChooser);
+		yesilsariIcon.addMouseListener(colorChooser);
+		moryesilIcon.addMouseListener(colorChooser);
+		turuncumaviIcon.addMouseListener(colorChooser);
+		turuncusariIcon.addMouseListener(colorChooser);
+		
 		NameTextField = new JTextField();
 		NameTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		NameTextField.setForeground(Color.GRAY);
@@ -296,6 +390,7 @@ public class LoginPage {
 		
 
 		// cards.show(panel, "signupPanel");
+		frame.setVisible(true);
 	}
 
 	public static class FrameDragListener extends MouseAdapter {
@@ -323,6 +418,35 @@ public class LoginPage {
 
 	public JFrame getFrame() {
 		return frame;
+	}
+	
+	public ImageIcon scaleColorOption(String path) {
+		Image colorImage = new ImageIcon(Window.class.getResource(path)).getImage();
+		Image scaledColorImage = colorImage.getScaledInstance((int) (28*1.91), 28, Image.SCALE_SMOOTH);
+		ImageIcon scaledColorImageIcon = new ImageIcon(scaledColorImage);
+		return scaledColorImageIcon;
+	}
+
+	public boolean isVerified() {
+		return verified;
+	}
+
+	public Color getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(int r, int g, int b) {
+		Color newColor = new Color(r, g, b);
+		this.textColor = newColor;
+	}
+
+	public Color getButtonText() {
+		return buttonText;
+	}
+
+	public void setButtonText(int r, int g, int b) {
+		Color newColor = new Color(r, g, b);
+		this.buttonText = newColor;
 	}
 	
 }
