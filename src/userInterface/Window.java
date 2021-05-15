@@ -57,8 +57,8 @@ public class Window {
 	//private static Color textColor = new Color(253, 65, 60);
 	private Color sideBarSelectionColor = textColor;
 	private Color textColorLight = new Color(255, 255, 255);
-	private Color buttonText = new Color(255, 164, 142);
-	//private static Color buttonText = new Color(254, 188, 44);
+	private Color buttonTextColor = new Color(255, 164, 142);
+	//private static Color buttonTextColor = new Color(254, 188, 44);
 	/**
 	 * Launch the application.
 	 */
@@ -100,9 +100,9 @@ public class Window {
 	/**
 	 * Create the application.
 	 */
-	public Window(Color textColor, Color buttonText) {
+	public Window(Color textColor, Color buttonTextColor) {
 		this.textColor = textColor;
-		this.buttonText = buttonText;
+		this.buttonTextColor = buttonTextColor;
 		this.sideBarSelectionColor = textColor;
 		//login();
 		initialize();
@@ -112,8 +112,8 @@ public class Window {
 		Font systemText = new Font("Arial Rounded MT Bold", Font.PLAIN, 17);
 		Font info = new Font("Arial", Font.PLAIN, 15);
 		
-		MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, (Color) buttonText);
-		MatteBorder bottomLineTextField = new MatteBorder(0, 0, 3, 0, (Color) buttonText);
+		MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, (Color) buttonTextColor);
+		MatteBorder bottomLineTextField = new MatteBorder(0, 0, 3, 0, (Color) buttonTextColor);
 		
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
@@ -192,7 +192,7 @@ public class Window {
 		JButton bookLoanButton = new JButton("Take Book");
 		bookLoanButton.setBorder(null);
 		bookLoanButton.setFont(systemText);
-		bookLoanButton.setForeground(buttonText);
+		bookLoanButton.setForeground(buttonTextColor);
 		bookLoanButton.setBackground(elevation1);
 		bookLoanButton.setBounds(892, 445, 127, 60);
 		
@@ -225,7 +225,7 @@ public class Window {
 		bookSuggest.setSelectionBackground(textColor);
 		bookSuggestionsScrollPanel.setViewportView(bookSuggest);
 		bookSuggestionsScrollPanel.getHorizontalScrollBar().setBackground(backgroundColor);
-		ScrollBarColor scrollBarBookSuggest = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		ScrollBarColor scrollBarBookSuggest = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		bookSuggestionsScrollPanel.getHorizontalScrollBar().setUI(scrollBarBookSuggest);
 		
 		Image goodbye = new ImageIcon(getClass().getResource("/bookCovers/kopya.png")).getImage();
@@ -250,7 +250,7 @@ public class Window {
 		bookLoanPanel.add(bookCoverPanel);
 		
 		JPanel overviewShadingPanel = new JPanel();
-		MatteBorder bottomLineCover = new MatteBorder(2, 2, 2, 2, (Color) buttonText);
+		MatteBorder bottomLineCover = new MatteBorder(2, 2, 2, 2, (Color) buttonTextColor);
 		overviewShadingPanel.setBorder(bottomLineCover);
 		JButton overviewHoverButton = new JButton("");
 		overviewHoverButton.setBorder(bottomLine);
@@ -299,7 +299,7 @@ public class Window {
 		scrollPane.setBounds(0, 0, 545, 200);
 		bookReview.add(scrollPane);
 		scrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
-		ScrollBarColor scrollBarComments = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		ScrollBarColor scrollBarComments = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		scrollPane.getHorizontalScrollBar().setUI(scrollBarComments);
 		
 		DefaultListModel<String> reviewListModel = new DefaultListModel<>();
@@ -485,7 +485,7 @@ public class Window {
 		
 		JButton bookLocationButton = new JButton("Find Location");
 		bookLocationButton.setBorder(null);
-		bookLocationButton.setForeground(buttonText);
+		bookLocationButton.setForeground(buttonTextColor);
 		bookLocationButton.setFont(systemText);
 		bookLocationButton.setBounds(1068, 445, 127, 60);
 		bookLocationButton.setBackground(elevation1);
@@ -518,7 +518,7 @@ public class Window {
 		bookLoanPanel.add(textArea);
 		
 		JButton commentButton = new JButton("Comment");
-		commentButton.setForeground(buttonText);
+		commentButton.setForeground(buttonTextColor);
 		commentButton.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
 		commentButton.setBorder(bottomLine);
 		commentButton.setBackground(new Color(39, 43, 47));
@@ -623,7 +623,7 @@ public class Window {
 		librarySelectionList_1.setBackground(new Color(56, 56, 61));
 		libraryDonationScrollPanel.setViewportView(librarySelectionList_1);
 		libraryDonationScrollPanel.getVerticalScrollBar().setBackground(backgroundColor);
-		ScrollBarColor scrollBarDonation = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		ScrollBarColor scrollBarDonation = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		libraryDonationScrollPanel.getVerticalScrollBar().setUI(scrollBarDonation);
 		
 		JLabel infoText = new JLabel("Choose a library from the below list:");
@@ -635,7 +635,7 @@ public class Window {
 		JButton bookDonateButton = new JButton("Donate Book");
 		bookDonateButton.setBounds(515, 263, 127, 60);
 		panelMiddle.add(bookDonateButton);
-		bookDonateButton.setForeground(buttonText);
+		bookDonateButton.setForeground(buttonTextColor);
 		bookDonateButton.setFont(systemText);
 		bookDonateButton.setBorder(bottomLine);
 		bookDonateButton.setBackground(backgroundColor);
@@ -799,7 +799,7 @@ public class Window {
 		takenBooksScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		takenBooksScroll.setBorder(null);
 		takenBooksScroll.getHorizontalScrollBar().setBackground(backgroundColor);
-		ScrollBarColor scrollBarTakenBooks = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		ScrollBarColor scrollBarTakenBooks = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		takenBooksScroll.getHorizontalScrollBar().setUI(scrollBarTakenBooks);
 		
 		JList<Book> takenBooksList = new JList<>(takenBooks);
@@ -813,7 +813,7 @@ public class Window {
 		JButton btnReturnBook = new JButton("Return Book");
 		btnReturnBook.setBounds(218, 421, 127, 60);
 		profilePanelMiddle.add(btnReturnBook);
-		btnReturnBook.setForeground(buttonText);
+		btnReturnBook.setForeground(buttonTextColor);
 		btnReturnBook.setFont(systemText);
 		btnReturnBook.setBorder(bottomLine);
 		btnReturnBook.setBackground(backgroundColor);
@@ -823,7 +823,7 @@ public class Window {
 		preCommentsScrollPane.setBorder(bottomLine);
 		profilePanelMiddle.add(preCommentsScrollPane);
 		preCommentsScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
-		ScrollBarColor scrollBarPreComment = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		ScrollBarColor scrollBarPreComment = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		preCommentsScrollPane.getHorizontalScrollBar().setUI(scrollBarPreComment);
 		
 		DefaultListModel<String> takenBooksModel = new DefaultListModel<>();
@@ -862,14 +862,14 @@ public class Window {
 		mainPagePanel.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(buttonText);
+		panel_1.setBackground(buttonTextColor);
 		panel_1.setBounds(0, 536, 1220, 165);
 		mainPagePanel.add(panel_1);
 		panel_1.setLayout(null);
 		
 		JLabel openQuoteLabel = new JLabel("");
 		openQuoteLabel.setOpaque(true);
-		openQuoteLabel.setBackground(buttonText);
+		openQuoteLabel.setBackground(buttonTextColor);
 		openQuoteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		openQuoteLabel.setIcon(new ImageIcon(Window.class.getResource("/SystemAssets/quoteIcon/colorlessQuoteOpen.png")));
 		openQuoteLabel.setBounds(47, 28, 49, 32);
@@ -879,7 +879,7 @@ public class Window {
 		closeQuoteLabel.setIcon(new ImageIcon(Window.class.getResource("/SystemAssets/quoteIcon/colorlessQuoteClose.png")));
 		closeQuoteLabel.setOpaque(true);
 		closeQuoteLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		closeQuoteLabel.setBackground(buttonText);
+		closeQuoteLabel.setBackground(buttonTextColor);
 		closeQuoteLabel.setBounds(1117, 112, 49, 32);
 		panel_1.add(closeQuoteLabel);
 		
@@ -892,7 +892,7 @@ public class Window {
 		JLabel quoteBackgroundLabel = new JLabel("");
 		quoteBackgroundLabel.setBorder(new MatteBorder(4, 4, 4, 4, (Color) new Color(255, 255, 255)));
 		quoteBackgroundLabel.setOpaque(true);
-		quoteBackgroundLabel.setBackground(buttonText);
+		quoteBackgroundLabel.setBackground(buttonTextColor);
 		quoteBackgroundLabel.setIcon(null);
 		quoteBackgroundLabel.setBounds(35, 40, 1150, 90);
 		panel_1.add(quoteBackgroundLabel);
@@ -918,7 +918,7 @@ public class Window {
 		oldBooksScrollPane.setViewportView(oldBooksList);
 		oldBooksList.setCellRenderer(new oldBooksListRenderer());
 		oldBooksScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
-		ScrollBarColor scrollBaroldBooks = new ScrollBarColor(textColor, buttonText, backgroundColor);
+		ScrollBarColor scrollBaroldBooks = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		oldBooksScrollPane.getHorizontalScrollBar().setUI(scrollBaroldBooks);
 		
 		oldBooksListModel.addElement(new oldBook(3, "1984", goodbye));
@@ -983,8 +983,8 @@ public class Window {
 		return textColor;
 	}
 
-	public Color getButtonText() {
-		return buttonText;
+	public Color getbuttonTextColor() {
+		return buttonTextColor;
 	}
 	
 	
@@ -994,9 +994,9 @@ public class Window {
 		this.textColor = newColor;
 	}
 
-	public void setButtonText(int r, int g, int b) {
+	public void setbuttonTextColor(int r, int g, int b) {
 		Color newColor = new Color(r, g, b);
-		this.buttonText = newColor;
+		this.buttonTextColor = newColor;
 	}
 	
 	public JFrame getFrame() {
@@ -1166,18 +1166,18 @@ class CommentListRenderer extends DefaultListCellRenderer {
 
 class ScrollBarColor extends BasicScrollBarUI{
 		Color textColor;
-		Color buttonText;
+		Color buttonTextColor;
 		Color backgroundColor;
 		
-		ScrollBarColor(Color textColor, Color buttonText, Color backgroundColor){
+		ScrollBarColor(Color textColor, Color buttonTextColor, Color backgroundColor){
 			this.textColor = textColor;
-			this.buttonText = buttonText;
+			this.buttonTextColor = buttonTextColor;
 			this.backgroundColor = backgroundColor;
 		}
 	
 		protected JButton createDecreaseButton(int orientation) {
         	JButton button = super.createDecreaseButton(orientation);
-        	button.setBackground(buttonText);
+        	button.setBackground(buttonTextColor);
         	button.setForeground(backgroundColor);
         	button.setBorder(null);
         	return button;
@@ -1186,7 +1186,7 @@ class ScrollBarColor extends BasicScrollBarUI{
     	@Override
     	protected JButton createIncreaseButton(int orientation) {
         	JButton button = super.createIncreaseButton(orientation);
-        	button.setBackground(buttonText);
+        	button.setBackground(buttonTextColor);
         	button.setForeground(backgroundColor);
         	button.setBorder(null);
         	return button;

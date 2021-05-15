@@ -33,7 +33,7 @@ public class LoginPage {
 	private JPasswordField passwordFieldLogin;
 	private boolean verified = false;
 	private Color textColor = new Color(253, 65, 60);
-	private Color buttonText = new Color(254, 188, 44);
+	private Color buttonTextColor = new Color(254, 188, 44);
 
 	/**
 	 * Launch the application.
@@ -142,7 +142,7 @@ public class LoginPage {
 			public void mouseClicked(MouseEvent e) {
 				if(!verified){
 					verified = true;
-					Window window = new Window(getTextColor(), getButtonText());
+					Window window = new Window(getTextColor(), getbuttonTextColor());
 					window.getFrame().setVisible(true);
 					frame.setVisible(false);
 				}
@@ -251,13 +251,13 @@ public class LoginPage {
 		turuncumaviIcon.setBounds(290, 11, 60, 41);
 		colorOptionsPanel.add(turuncumaviIcon);
 		
-		JToggleButton tglbtnNewToggleButton = new JToggleButton("");
-		tglbtnNewToggleButton.setSelectedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
-		tglbtnNewToggleButton.setBackground(Color.white);
-		tglbtnNewToggleButton.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/closeEyeGray.png")));
-		tglbtnNewToggleButton.setPressedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
-		tglbtnNewToggleButton.setBounds(354, 249, 32, 32);
-		signinPanel.add(tglbtnNewToggleButton);
+		JToggleButton passwordVisibilityButton = new JToggleButton("");
+		passwordVisibilityButton.setSelectedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		passwordVisibilityButton.setBackground(Color.white);
+		passwordVisibilityButton.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/closeEyeGray.png")));
+		passwordVisibilityButton.setPressedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		passwordVisibilityButton.setBounds(354, 249, 32, 32);
+		signinPanel.add(passwordVisibilityButton);
 		
 		ItemListener passwordVisibility = new ItemListener() {
 
@@ -275,7 +275,7 @@ public class LoginPage {
 			
 		};
 		
-		tglbtnNewToggleButton.addItemListener(passwordVisibility);
+		passwordVisibilityButton.addItemListener(passwordVisibility);
 		
 		JLabel infoTextSignUp = new JLabel("Sign up to myLibrary");
 		infoTextSignUp.setForeground(textColor);
@@ -292,7 +292,7 @@ public class LoginPage {
 					signUpButton.setBackground(new Color(54, 199, 208));
 					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridCyan.png")));
 					setTextColor(54, 199, 208);
-					setButtonText(255, 164, 142);
+					setbuttonTextColor(255, 164, 142);
 					
 				}
 				if(e.getSource() == yesilsariIcon) {
@@ -302,7 +302,7 @@ public class LoginPage {
 					signUpButton.setBackground(new Color(63, 139, 76));
 					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridGreen.png")));
 					setTextColor(63, 139, 76);
-					setButtonText(198, 192, 19);
+					setbuttonTextColor(198, 192, 19);
 				}
 				if(e.getSource() == moryesilIcon) {
 					infoTextSignIn.setForeground(new Color(187, 134, 252));
@@ -311,7 +311,7 @@ public class LoginPage {
 					signUpButton.setBackground(new Color(187, 134, 252));
 					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridPurple.png")));
 					setTextColor(187, 134, 252);
-					setButtonText(3, 218, 196);
+					setbuttonTextColor(3, 218, 196);
 				}
 				if(e.getSource() == turuncumaviIcon) {
 					infoTextSignIn.setForeground(new Color(253, 65, 60));
@@ -320,7 +320,7 @@ public class LoginPage {
 					signUpButton.setBackground(new Color(253, 65, 60));
 					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
 					setTextColor(253, 65, 60);
-					setButtonText(2, 129, 255);
+					setbuttonTextColor(2, 129, 255);
 				}
 				if(e.getSource() == turuncusariIcon) {
 					infoTextSignIn.setForeground(new Color(253, 65, 60));
@@ -329,7 +329,7 @@ public class LoginPage {
 					signUpButton.setBackground(new Color(253, 65, 60));
 					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
 					setTextColor(253, 65, 60);
-					setButtonText(254, 188, 44);
+					setbuttonTextColor(254, 188, 44);
 				}
 			}
 		};
@@ -500,12 +500,12 @@ public class LoginPage {
 		this.textColor = newColor;
 	}
 
-	public Color getButtonText() {
-		return buttonText;
+	public Color getbuttonTextColor() {
+		return buttonTextColor;
 	}
 
-	public void setButtonText(int r, int g, int b) {
+	public void setbuttonTextColor(int r, int g, int b) {
 		Color newColor = new Color(r, g, b);
-		this.buttonText = newColor;
+		this.buttonTextColor = newColor;
 	}
 }
