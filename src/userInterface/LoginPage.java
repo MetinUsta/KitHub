@@ -6,6 +6,8 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,6 +19,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.JToggleButton;
 
 public class LoginPage {
 
@@ -158,7 +161,7 @@ public class LoginPage {
 		passwordFieldLogin.setBackground(new Color(244, 244, 244));
 		passwordFieldLogin.setForeground(Color.GRAY);
 		passwordFieldLogin.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		passwordFieldLogin.setBounds(137, 249, 249, 32);
+		passwordFieldLogin.setBounds(137, 249, 217, 32);
 		signinPanel.add(passwordFieldLogin);
 
 		JPanel signupPanel = new JPanel();
@@ -247,6 +250,34 @@ public class LoginPage {
 		turuncumaviIcon.setIcon(turuncumavi);
 		turuncumaviIcon.setBounds(290, 11, 60, 41);
 		colorOptionsPanel.add(turuncumaviIcon);
+		
+		JToggleButton tglbtnNewToggleButton = new JToggleButton("");
+		tglbtnNewToggleButton.setSelectedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		tglbtnNewToggleButton.setBackground(Color.white);
+		tglbtnNewToggleButton.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/closeEyeGray.png")));
+		tglbtnNewToggleButton.setPressedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		tglbtnNewToggleButton.setBounds(354, 249, 32, 32);
+		signinPanel.add(tglbtnNewToggleButton);
+		
+		ItemListener passwordVisibility = new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				int state = e.getStateChange();
+				
+				if(state == ItemEvent.SELECTED) {
+					passwordFieldLogin.setEchoChar((char)0);
+					//DO THIS
+				}else {
+					passwordFieldLogin.setEchoChar('●');
+					//DO THIS
+				}
+				
+			}
+			
+		};
+		
+		tglbtnNewToggleButton.addItemListener(passwordVisibility);
 		
 		JLabel infoTextSignUp = new JLabel("Sign up to myLibrary");
 		infoTextSignUp.setForeground(textColor);
@@ -479,5 +510,4 @@ public class LoginPage {
 		Color newColor = new Color(r, g, b);
 		this.buttonText = newColor;
 	}
-	
 }
