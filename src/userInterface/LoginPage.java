@@ -267,10 +267,8 @@ public class LoginPage {
 				
 				if(state == ItemEvent.SELECTED) {
 					passwordFieldLogin.setEchoChar((char)0);
-					//DO THIS
 				}else {
 					passwordFieldLogin.setEchoChar('●');
-					//DO THIS
 				}
 				
 			}
