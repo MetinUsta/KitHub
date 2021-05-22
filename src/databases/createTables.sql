@@ -13,12 +13,10 @@ create table if not exists Books (
     BookId integer primary key,
     Title text not null,
     Author text not null,
-    PublishDate text,
-    PageCount integer,
-    Edition text,
-    Publisher text,
-    Isbn13 text not null,
-    Overview text
+    PublishDate text not null,
+    PageCount integer not null,
+    Isbn13 text not null unique,
+    Overview text not null
 );
 
 create table if not exists Libraries (
@@ -38,27 +36,16 @@ create table if not exists Libraries (
     ShelfVerticalGap integer not null
 );
 
-create table if not exists Genres (
-    GenreId integer primary key,
-    Title text not null
-);
-
-create table if not exists Queue (
-    UserId integer references Users
-        on update cascade
-        on delete cascade,
-    BookId integer references Books
-        on update cascade
-        on delete cascade,
-    QueueOrder integer not null,
-    primary key (UserId, BookId)
+create table if not exists BookGenres (
+    BookId integer not null,
+    Genre text not null
 );
 
 create table if not exists BookLoans (
-    UserId integer references Users
+    UserId integer references Users(UserId)
         on update cascade
         on delete cascade,
-    BookCopyId integer references BookCopies
+    BookCopyId integer references BookCopies(BookCopyId)
         on update cascade
         on delete cascade,
     LoanDate text not null,
@@ -67,10 +54,10 @@ create table if not exists BookLoans (
 );
 
 create table if not exists Comments (
-    UserId integer references Users
+    UserId integer references Users(UserId)
         on update cascade
         on delete cascade,
-    BookId integer references Books
+    BookId integer references Books(BookId)
         on update cascade
         on delete cascade,
     Comment text not null,
@@ -79,21 +66,15 @@ create table if not exists Comments (
 
 create table if not exists BookCopies (
     BookCopyId integer primary key,
-    BookId integer references Books
+    BookId integer references Books(BookId)
         on update cascade
         on delete cascade,
-    LibraryId integer references Libraries
+    LibraryId integer references Libraries(LibraryId)
         on update cascade
         on delete cascade,
-    CopyCount integer not null default 0
+    CopyCount integer not null default 1
 );
 
-create table if not exists BooksGenres (
-    BookId integer references Books
-        on update cascade
-        on delete cascade,
-    GenreId integer references Genres
-        on update cascade
-        on delete cascade,
-    primary key (BookId, GenreId)
-);
+insert or ignore into Users (Name, Surname, Email, Password)
+values
+    ("admin", "admin", "admin@sistemanalizi.com", "15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225");
