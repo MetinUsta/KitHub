@@ -125,7 +125,7 @@ public class LoginPage {
 		JLabel infoTextAccount = new JLabel("Don't have an account?");
 		infoTextAccount.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				cards.show(panel, "signupPanel");
 			}
 		});
@@ -139,7 +139,7 @@ public class LoginPage {
 		JLabel signInButton = new JLabel("SIGN IN");
 		signInButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				if(!verified){
 					verified = true;
 					Window window = new Window(getTextColor(), getbuttonTextColor());
@@ -177,7 +177,7 @@ public class LoginPage {
 		JLabel iconifyButton = new JLabel("");
 		iconifyButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				frame.setState(JFrame.ICONIFIED);
 			}
 		});
@@ -193,7 +193,7 @@ public class LoginPage {
 		JLabel closeButton = new JLabel("X");
 		closeButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				System.exit(0);
 			}
 		});
@@ -284,7 +284,7 @@ public class LoginPage {
 		
 		MouseAdapter colorChooser = new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				if(e.getSource() == turkuazsomonIcon) {
 					infoTextSignIn.setForeground(new Color(54, 199, 208));
 					signInButton.setBackground(new Color(54, 199, 208));
@@ -406,7 +406,7 @@ public class LoginPage {
 		JLabel returnButton = new JLabel("Sign in instead");
 		returnButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				cards.show(panel, "signinPanel");
 			}
 		});
@@ -421,7 +421,7 @@ public class LoginPage {
 		iconifyButtonSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		iconifyButtonSignUp.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				frame.setState(JFrame.ICONIFIED);
 			}
 		});
@@ -437,7 +437,7 @@ public class LoginPage {
 		closeButtonSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		closeButtonSignUp.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				System.exit(0);
 			}
 		});
