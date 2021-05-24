@@ -1,4 +1,4 @@
-PRAGMA foreign_keys = 1;
+PRAGMA foreign_keys = ON;
 
 create table if not exists Users (
     UserId integer primary key,
@@ -38,7 +38,8 @@ create table if not exists Libraries (
 
 create table if not exists BookGenres (
     BookId integer not null,
-    Genre text not null
+    Genre text not null,
+    primary key(BookId, Genre)
 );
 
 create table if not exists BookLoans (
@@ -72,7 +73,8 @@ create table if not exists BookCopies (
     LibraryId integer references Libraries(LibraryId)
         on update cascade
         on delete cascade,
-    CopyCount integer not null default 1
+    CopyCount integer not null default 1,
+    unique(BookId, LibraryId)
 );
 
 insert or ignore into Users (Name, Surname, Email, Password)

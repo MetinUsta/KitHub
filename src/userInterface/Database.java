@@ -1,15 +1,18 @@
 package userInterface;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.Clock;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -20,6 +23,11 @@ public class Database {
 
 	public static void main(String[] args) {
 		createTables();
+		fillTables();
+
+		// CALL PYTHON SCRIPT FROM JAVA
+		callPython("src/scripts/importBooks.py", "src/databases/importFiles/Books.csv",
+				"src/databases/libraryManagement.db");
 
 //		System.out.println(isAdmin("123456789"));
 
@@ -231,6 +239,43 @@ public class Database {
 	}
 
 	/**
+	 * Gets command line arguments as varargs and calls the given python script with those arguments.
+	 * Exit code and the stdout of the python script is also tied to the Java.
+	 * @param args command-line arguments of the python script (argv)
+	 */
+	public static void callPython(String scriptPath, String... args) {
+		try {
+			ArrayList<String> argList = new ArrayList<>();
+			
+			argList.add("python");
+			argList.add(scriptPath);
+			for(String arg : args) {
+				argList.add(arg);
+			}
+			ProcessBuilder pb = new ProcessBuilder(argList);
+
+			pb.redirectErrorStream(true);
+			Process proc;
+			proc = pb.start();
+			int exitCode = proc.waitFor();
+			if (exitCode != 0) {
+				System.out.println("error: An error occured in the " + scriptPath + " script.");
+			}
+
+			Reader reader = new InputStreamReader(proc.getInputStream());
+			BufferedReader bf = new BufferedReader(reader);
+			String s;
+			while ((s = bf.readLine()) != null) {
+				System.out.println(s);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Reads sql query lines from a file and builds a sql string containing them.
 	 * 
 	 * @param queryPath absolute or relative path of the sql text file
@@ -270,8 +315,8 @@ public class Database {
 	}
 
 	/**
-	 * Creates all of the needed database tables for the application No operation if
-	 * the tables already exist.
+	 * Creates all of the needed database tables for the application.
+	 * No operation if the tables already exist.
 	 */
 	public static void createTables() {
 		try (Connection conn = connectToDatabase();
@@ -285,6 +330,26 @@ public class Database {
 			}
 		} catch (SQLException e) {
 			System.out.println("error: Could not create the tables.");
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Fills all of the needed database tables for the application.
+	 * No operation if the tables already exist.
+	 */
+	public static void fillTables() {
+		try (Connection conn = connectToDatabase();
+				Statement stmt = conn.createStatement()) {
+			String sql = getSqlQuery("src/databases/fillTables.sql");
+
+			for (String s : sql.split(";\n")) {
+				if (!s.equals("\n")) {
+					stmt.execute(s + ";");
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("error: Could not fill the tables.");
 			e.printStackTrace();
 		}
 	}

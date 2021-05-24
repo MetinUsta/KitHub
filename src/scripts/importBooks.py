@@ -33,12 +33,12 @@ if __name__ == '__main__':
         print('error: Could not import the books!')
         exit(1)
 
-    with open(inputPath, "r", newline='') as readFile, conn:
+    with open(inputPath, "r", newline='', encoding='utf8') as readFile, conn:
         reader = csv.DictReader(readFile)
 
         fillBooksSql = ''' INSERT OR IGNORE INTO Books (BookId, Title, Author, PublishDate, PageCount, Isbn13, Overview)
                            VALUES(?, ?, ?, ?, ?, ?, ?) '''
-        fillBookGenresSql = ''' INSERT INTO BookGenres (BookId, Genre)
+        fillBookGenresSql = ''' INSERT OR IGNORE INTO BookGenres (BookId, Genre)
                                 VALUES(?, ?)'''
 
         cursor = conn.cursor()
@@ -54,3 +54,4 @@ if __name__ == '__main__':
             for genre in genres:
                 cursor.execute(fillBookGenresSql, (lastBookId, genre.strip()))
             lastBookId += 1
+    exit(0)
