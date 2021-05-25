@@ -15,8 +15,8 @@ public class GeneralBook extends Book{
 			
 			this.bookId = bookId;
 			setISBN((String) bookInfo.get("Isbn13"));
-			String coverPath = "/bookCovers/" + getISBN() + ".png";
-			setName((String) bookInfo.get("Name"));
+			String coverPath = "/bookCovers/" + getISBN() + ".jpg";
+			setName((String) bookInfo.get("Title"));
 			setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
