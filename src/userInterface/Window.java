@@ -52,49 +52,10 @@ public class Window {
 	private Color elevation1 = new Color(39, 43, 47);
 	private Color backgroundColor = new Color(33, 37, 41);
 	private Color textColor = new Color(54, 199, 208);
-	//private static Color textColor = new Color(253, 65, 60);
 	private Color sideBarSelectionColor = textColor;
 	private Color textColorLight = new Color(255, 255, 255);
 	private Color buttonTextColor = new Color(255, 164, 142);
-	//private static Color buttonTextColor = new Color(254, 188, 44);
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		//javax.swing.UIManager.put("ScrollBar.thumb", new javax.swing.plaf.ColorUIResource(33,129,176));
-		//javax.swing.UIManager.put("Button.foreground", new javax.swing.plaf.ColorUIResource(0,0,0));
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGui();
-				try {
-					LoginPage loginPage = new LoginPage();
-					loginPage.getFrame().setVisible(true);
-					
-					boolean flag = true;
-					while(flag) {
-						flag = loginPage.isVerified();
-					}
-					Window window = new Window();
-					window.frame.setVisible(true);
-					createAndShowGui();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 	
-	/*private static void createAndShowGui() {
-		  LoginPage loginPage = new LoginPage();
-		  Window window = new Window();
-		  window.frame.setVisible(false);
-		  loginPage.getFrame().setVisible(true);
-
-	      if (loginPage.isVerified()) {
-	    	  
-	    	  window.frame.setVisible(true);
-	      }
-	}*/
 	/**
 	 * Create the application.
 	 */
@@ -102,7 +63,6 @@ public class Window {
 		this.textColor = textColor;
 		this.buttonTextColor = buttonTextColor;
 		this.sideBarSelectionColor = textColor;
-		//login();
 		initialize();
 	}
 
@@ -125,7 +85,6 @@ public class Window {
 		Image icon = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/icon.png")).getImage();
 		frame.setIconImage(icon);
 		frame.setTitle("Test");
-		//frame.setIconImage(null);
 		
 		JPanel sideBarPanel = new JPanel();
 		sideBarPanel.setBounds(0, 0, 141, 739);
@@ -135,9 +94,6 @@ public class Window {
 		contentPanel.setBounds(140, 0, 1220, 739);
 		CardLayout card = new CardLayout(0, 0);
 		contentPanel.setLayout(card);
-		
-		
-		
 
 		JPanel bookLoanPanel = new JPanel();
 		bookLoanPanel.setBackground(backgroundColor);
@@ -149,11 +105,6 @@ public class Window {
 		JPanel mainPagePanel = new JPanel();
 		contentPanel.add(mainPagePanel, "mainPage");
 		card.show(contentPanel, "mainPage");
-		//a.show(contentPanel, "name_180929098874800");
-		//contentPanel.show(true);
-		//bookLoanPanel.setVisible(false);
-		//bookDonation.setVisible(true);
-		//bookLoanPanel.setVisible(false);
 		
 		JScrollPane bookListScrollPane = new JScrollPane();
 		bookListScrollPane.setBorder(null);
@@ -161,13 +112,13 @@ public class Window {
 		bookListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		bookListScrollPane.setBorder(bottomLine);
 		
-		DefaultListModel<String> bookList = new DefaultListModel<>();
-		JList<String> list = new JList<>(bookList);
-		list.setCellRenderer(new CommentListRenderer(textColor));
+		DefaultListModel<GeneralBook> bookList = new DefaultListModel<>();
+		JList<GeneralBook> list = new JList<>(bookList);
+
+		list.setCellRenderer(new BookNameListRenderer());
 		list.setSelectionForeground(Color.WHITE);
 		list.setSelectionBackground(textColor);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//list.setBorder(bottomLine);
 		list.setBackground(elevation1);
 		
 		JScrollPane bookSuggestionsScrollPanel = new JScrollPane();
@@ -183,7 +134,6 @@ public class Window {
 		JPanel bookCoverPanel = new JPanel();
 		bookCoverPanel.setBounds(338, 11, 310, 494);
 		bookCoverPanel.setBackground(Color.GRAY);
-		//bookCoverPanel.setBorder(bottomLine);
 		
 		JPanel searchPanel = new JPanel();
 		searchPanel.setBounds(10, 11, 317, 34);
@@ -201,8 +151,6 @@ public class Window {
 		menuBar.setBorder(null);
 		searchPanel.add(menuBar);
 		
-		
-		
 		JTextField searchBar = new JTextField();
 		
 		searchBar.setBorder(new LineBorder(Color.WHITE, 4));
@@ -217,8 +165,8 @@ public class Window {
 		selectGenreList.addItem("India");
 		menuBar.add(selectGenreList);
 		
-		DefaultListModel<Book> bookSuggestList = new DefaultListModel<>();
-		JList<Book> bookSuggest = new JList<>(bookSuggestList);
+		DefaultListModel<GeneralBook> bookSuggestList = new DefaultListModel<>();
+		JList<GeneralBook> bookSuggest = new JList<>(bookSuggestList);
 		bookSuggest.setVisibleRowCount(1);
 		bookSuggest.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		bookSuggest.setBorder(new LineBorder(componentBorderColor, 2));
@@ -228,17 +176,6 @@ public class Window {
 		bookSuggestionsScrollPanel.getHorizontalScrollBar().setBackground(backgroundColor);
 		ScrollBarColor scrollBarBookSuggest = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		bookSuggestionsScrollPanel.getHorizontalScrollBar().setUI(scrollBarBookSuggest);
-		
-		Image goodbye = new ImageIcon(getClass().getResource("/bookCovers/kopya.png")).getImage();
-		Image kissing = new ImageIcon(getClass().getResource("/bookCovers/kissingCouple.png")).getImage();
-		Image murder = new ImageIcon(getClass().getResource("/bookCovers/murder.png")).getImage();
-		Image umbrella = new ImageIcon(getClass().getResource("/bookCovers/umbrella.png")).getImage();
-		Image colorful = new ImageIcon(getClass().getResource("/bookCovers/colorful.png")).getImage();
-		bookSuggestList.addElement(new Book(1, "Elveda", goodbye));
-		bookSuggestList.addElement(new Book(1, "Mmhm...", kissing));
-		bookSuggestList.addElement(new Book(1, "Epstein", murder));
-		bookSuggestList.addElement(new Book(1, "Raindrops", umbrella));
-		bookSuggestList.addElement(new Book(1, "Lily", colorful));
 		
 		bookSuggest.setCellRenderer(new BookListRenderer());
 		
@@ -483,9 +420,9 @@ public class Window {
 		librarySelectionScrollPanel.setBounds(892, 34, 303, 214);
 		bookLoanPanel.add(librarySelectionScrollPanel);
 		
-		DefaultListModel<String> libraryList = new DefaultListModel<>();
-		JList<String> librarySelectionList = new JList<>(libraryList);
-		librarySelectionList.setCellRenderer(new CommentListRenderer(textColor));
+		DefaultListModel<Library> libraryList = new DefaultListModel<>();
+		JList<Library> librarySelectionList = new JList<>(libraryList);
+		librarySelectionList.setCellRenderer(new LibraryListRenderer());
 		librarySelectionList.setSelectionForeground(Color.WHITE);
 		librarySelectionList.setSelectionBackground(textColor);
 		librarySelectionList.setBackground(elevation1);
@@ -591,12 +528,9 @@ public class Window {
 		sideBarPanel.add(mainPageSidemenuSelection);
 		frame.getContentPane().add(contentPanel);
 		
-		
 		bookDonationPanel.setBackground(backgroundColor);
 		
 		bookDonationPanel.setLayout(null);
-		
-		DefaultListModel<String> librarySelectionForm = new DefaultListModel<>();
 		
 		JPanel panelMiddle = new JPanel();
 		panelMiddle.setBorder(bottomLine);
@@ -609,12 +543,15 @@ public class Window {
 		libraryDonationScrollPanel.setBounds(413, 38, 303, 214);
 		panelMiddle.add(libraryDonationScrollPanel);
 		libraryDonationScrollPanel.setBorder(bottomLine);
-		JList<String> librarySelectionList_1 = new JList<String>(librarySelectionForm);
-		librarySelectionList_1.setBackground(new Color(56, 56, 61));
-		libraryDonationScrollPanel.setViewportView(librarySelectionList_1);
+		
+		DefaultListModel<Library> librarySelectionForm = new DefaultListModel<>();
+		JList<Library> librarySelectionListDonation = new JList<>(librarySelectionForm);
+		librarySelectionListDonation.setBackground(new Color(56, 56, 61));
+		libraryDonationScrollPanel.setViewportView(librarySelectionListDonation);
 		libraryDonationScrollPanel.getVerticalScrollBar().setBackground(backgroundColor);
 		ScrollBarColor scrollBarDonation = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		libraryDonationScrollPanel.getVerticalScrollBar().setUI(scrollBarDonation);
+		librarySelectionListDonation.setCellRenderer(new LibraryListRenderer());
 		
 		JLabel infoText = new JLabel("Choose a library from the below list:");
 		infoText.setBounds(413, 11, 303, 24);
@@ -700,8 +637,6 @@ public class Window {
 		contentPanel.add(profilePanel, "profile");
 		profilePanel.setLayout(null);
 		
-		DefaultListModel<Book> takenBooks = new DefaultListModel<>();
-		
 		JPanel profilePanelMiddle = new JPanel();
 		profilePanelMiddle.setBackground(elevation1);
 		profilePanelMiddle.setBounds(279, 15, 565, 703);
@@ -766,7 +701,8 @@ public class Window {
 		ScrollBarColor scrollBarTakenBooks = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		takenBooksScroll.getHorizontalScrollBar().setUI(scrollBarTakenBooks);
 		
-		JList<Book> takenBooksList = new JList<>(takenBooks);
+		DefaultListModel<LibraryBook> takenBooks = new DefaultListModel<>();
+		JList<LibraryBook> takenBooksList = new JList<>(takenBooks);
 		takenBooksList.setSelectionBackground(textColor);
 		takenBooksScroll.setViewportView(takenBooksList);
 		takenBooksList.setVisibleRowCount(1);
@@ -868,19 +804,20 @@ public class Window {
 		mainPagePanel.add(infoTextOldBooks);
 		
 		JScrollPane oldBooksScrollPane = new JScrollPane();
-		oldBooksScrollPane.setBorder(null);
-		oldBooksScrollPane.setBounds(10, 163, 1176, 362);
+		oldBooksScrollPane.setBounds(10, 163, 1195, 362);
+		oldBooksScrollPane.setBorder(bottomLine);
+		oldBooksScrollPane.setBackground(elevation1);
 		mainPagePanel.add(oldBooksScrollPane);
 		
-		DefaultListModel<oldBook> oldBooksListModel = new DefaultListModel<>();
-		JList<oldBook> oldBooksList = new JList<>(oldBooksListModel);
+		DefaultListModel<GeneralBook> oldBooksListModel = new DefaultListModel<>();
+		JList<GeneralBook> oldBooksList = new JList<>(oldBooksListModel);
 		oldBooksList.setSelectionBackground(textColor);
 		oldBooksList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		oldBooksList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		oldBooksList.setVisibleRowCount(1);
-		oldBooksList.setBackground(backgroundColor);
+		oldBooksList.setBackground(elevation1);
 		oldBooksScrollPane.setViewportView(oldBooksList);
-		oldBooksList.setCellRenderer(new oldBooksListRenderer());
+		oldBooksList.setCellRenderer(new BookListRenderer());
 		
 		JLabel appNameLabel = new JLabel("Library Management App");
 		appNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -892,28 +829,6 @@ public class Window {
 		oldBooksScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
 		ScrollBarColor scrollBaroldBooks = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		oldBooksScrollPane.getHorizontalScrollBar().setUI(scrollBaroldBooks);
-		
-		oldBooksListModel.addElement(new oldBook(3, "1984", goodbye));
-		oldBooksListModel.addElement(new oldBook(3, "1985", colorful));
-		oldBooksListModel.addElement(new oldBook(3, "1986", murder));
-		oldBooksListModel.addElement(new oldBook(3, "1987", umbrella));
-		oldBooksListModel.addElement(new oldBook(3, "1988", kissing));
-		oldBooksListModel.addElement(new oldBook(3, "1989", goodbye));
-		oldBooksListModel.addElement(new oldBook(3, "1990", colorful));
-		oldBooksListModel.addElement(new oldBook(3, "1991", murder));
-		oldBooksListModel.addElement(new oldBook(3, "1992", umbrella));
-		
-		
-
-		takenBooks.addElement(new Book(3, "1984", goodbye));
-		takenBooks.addElement(new Book(3, "1985", colorful));
-		takenBooks.addElement(new Book(3, "1986", murder));
-		takenBooks.addElement(new Book(3, "1987", umbrella));
-		takenBooks.addElement(new Book(3, "1988", kissing));
-		takenBooks.addElement(new Book(3, "1989", goodbye));
-		takenBooks.addElement(new Book(3, "1990", colorful));
-		takenBooks.addElement(new Book(3, "1991", murder));
-		takenBooks.addElement(new Book(3, "1992", umbrella));
 		
 		JPanel[] selectionList = {mainPageSidemenuSelection, bookLoanSidemenuSelection, bookDonationSidemenuSelection, profileSidemenuSelection};
 		JPanel[] barList = {mainPageSidemenuBar, bookLoanSidemenuBar, bookDonationSidemenuBar, profileSidemenuBar};
@@ -949,8 +864,6 @@ public class Window {
 		bookDonationSidemenuBar.addMouseListener(select);
 		profileSidemenuBar.addMouseListener(select);
 		frame.setVisible(false);
-		
-		searchBar.addActionListener(new bookSearchAction(bookList));
 	}
 
 	public Color getTextColor() {
@@ -985,46 +898,12 @@ public class Window {
 	}
 }
 
-class Book{
-	private int bookId;
-	private String bookName;
-	private ImageIcon bookCover;
-	
-	public Book(int bookId, String bookName, Image original) {
-		this.bookId = bookId;
-		this.bookName = bookName;
-		//Image original = new ImageIcon(getClass().getResource(path)).getImage();
-		Image dimg = original.getScaledInstance((int) (150*0.62), 150, Image.SCALE_SMOOTH);
-		//this.bookCover = new ImageIcon(getClass().getResource(path));
-		this.bookCover = new ImageIcon(dimg);
-	}
-
-	public int getBookId() {
-		return bookId;
-	}
-
-	public String getBookName() {
-		return bookName;
-	}
-
-	public ImageIcon getBookCover() {
-		return bookCover;
-	}
-	
-}
-
 class BookListRenderer extends DefaultListCellRenderer {
-	//private Book book;
-	
-	/*public MarioListRenderer(Book book) {
-		this.book = book;
-	}*/
-	
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Font font = new Font("helvitica", Font.BOLD, 14);
+	Font font = new Font("helvetica", Font.BOLD, 14);
 
     @Override
     public Component getListCellRendererComponent(
@@ -1033,8 +912,8 @@ class BookListRenderer extends DefaultListCellRenderer {
 
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
-        label.setText(((Book) value).getBookName());
-        label.setIcon(((Book) value).getBookCover());
+        label.setText(((Book) value).getName());
+        label.setIcon(((Book) value).getCover());
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
@@ -1045,46 +924,11 @@ class BookListRenderer extends DefaultListCellRenderer {
     }
 }
 
-class oldBook{
-	private int bookId;
-	private String bookName;
-	private ImageIcon bookCover;
+class LibraryListRenderer extends DefaultListCellRenderer {
+	MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, new Color(54, 199, 208));
 	
-	public oldBook(int bookId, String bookName, Image original) {
-		this.bookId = bookId;
-		this.bookName = bookName;
-		//Image original = new ImageIcon(getClass().getResource(path)).getImage();
-		Image dimg = original.getScaledInstance((int) (310*0.62), 310, Image.SCALE_SMOOTH);
-		//this.bookCover = new ImageIcon(getClass().getResource(path));
-		this.bookCover = new ImageIcon(dimg);
-	}
-
-	public int getBookId() {
-		return bookId;
-	}
-
-	public String getBookName() {
-		return bookName;
-	}
-
-	public ImageIcon getBookCover() {
-		return bookCover;
-	}
-	
-}
-
-class oldBooksListRenderer extends DefaultListCellRenderer {
-	//private Book book;
-	
-	/*public MarioListRenderer(Book book) {
-		this.book = book;
-	}*/
-	
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	Font font = new Font("helvitica", Font.BOLD, 14);
+	Font font = new Font("helvetica", Font.BOLD, 14);
 
     @Override
     public Component getListCellRendererComponent(
@@ -1093,12 +937,35 @@ class oldBooksListRenderer extends DefaultListCellRenderer {
 
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
-        label.setText(((oldBook) value).getBookName());
-        label.setIcon(((oldBook) value).getBookCover());
+        label.setText(((Library) value).getName());
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
-        label.setBorder(new LineBorder(new Color(39, 43, 47), 4));
+        label.setBorder(bottomLine);
+        label.setFont(font);
+        label.setForeground(Color.white);
+        return label;
+    }
+}
+
+class BookNameListRenderer extends DefaultListCellRenderer {
+	MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, new Color(54, 199, 208));
+	
+	private static final long serialVersionUID = 1L;
+	Font font = new Font("helvetica", Font.BOLD, 14);
+
+    @Override
+    public Component getListCellRendererComponent(
+            JList<?> list, Object value, int index,
+            boolean isSelected, boolean cellHasFocus) {
+
+        JLabel label = (JLabel) super.getListCellRendererComponent(
+                list, value, index, isSelected, cellHasFocus);
+        label.setText(((GeneralBook) value).getName());
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
+        list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
+        label.setBorder(bottomLine);
         label.setFont(font);
         label.setForeground(Color.white);
         return label;
@@ -1109,7 +976,6 @@ class CommentListRenderer extends DefaultListCellRenderer {
 	
 	Color commentLine;
 	MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, (Color) commentLine);
-	//private Book book;
 	
 	public CommentListRenderer(Color textColor) {
 		commentLine = textColor;
