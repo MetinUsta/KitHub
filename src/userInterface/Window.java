@@ -949,8 +949,6 @@ public class Window {
 		bookDonationSidemenuBar.addMouseListener(select);
 		profileSidemenuBar.addMouseListener(select);
 		frame.setVisible(false);
-		
-		searchBar.addActionListener(new bookSearchAction(bookList));
 	}
 
 	public Color getTextColor() {

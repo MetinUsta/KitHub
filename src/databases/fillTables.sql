@@ -2,9 +2,15 @@ BEGIN TRANSACTION;
 INSERT OR IGNORE INTO BookCopies VALUES(1,6,2,1);
 INSERT OR IGNORE INTO BookCopies VALUES(2,6,5,1);
 INSERT OR IGNORE INTO BookCopies VALUES(3,28,5,1);
-INSERT OR IGNORE INTO BookCopies VALUES(4,35,5,1);
+INSERT OR IGNORE INTO BookCopies VALUES(4,99,5,1);
 INSERT OR IGNORE INTO BookCopies VALUES(5,35,2,3);
 INSERT OR IGNORE INTO BookCopies VALUES(6,6,3,1);
+
+INSERT OR IGNORE INTO BookLoans VALUES(5,4,'2021-05-22T10:22:04.912340600Z',1);
+INSERT OR IGNORE INTO BookLoans VALUES(5,5,'2021-05-22T10:22:33.057493200Z',0);
+INSERT OR IGNORE INTO BookLoans VALUES(2,5,'2021-05-22T10:22:39.730673700Z',0);
+INSERT OR IGNORE INTO BookLoans VALUES(6,5,'2021-05-22T10:22:45.104275500Z',0);
+INSERT OR IGNORE INTO BookLoans VALUES(15,2,'2021-05-22T10:23:00.428705600Z',0);
 
 INSERT OR IGNORE INTO "Comments" ("UserId","BookId","Comment") VALUES (33,1,'I enjoyed this book. It wasn''t perfect or innovating, and it was kind of predictable. Still, it was a nice read and I enjoyed the story. I also like how the romance was kind of already established, so it wasn''t insanely cheesy or cliche or something.');
 INSERT OR IGNORE INTO "Comments" ("UserId","BookId","Comment") VALUES (63,1,'Man, oh man. I don''t even know what to say about this book. So many things...');
@@ -1121,12 +1127,6 @@ INSERT OR IGNORE INTO "Comments" ("UserId","BookId","Comment") VALUES (19,319,'T
 INSERT OR IGNORE INTO "Comments" ("UserId","BookId","Comment") VALUES (82,320,'It has been a while since I read it so I have forgotten details, but I remember mostly liking it. I wondered if amnesia would alter a personality as much as shown, but the author did do research. And the fiance''s getting to know the new woman is a sort of reminder that we do change and that we shouldn''t assume details about another.');
 INSERT OR IGNORE INTO "Comments" ("UserId","BookId","Comment") VALUES (2,320,'After reading an intriguing review in the Women''s REeiew of Books, I had to read the book. From the review I learned that the novel included two related narratives; half of the editions started with the one narrated by the 15th Century painter, the other half by the daughter of a woman who had loved a painting by that artist. I don''t think there is any way to tell which edition you are getting other than the illustration just before');
 INSERT OR IGNORE INTO "Comments" ("UserId","BookId","Comment") VALUES (17,320,'The primary thing for me in a mystery is how well the various options for solution are kept open till the end. In this book that was accomplished very well. The secondary consideration is characterization, and I am really growing to like the regulars in Penny''s novels. I am amused, however by what seems an inconsistency. In the later books, there is no online connectivity from Three Pines; in the earlier ones there is, albeit Slow. I was about to capitalize ''slow''; however, according to the book that would imply an acronym. As in Ruth''s poetry, I''m FINE.   A good read.');
-
-INSERT OR IGNORE INTO BookLoans VALUES(5,4,'2021-05-22T10:22:04.912340600Z',0);
-INSERT OR IGNORE INTO BookLoans VALUES(5,5,'2021-05-22T10:22:33.057493200Z',0);
-INSERT OR IGNORE INTO BookLoans VALUES(2,5,'2021-05-22T10:22:39.730673700Z',0);
-INSERT OR IGNORE INTO BookLoans VALUES(6,5,'2021-05-22T10:22:45.104275500Z',0);
-INSERT OR IGNORE INTO BookLoans VALUES(15,2,'2021-05-22T10:23:00.428705600Z',0);
 
 INSERT OR IGNORE INTO "Users" ("UserId","Name","Surname","Email","Password","LateReturnStatus") VALUES (1,'admin','admin','admin@sistemanalizi.com','15e2b0d3c33891ebb0f1ef609ec419420c20e320ce94c65fbc8c3312448eb225',0);
 INSERT OR IGNORE INTO "Users" ("UserId","Name","Surname","Email","Password","LateReturnStatus") VALUES (2,'Chanice','Wooten','Chanice_Wooten@hotmail.com','2ae4ae5509b359e35cf9329a52de7dc48b25e119ad9666e43982729178cf18b0',0);
