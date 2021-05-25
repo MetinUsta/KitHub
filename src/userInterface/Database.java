@@ -12,12 +12,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+@SuppressWarnings("serial")
+class LateBookReturnException extends Exception {
+	public LateBookReturnException() {
+		super();
+	}
+}
+
 public class Database {
+	public final static int MAX_DAYS_TO_RETURN = 20;
+
 	private static String dbPath = "src/databases/libraryManagement.db";
 	private static String dbUrl = "jdbc:sqlite:" + dbPath;
 
@@ -34,10 +47,15 @@ public class Database {
 		/*
 		HashMap<String, Object> info;
 		try {
-			info = getUserInfo("aaron_jukes@tutanota.com",
-					"2ae4ae5509b359e35cf9329a52de7dc48b25e119ad9666e43982729178cf18b0");
-			System.out.println((String) info.get("Name"));
-			System.out.println((boolean) info.get("LateReturnStatus"));
+			info = getUserInfo("test@mail.com",
+					Security.getPasswordHash("12345"));
+			if (info.get("Name") == null) {
+				System.out.println("Boyle bir kullanici bulunmamaktadir.");
+			} else {
+				System.out.println((String) info.get("Name"));
+				System.out.println((boolean) info.get("LateReturnStatus"));
+			}
+		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -66,9 +84,20 @@ public class Database {
 
 		/*
 		try {
-			LinkedList<Integer> bookIds = getRelatedBooks("cruise");
+			LinkedList<Integer> bookIds = getSearchedBooks("cruise");
 			for (int bookId : bookIds) {
 				System.out.println(bookId);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+
+		/*
+		try {
+			LinkedList<String>genres = getUniqueGenres();
+			for(String genre : genres) {
+				System.out.println(genre);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -120,13 +149,29 @@ public class Database {
 		/*
 		Integer bookId;
 		try {
-			bookId = getBookFromIsbn("9780486276809");
+			bookId = getBookFromIsbn("9780007119332");
 			System.out.println(bookId);
 			bookId = getBookFromIsbn("0000000000000");
 			System.out.println(bookId);
 			// null checks here
 			if(bookId == null) {
 				System.out.println("No book with that Isbn13 exists in the database.");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+
+		/*
+		Integer bookId;
+		try {
+			bookId = getBookFromCopyId(3);
+			System.out.println(bookId);
+			bookId = getBookFromCopyId(29);
+			System.out.println(bookId);
+			// null checks here
+			if (bookId == null) {
+				System.out.println("No book with that bookCopyId exists in the database.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -180,8 +225,9 @@ public class Database {
 
 		/*
 		Clock clock = Clock.systemUTC();
+		
 		try {
-			userLoanBook(15, 2, clock.instant().toString());
+			userLoanBook(15, 28, 5, clock.instant().toString());
 		} catch (SQLException e) {
 			// Duplicate handling here
 			if(e.getErrorCode() == 19) {
@@ -189,9 +235,30 @@ public class Database {
 			}
 			e.printStackTrace();
 		}
-		// Demo code to show how to turn clock instant into printable YYYY-MM-DD string 
-		LocalDate date = LocalDate.ofInstant(clock.instant(), clock.getZone());
+		// Demo code to show how to turn clock instant string into printable YYYY-MM-DD string 
+		Instant instant =  Instant.parse("2021-05-22T10:22:04.912340600Z");
+		LocalDate date = LocalDate.ofInstant(instant, clock.getZone());
 		System.out.println(date.toString());
+		*/
+
+		/*
+		try {
+			System.out.println(isBookReturnedLate(5, 4, "2021-06-28T10:22:04.912340600Z"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+
+		/*
+		Clock clock = Clock.systemUTC();
+		try {
+			userReturnBook(5, 4, "2021-07-22T10:22:33.057493200Z");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (LateBookReturnException e) {
+			System.out.println(
+					"You returned this book late. You cannot loan new books until you donate a book to one of the libraries.");
+		}
 		*/
 
 		/*
@@ -226,7 +293,18 @@ public class Database {
 
 		/*
 		try {
-			LinkedList<Integer> bookIds = getLoanedBooks(1);
+			LinkedList<Integer> bookIds = getLoanedBooks(5);
+			for (int bookId : bookIds) {
+				System.out.println(bookId);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+
+		/*
+		try {
+			LinkedList<Integer> bookIds = getReturnedBooks(15);
 			for (int bookId : bookIds) {
 				System.out.println(bookId);
 			}
@@ -239,17 +317,19 @@ public class Database {
 	}
 
 	/**
-	 * Gets command line arguments as varargs and calls the given python script with those arguments.
+	 * Gets command line arguments as varargs and calls the given python script with
+	 * those arguments.
 	 * Exit code and the stdout of the python script is also tied to the Java.
+	 * 
 	 * @param args command-line arguments of the python script (argv)
 	 */
 	public static void callPython(String scriptPath, String... args) {
 		try {
 			ArrayList<String> argList = new ArrayList<>();
-			
+
 			argList.add("python");
 			argList.add(scriptPath);
-			for(String arg : args) {
+			for (String arg : args) {
 				argList.add(arg);
 			}
 			ProcessBuilder pb = new ProcessBuilder(argList);
@@ -376,11 +456,12 @@ public class Database {
 	/**
 	 * Finds the given user in the database and returns all of its columns.
 	 * 
-	 * @return HashMap containing the columns of the matching user
+	 * @return HashMap containing the columns of the matching user or empty HashMap
+	 *         if the user does not exist
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
-	public static HashMap<String, Object> getUserInfo(String email, String password) throws SQLException {
+	public static HashMap<String, Object> getUserInfo(String email, String passwordHash) throws SQLException {
 		String sql = "SELECT UserId, Name, Surname, Email, Password, LateReturnStatus FROM Users WHERE Email = ? AND Password = ?";
 		HashMap<String, Object> info = new HashMap<>();
 
@@ -388,7 +469,7 @@ public class Database {
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, email);
-			pstmt.setString(2, password);
+			pstmt.setString(2, passwordHash);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				info.put("UserId", rs.getInt("UserId"));
@@ -405,7 +486,8 @@ public class Database {
 	/**
 	 * Finds the given user in the database and returns all of its columns.
 	 * 
-	 * @return HashMap containing the columns of the matching user
+	 * @return HashMap containing the columns of the matching usepr or empty HashMap
+	 *         if the user does not exist
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
@@ -435,7 +517,7 @@ public class Database {
 	 * 
 	 * @throws SQLException
 	 */
-	public static void addNewUser(String name, String surname, String email, String password) throws SQLException {
+	public static void addNewUser(String name, String surname, String email, String passwordHash) throws SQLException {
 		String sql = "INSERT INTO Users (Name, Surname, Email, Password)"
 				+ "VALUES (?, ?, ?, ?)";
 
@@ -445,39 +527,128 @@ public class Database {
 			pstmt.setString(1, name);
 			pstmt.setString(2, surname);
 			pstmt.setString(3, email);
-			pstmt.setString(4, password);
+			pstmt.setString(4, passwordHash);
 			pstmt.executeUpdate();
 		}
 	}
 
+	// TODO isReturned kontrolü ve library CopyCount kontrolü ekle
+	// TODO LateReturnStatus kontrolü ekle
 	/**
 	 * Registers the new book loan to the BookLoans table.
 	 * 
 	 * @throws SQLException
 	 */
-	public static void userLoanBook(int userId, int bookCopyId, String loanDate) throws SQLException {
+	public static void userLoanBook(int userId, int bookId, int libraryId, String loanDateInstant) throws SQLException {
 		String sql = "INSERT INTO BookLoans (UserId, BookCopyId, LoanDate)"
 				+ "VALUES (?, ?, ?)";
+		String sqlGetCopyId = "SELECT BookCopyId FROM BookCopies WHERE BookId = ? AND LibraryId = ?";
+
+		Connection conn = connectToDatabase();
+		PreparedStatement pstmt;
+		ResultSet rs;
+		int bookCopyId;
+
+		pstmt = conn.prepareStatement(sqlGetCopyId);
+
+		pstmt.setInt(1, bookId);
+		pstmt.setInt(2, libraryId);
+		rs = pstmt.executeQuery();
+		if (rs.next()) {
+			bookCopyId = rs.getInt("BookCopyId");
+		} else {
+			throw new SQLException();
+		}
+		pstmt = conn.prepareStatement(sql);
+
+		pstmt.setInt(1, userId);
+		pstmt.setInt(2, bookCopyId);
+		pstmt.setString(3, loanDateInstant);
+		pstmt.executeUpdate();
+
+	}
+
+	/**
+	 * Check if the return time of the book exceeds the library limitations.
+	 * 
+	 * @return Flag true if user returned the book late, otherwise return false
+	 * @throws SQLException
+	 */
+
+	@SuppressWarnings("resource")
+	private static boolean isBookReturnedLate(int userId, int bookCopyId, String returnDateInstant)
+			throws SQLException {
+		Clock clock = Clock.systemUTC();
+		LocalDate returnDate = LocalDate.ofInstant(Instant.parse(returnDateInstant), clock.getZone());
+		LocalDate loanDate;
+		String sql = "SELECT LoanDate FROM BookLoans WHERE UserId = ? AND BookCopyId = ?";
 
 		try (Connection conn = connectToDatabase();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setInt(1, userId);
 			pstmt.setInt(2, bookCopyId);
-			pstmt.setString(3, loanDate);
-			pstmt.executeUpdate();
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				loanDate = LocalDate.ofInstant(Instant.parse(rs.getString("LoanDate")), clock.getZone());
+			} else {
+				throw new SQLException();
+			}
+			if (ChronoUnit.DAYS.between(loanDate, returnDate) >= MAX_DAYS_TO_RETURN) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 
 	/**
-	 * Searches BookLoans table and returns loaned books of the given user
+	 * Returns given book to the library. If the user returned the book late
+	 * according to the MAX_DAYS_TO_RETURN, user
+	 * gets banned from loaning new books until he/she serves his penalty.
 	 * 
-	 * @return a LinkedList containing BookIds
+	 * @throws SQLException            if any error occurs while executing SQL
+	 *                                 queries
+	 * @throws LateBookReturnException if the user returned the book late
+	 */
+	public static void userReturnBook(int userId, int bookCopyId, String returnDateInstant)
+			throws SQLException, LateBookReturnException {
+		String sql = "UPDATE BookLoans SET IsReturned = 1 WHERE UserId = ? AND BookCopyId = ? AND IsReturned = 0";
+		String sqlSetLateReturn = "UPDATE Users SET LateReturnStatus = 1 WHERE UserId = ?";
+		String sqlSetBookLoans = "UPDATE BookLoans SET LoanDate = ?, IsReturned = -1 WHERE UserId = ? AND BookCopyId = ?";
+
+		try (Connection conn = connectToDatabase()) {
+			if (isBookReturnedLate(userId, bookCopyId, returnDateInstant)) {
+				try (PreparedStatement pstmt = conn.prepareStatement(sqlSetLateReturn)) {
+					pstmt.setInt(1, userId);
+					pstmt.executeUpdate();
+				}
+				try (PreparedStatement pstmt = conn.prepareStatement(sqlSetBookLoans)) {
+					pstmt.setString(1, returnDateInstant);
+					pstmt.setInt(2, userId);
+					pstmt.setInt(3, bookCopyId);
+					pstmt.executeUpdate();
+				}
+				throw new LateBookReturnException();
+			} else {
+				try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+					pstmt.setInt(1, userId);
+					pstmt.setInt(2, bookCopyId);
+					pstmt.executeUpdate();
+				}
+			}
+		}
+	}
+
+	/**
+	 * Searches BookLoans table and returns currently loaned books of the given user
+	 * 
+	 * @return a LinkedList containing BookCopyIds
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
 	public static LinkedList<Integer> getLoanedBooks(int userId) throws SQLException {
-		String sql = "SELECT BookId FROM BookLoans INNER JOIN BookCopies USING(BookCopyId) WHERE UserId = ?";
+		String sql = "SELECT BookCopyId FROM BookLoans INNER JOIN BookCopies USING(BookCopyId) WHERE UserId = ? AND IsReturned = 0";
 		LinkedList<Integer> books = new LinkedList<>();
 
 		try (Connection conn = connectToDatabase();
@@ -486,7 +657,40 @@ public class Database {
 
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				books.addLast(rs.getInt("BookId"));
+				books.addLast(rs.getInt("BookCopyId"));
+			}
+			return books;
+		}
+	}
+
+	/**
+	 * Searches BookLoans table and returns previously returned books of the given
+	 * user
+	 * 
+	 * @return a LinkedList containing BookIds
+	 * @throws SQLException
+	 * @authors Metin Usta
+	 */
+	@SuppressWarnings("resource")
+	public static LinkedList<Integer> getReturnedBooks(int userId) throws SQLException {
+		String sql = "SELECT BookCopyId FROM BookLoans INNER JOIN BookCopies USING(BookCopyId) WHERE UserId = ? AND (IsReturned = 1 OR IsReturned = -1)";
+		String sqlBookCopy = "SELECT BookId FROM BookCopies WHERE BookCopyId = ?";
+		LinkedList<Integer> books = new LinkedList<>();
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				PreparedStatement pstmt2 = conn.prepareStatement(sqlBookCopy)) {
+			pstmt.setInt(1, userId);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int bookCopyId = rs.getInt("BookCopyId");
+				ResultSet rs2;
+				pstmt2.setInt(1, bookCopyId);
+
+				rs2 = pstmt2.executeQuery();
+				rs2.next();
+				books.addLast(rs2.getInt("BookId"));
 			}
 			return books;
 		}
@@ -495,7 +699,7 @@ public class Database {
 	/**
 	 * Adds a new comment with the given properties to the Comments table.
 	 * 
-	 * @throws SQLException
+	 * @throws SQLException A user cannot comment twice to the same book
 	 */
 	public static void addNewComment(int userId, int bookId, String comment) throws SQLException {
 		String sql = "INSERT INTO Comments (UserId, BookId, Comment)"
@@ -537,7 +741,8 @@ public class Database {
 	/**
 	 * Finds the given book in the database and returns all of its columns.
 	 * 
-	 * @return HashMap containing the columns of the matching book
+	 * @return HashMap containing the columns of the matching book or empty HashMap
+	 *         if the book does not exist
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
@@ -581,7 +786,7 @@ public class Database {
 
 			pstmt.setString(1, isbn13);
 			ResultSet rs = pstmt.executeQuery();
-			while (rs.next()) {
+			if (rs.next()) {
 				bookId = rs.getInt("BookId");
 			}
 			return bookId;
@@ -589,7 +794,33 @@ public class Database {
 	}
 
 	/**
-	 * Finds 10 most recent published books that belong the the given genre and
+	 * Finds the book with the given bookCopyId and returns its BookId if it exists
+	 * in the
+	 * Books.
+	 * 
+	 * @return a Integer object which contains BookId or null (must put this return
+	 *         value inside an Integer object to be able to detect null values)
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("resource")
+	public static Integer getBookFromCopyId(int bookCopyId) throws SQLException {
+		String sql = "SELECT BookId FROM BookCopies WHERE BookCopyId = ?";
+		Integer bookId = null;
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setInt(1, bookCopyId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				bookId = rs.getInt("BookId");
+			}
+			return bookId;
+		}
+	}
+
+	/**
+	 * Finds 10 most recent published books that belong to the given genre and
 	 * returns them.
 	 * 
 	 * @return a LinkedList containing BookIds
@@ -699,69 +930,67 @@ public class Database {
 		String sqlInsertCopies = "INSERT INTO BookCopies (BookId, LibraryId, CopyCount)"
 				+ "VALUES (?, ?, ?)";
 
-		Integer bookId;
-		Connection conn = connectToDatabase();
-		PreparedStatement pstmt;
-		Statement stmt;
+		try (Connection conn = connectToDatabase()) {
+			Integer bookId;
+			bookId = getBookFromIsbn(isbn13);
+			if (bookId == null) { // book does not exist
+				int lastBookId;
 
-		pstmt = conn.prepareStatement(sqlCreate);
-		stmt = conn.createStatement();
+				try (Statement stmt = conn.createStatement()) {
+					ResultSet rs = stmt.executeQuery("SELECT BookId FROM Books ORDER BY BookId DESC");
+					if (rs.next()) {
+						lastBookId = rs.getInt("BookId");
+						lastBookId++;
+					} else {
+						throw new SQLException();
+					}
+				}
+				try (PreparedStatement pstmt = conn.prepareStatement(sqlCreate)) {
+					pstmt.setString(1, title);
+					pstmt.setString(2, author);
+					pstmt.setString(3, publishDate);
+					pstmt.setInt(4, pageCount);
+					pstmt.setString(5, isbn13);
+					pstmt.setString(6, overview);
+					pstmt.executeUpdate();
+				}
+				try (PreparedStatement pstmt = conn.prepareStatement(sqlGenre)) {
+					pstmt.setInt(1, lastBookId);
+					for (String genre : genres.split(",")) {
+						pstmt.setString(2, genre.strip());
+						pstmt.executeUpdate();
+					}
+				}
+				try (PreparedStatement pstmt = conn.prepareStatement(sqlInsertCopies)) {
+					pstmt.setInt(1, lastBookId);
+					pstmt.setInt(2, libraryId);
+					pstmt.setInt(3, 1);
+					pstmt.executeUpdate();
+				}
+			} else { // book already in the books table
+				LinkedList<Integer> libraries = getLibrariesOfBook(bookId);
+				boolean registered = false;
 
-		bookId = getBookFromIsbn(isbn13);
-		if (bookId == null) { // book does not exist
-			int lastBookId;
-
-			ResultSet rs = stmt.executeQuery("SELECT BookId FROM Books ORDER BY BookId DESC LIMIT 1");
-			rs.next();
-			lastBookId = rs.getInt("BookId");
-			System.out.println("Test: " + lastBookId);
-			lastBookId++;
-
-			pstmt.setString(1, title);
-			pstmt.setString(2, author);
-			pstmt.setString(3, publishDate);
-			pstmt.setInt(4, pageCount);
-			pstmt.setString(5, isbn13);
-			pstmt.setString(6, overview);
-			pstmt.executeUpdate();
-
-			pstmt = conn.prepareStatement(sqlGenre);
-			pstmt.setInt(1, lastBookId);
-			for (String genre : genres.split(",")) {
-				pstmt.setString(2, genre.strip());
-				pstmt.executeUpdate();
-			}
-
-			pstmt = conn.prepareStatement(sqlInsertCopies);
-			pstmt.setInt(1, lastBookId);
-			pstmt.setInt(2, libraryId);
-			pstmt.setInt(3, 1);
-			pstmt.executeUpdate();
-		} else { // book already in the books table
-			LinkedList<Integer> libraries = getLibrariesOfBook(bookId);
-			boolean registered = false;
-
-			for (int lib : libraries) {
-				if (lib == libraryId) {
-					registered = true;
+				for (int lib : libraries) {
+					if (lib == libraryId) {
+						registered = true;
+					}
+				}
+				if (registered) { // library has at least one copy of this book
+					try (PreparedStatement pstmt = conn.prepareStatement(sqlUpdateCopies)) {
+						pstmt.setInt(1, bookId);
+						pstmt.setInt(2, libraryId);
+						pstmt.executeUpdate();
+					}
+				} else {
+					try (PreparedStatement pstmt = conn.prepareStatement(sqlInsertCopies)) {
+						pstmt.setInt(1, bookId);
+						pstmt.setInt(2, libraryId);
+						pstmt.setInt(3, 1);
+						pstmt.executeUpdate();
+					}
 				}
 			}
-			if (registered) {
-				pstmt = conn.prepareStatement(sqlUpdateCopies);
-
-				pstmt.setInt(1, bookId);
-				pstmt.setInt(2, libraryId);
-				pstmt.executeUpdate();
-			} else {
-				pstmt = conn.prepareStatement(sqlInsertCopies);
-				pstmt.setInt(1, bookId);
-				pstmt.setInt(2, libraryId);
-				pstmt.setInt(3, 1);
-				pstmt.executeUpdate();
-			}
-		}
-		try {
-			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -775,7 +1004,7 @@ public class Database {
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
-	public static LinkedList<Integer> getRelatedBooks(String searchStr) throws SQLException {
+	public static LinkedList<Integer> getSearchedBooks(String searchStr) throws SQLException {
 		String sql = "SELECT BookId FROM Books WHERE Title LIKE ? OR Author LIKE ? ORDER BY Title";
 		LinkedList<Integer> books = new LinkedList<>();
 
@@ -793,9 +1022,32 @@ public class Database {
 	}
 
 	/**
+	 * Finds all of the unique genres in the BookGenres table and returns them
+	 * 
+	 * @return a LinkedList containing genres
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("resource")
+	public static LinkedList<String> getUniqueGenres() throws SQLException {
+		String sql = "SELECT DISTINCT Genre FROM BookGenres ORDER BY Genre";
+		LinkedList<String> genres = new LinkedList<>();
+
+		try (Connection conn = connectToDatabase();
+				Statement stmt = conn.createStatement()) {
+
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				genres.addLast(rs.getString("Genre"));
+			}
+			return genres;
+		}
+	}
+
+	/**
 	 * Finds the given library in the database and returns its contact info.
 	 * 
-	 * @return HashMap containing the columns of the matching library
+	 * @return HashMap containing the columns of the matching library or empty
+	 *         HashMap if the library does not exist
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
@@ -824,7 +1076,8 @@ public class Database {
 	/**
 	 * Finds the given library in the database and returns its shelf properties.
 	 * 
-	 * @return HashMap containing the columns of the matching library
+	 * @return HashMap containing the columns of the matching library or empty
+	 *         HashMap if the library does not exist
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
