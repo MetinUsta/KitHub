@@ -35,6 +35,10 @@ import javax.swing.JTextArea;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class Window {
 	
@@ -109,20 +113,21 @@ public class Window {
 		JScrollPane bookListScrollPane = new JScrollPane();
 		bookListScrollPane.setBorder(null);
 		bookListScrollPane.setBounds(10, 57, 317, 448);
-		bookListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		bookListScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		bookListScrollPane.setBorder(bottomLine);
+		bookListScrollPane.getVerticalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
+		bookListScrollPane.getHorizontalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
 		
 		DefaultListModel<GeneralBook> bookList = new DefaultListModel<>();
 		JList<GeneralBook> list = new JList<>(bookList);
 
-		list.setCellRenderer(new BookNameListRenderer());
+		list.setCellRenderer(new BookNameListRenderer(textColor));
 		list.setSelectionForeground(Color.WHITE);
 		list.setSelectionBackground(textColor);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setBackground(elevation1);
 		
 		JScrollPane bookSuggestionsScrollPanel = new JScrollPane();
-		bookSuggestionsScrollPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		bookSuggestionsScrollPanel.setBorder(bottomLine);
 		bookSuggestionsScrollPanel.setBounds(10, 516, 317, 200);
 		
@@ -152,18 +157,21 @@ public class Window {
 		searchPanel.add(menuBar);
 		
 		JTextField searchBar = new JTextField();
-		
 		searchBar.setBorder(new LineBorder(Color.WHITE, 4));
 		searchBar.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		menuBar.add(searchBar);
 		searchBar.setColumns(10);
 		
-		JComboBox<String> selectGenreList = new JComboBox<>();
-		selectGenreList.setPrototypeDisplayValue("---------------");
-		selectGenreList.setBorder(null);
-		selectGenreList.setBackground(Color.WHITE);
-		selectGenreList.addItem("India");
-		menuBar.add(selectGenreList);
+		JComboBox<String> searchTypeComboBox = new JComboBox<>();
+		searchTypeComboBox.setPrototypeDisplayValue("---------------");
+		searchTypeComboBox.setBorder(null);
+		searchTypeComboBox.setBackground(Color.WHITE);
+		searchTypeComboBox.addItem("Type");
+		searchTypeComboBox.addItem("Title");
+		searchTypeComboBox.addItem("Author");
+		searchTypeComboBox.addItem("ISBN13");
+		searchTypeComboBox.addItem("Genre");
+		menuBar.add(searchTypeComboBox);
 		
 		DefaultListModel<GeneralBook> bookSuggestList = new DefaultListModel<>();
 		JList<GeneralBook> bookSuggest = new JList<>(bookSuggestList);
@@ -208,8 +216,8 @@ public class Window {
 		});
 		
 		overviewHoverButton.setBorder(null);
-		Image original = new ImageIcon(Window.class.getResource("/bookCovers/kissingCouple.png")).getImage();
-		Image dimg = original.getScaledInstance(bookCoverPanel.getWidth(), bookCoverPanel.getHeight(), Image.SCALE_SMOOTH);
+		/*Image original = new ImageIcon(Window.class.getResource("/bookCovers/kissingCouple.png")).getImage();
+		Image dimg = original.getScaledInstance(bookCoverPanel.getWidth(), bookCoverPanel.getHeight(), Image.SCALE_SMOOTH);*/
 		bookCoverPanel.setLayout(null);
 		
 		overviewShadingPanel.setVisible(false);
@@ -226,7 +234,7 @@ public class Window {
 		overviewTextLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		overviewTextLabel.setForeground(Color.WHITE);
 		overviewShadingPanel.add(overviewTextLabel);
-		overviewHoverButton.setIcon(new ImageIcon(dimg));
+		//overviewHoverButton.setIcon(new ImageIcon(dimg));
 		overviewHoverButton.setBounds(0, 0, 310, 494);
 		bookCoverPanel.add(overviewHoverButton);
 		bookLoanPanel.add(bookReview);
@@ -863,6 +871,9 @@ public class Window {
 		bookLoanSidemenuBar.addMouseListener(select);
 		bookDonationSidemenuBar.addMouseListener(select);
 		profileSidemenuBar.addMouseListener(select);
+		
+		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList));
+		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList));
 		frame.setVisible(false);
 	}
 
@@ -912,13 +923,20 @@ class BookListRenderer extends DefaultListCellRenderer {
 
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
-        label.setText(((Book) value).getName());
+        label.setText("<html><body style='width:80px'>" + ((Book) value).getName() + "</html>");
         label.setIcon(((Book) value).getCover());
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalTextPosition(JLabel.BOTTOM);
         list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
         label.setBorder(new LineBorder(new Color(39, 43, 47), 4));
+        //label.setBorder(new MatteBorder(0, 4, 0, 4, new Color(39, 43, 47)));
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setVerticalAlignment(SwingConstants.TOP);
         label.setFont(font);
+        /*Dimension d = label.getSize();
+        d.width = 150;
+        d.height = 150;
+        label.setPreferredSize(d);*/
         label.setForeground(Color.white);
         return label;
     }
@@ -949,11 +967,17 @@ class LibraryListRenderer extends DefaultListCellRenderer {
 }
 
 class BookNameListRenderer extends DefaultListCellRenderer {
-	MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, new Color(54, 199, 208));
+	private Color bottomLineColor;
+	MatteBorder bottomLine;
 	
 	private static final long serialVersionUID = 1L;
 	Font font = new Font("helvetica", Font.BOLD, 14);
-
+	
+	public BookNameListRenderer(Color bottomLineColor) {
+		this.bottomLineColor = bottomLineColor;
+		this.bottomLine = new MatteBorder(0, 0, 2, 0, bottomLineColor);
+	}
+	
     @Override
     public Component getListCellRendererComponent(
             JList<?> list, Object value, int index,
@@ -962,9 +986,9 @@ class BookNameListRenderer extends DefaultListCellRenderer {
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
         label.setText(((GeneralBook) value).getName());
-        label.setHorizontalTextPosition(JLabel.CENTER);
-        label.setVerticalTextPosition(JLabel.BOTTOM);
-        list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
+        //label.setHorizontalTextPosition(JLabel.CENTER);
+        //label.setVerticalTextPosition(JLabel.BOTTOM);
+        //list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
         label.setBorder(bottomLine);
         label.setFont(font);
         label.setForeground(Color.white);

@@ -39,279 +39,284 @@ public class Database {
 		fillTables();
 
 		// CALL PYTHON SCRIPT FROM JAVA
-		callPython("src/scripts/importBooks.py", "src/databases/importFiles/Books.csv",
-				"src/databases/libraryManagement.db");
+		/*callPython("src/scripts/importBooks.py", "src/databases/importFiles/Books.csv",
+				"src/databases/libraryManagement.db");*/
 
 //		System.out.println(isAdmin("123456789"));
 
 		/*
-		HashMap<String, Object> info;
-		try {
-			info = getUserInfo("test@mail.com",
-					Security.getPasswordHash("12345"));
-			if (info.get("Name") == null) {
-				System.out.println("Boyle bir kullanici bulunmamaktadir.");
-			} else {
-				System.out.println((String) info.get("Name"));
-				System.out.println((boolean) info.get("LateReturnStatus"));
-			}
-		
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * HashMap<String, Object> info;
+		 * try {
+		 * info = getUserInfo("test@mail.com",
+		 * Security.getPasswordHash("12345"));
+		 * if (info.get("Name") == null) {
+		 * System.out.println("Boyle bir kullanici bulunmamaktadir.");
+		 * } else {
+		 * System.out.println((String) info.get("Name"));
+		 * System.out.println((boolean) info.get("LateReturnStatus"));
+		 * }
+		 * 
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		HashMap<String, Object> info;
-		try {
-			info = getUserInfo(10);
-			System.out.println((String) info.get("Name"));
-			System.out.println((boolean) info.get("LateReturnStatus"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * HashMap<String, Object> info;
+		 * try {
+		 * info = getUserInfo(10);
+		 * System.out.println((String) info.get("Name"));
+		 * System.out.println((boolean) info.get("LateReturnStatus"));
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		String password = "1234*";
-		try {
-			addNewUser("Scott", "Rowlett",
-					"scott_rowlett@tutanota.com", Security.getPasswordHash(password));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * String password = "1234*";
+		 * try {
+		 * addNewUser("Scott", "Rowlett",
+		 * "scott_rowlett@tutanota.com", Security.getPasswordHash(password));
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<Integer> bookIds = getSearchedBooks("cruise");
-			for (int bookId : bookIds) {
-				System.out.println(bookId);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<Integer> bookIds = getSearchedBooks("cruise");
+		 * for (int bookId : bookIds) {
+		 * System.out.println(bookId);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<String>genres = getUniqueGenres();
-			for(String genre : genres) {
-				System.out.println(genre);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<String>genres = getUniqueGenres();
+		 * for(String genre : genres) {
+		 * System.out.println(genre);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<Integer> libraryIds = getLibrariesOfBook(20);
-			for (int libraryId : libraryIds) {
-				System.out.println(libraryId);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<Integer> libraryIds = getLibrariesOfBook(20);
+		 * for (int libraryId : libraryIds) {
+		 * System.out.println(libraryId);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		HashMap<String, Object> info;
-		try {
-			info = getLibraryContactInfo(1);
-			System.out.println((String) info.get("Name"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		h}
-		*/
+		 * HashMap<String, Object> info;
+		 * try {
+		 * info = getLibraryContactInfo(1);
+		 * System.out.println((String) info.get("Name"));
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * h}
+		 */
 
 		/*
-		HashMap<String, Integer> info;
-		try {
-			info = getLibraryShelfInfo(1);
-			System.out.println(info.get("RowCount"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * HashMap<String, Integer> info;
+		 * try {
+		 * info = getLibraryShelfInfo(1);
+		 * System.out.println(info.get("RowCount"));
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<Integer> bookIds = getBooksFromGenre("Detective and mystery stories");
-			for (int bookId : bookIds) {
-				System.out.println(bookId);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<Integer> bookIds =
+		 * getBooksFromGenre("Detective and mystery stories");
+		 * for (int bookId : bookIds) {
+		 * System.out.println(bookId);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		Integer bookId;
-		try {
-			bookId = getBookFromIsbn("9780007119332");
-			System.out.println(bookId);
-			bookId = getBookFromIsbn("0000000000000");
-			System.out.println(bookId);
-			// null checks here
-			if(bookId == null) {
-				System.out.println("No book with that Isbn13 exists in the database.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * Integer bookId;
+		 * try {
+		 * bookId = getBookFromIsbn("9780007119332");
+		 * System.out.println(bookId);
+		 * bookId = getBookFromIsbn("0000000000000");
+		 * System.out.println(bookId);
+		 * // null checks here
+		 * if(bookId == null) {
+		 * System.out.println("No book with that Isbn13 exists in the database.");
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		Integer bookId;
-		try {
-			bookId = getBookFromCopyId(3);
-			System.out.println(bookId);
-			bookId = getBookFromCopyId(29);
-			System.out.println(bookId);
-			// null checks here
-			if (bookId == null) {
-				System.out.println("No book with that bookCopyId exists in the database.");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * Integer bookId;
+		 * try {
+		 * bookId = getBookFromCopyId(3);
+		 * System.out.println(bookId);
+		 * bookId = getBookFromCopyId(29);
+		 * System.out.println(bookId);
+		 * // null checks here
+		 * if (bookId == null) {
+		 * System.out.println("No book with that bookCopyId exists in the database.");
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		HashMap<String, Object> info;
-		try {
-			info = getBookInfo(5);
-			System.out.println((String) info.get("Title"));
-			System.out.println((String) info.get("PublishDate"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * HashMap<String, Object> info;
+		 * try {
+		 * info = getBookInfo(5);
+		 * System.out.println((String) info.get("Title"));
+		 * System.out.println((String) info.get("PublishDate"));
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<String> comments = getBookComments(10);
-			for (String comment : comments) {
-				System.out.println(comment);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<String> comments = getBookComments(10);
+		 * for (String comment : comments) {
+		 * System.out.println(comment);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<String> genres = getGenresOfBook(7);
-			for (String genre : genres) {
-				System.out.println(genre);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<String> genres = getGenresOfBook(7);
+		 * for (String genre : genres) {
+		 * System.out.println(genre);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			addNewComment(2, 5365, "It's okay, I guess.");
-		} catch (SQLException e) {
-			// Duplicate review handling here
-			if(e.getErrorCode() == 19) {
-				System.out.println("error: You cannot review the same book twice.");
-			}
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * addNewComment(2, 5365, "It's okay, I guess.");
+		 * } catch (SQLException e) {
+		 * // Duplicate review handling here
+		 * if(e.getErrorCode() == 19) {
+		 * System.out.println("error: You cannot review the same book twice.");
+		 * }
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		Clock clock = Clock.systemUTC();
-		
-		try {
-			userLoanBook(15, 28, 5, clock.instant().toString());
-		} catch (SQLException e) {
-			// Duplicate handling here
-			if(e.getErrorCode() == 19) {
-				System.out.println("error");
-			}
-			e.printStackTrace();
-		}
-		// Demo code to show how to turn clock instant string into printable YYYY-MM-DD string 
-		Instant instant =  Instant.parse("2021-05-22T10:22:04.912340600Z");
-		LocalDate date = LocalDate.ofInstant(instant, clock.getZone());
-		System.out.println(date.toString());
-		*/
+		 * Clock clock = Clock.systemUTC();
+		 * 
+		 * try {
+		 * userLoanBook(15, 28, 5, clock.instant().toString());
+		 * } catch (SQLException e) {
+		 * // Duplicate handling here
+		 * if(e.getErrorCode() == 19) {
+		 * System.out.println("error");
+		 * }
+		 * e.printStackTrace();
+		 * }
+		 * // Demo code to show how to turn clock instant string into printable
+		 * YYYY-MM-DD string
+		 * Instant instant = Instant.parse("2021-05-22T10:22:04.912340600Z");
+		 * LocalDate date = LocalDate.ofInstant(instant, clock.getZone());
+		 * System.out.println(date.toString());
+		 */
 
 		/*
-		try {
-			System.out.println(isBookReturnedLate(5, 4, "2021-06-28T10:22:04.912340600Z"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * System.out.println(isBookReturnedLate(5, 4,
+		 * "2021-06-28T10:22:04.912340600Z"));
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		Clock clock = Clock.systemUTC();
-		try {
-			userReturnBook(5, 4, "2021-07-22T10:22:33.057493200Z");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (LateBookReturnException e) {
-			System.out.println(
-					"You returned this book late. You cannot loan new books until you donate a book to one of the libraries.");
-		}
-		*/
+		 * Clock clock = Clock.systemUTC();
+		 * try {
+		 * userReturnBook(5, 4, "2021-07-22T10:22:33.057493200Z");
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * } catch (LateBookReturnException e) {
+		 * System.out.println(
+		 * "You returned this book late. You cannot loan new books until you donate a book to one of the libraries."
+		 * );
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<Integer>libraries = getLibraries();
-			for(Integer library : libraries) {
-				System.out.println(library);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<Integer>libraries = getLibraries();
+		 * for(Integer library : libraries) {
+		 * System.out.println(library);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			donateBook("TestTitle", "TestAuthor", "1965", 322, "9780006280934", "I'm Groot!", "Crime, Thriller", 3);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * donateBook("TestTitle", "TestAuthor", "1965", 322, "9780006280934",
+		 * "I'm Groot!", "Crime, Thriller", 3);
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<String>comments = getUserComments(1);
-			for(String comment : comments) {
-				System.out.println(comment);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<String>comments = getUserComments(1);
+		 * for(String comment : comments) {
+		 * System.out.println(comment);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<Integer> bookIds = getLoanedBooks(5);
-			for (int bookId : bookIds) {
-				System.out.println(bookId);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<Integer> bookIds = getLoanedBooks(5);
+		 * for (int bookId : bookIds) {
+		 * System.out.println(bookId);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			LinkedList<Integer> bookIds = getReturnedBooks(15);
-			for (int bookId : bookIds) {
-				System.out.println(bookId);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * LinkedList<Integer> bookIds = getReturnedBooks(15);
+		 * for (int bookId : bookIds) {
+		 * System.out.println(bookId);
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		System.out.println("-Database.java main terminated succesfully-");
 	}
@@ -827,7 +832,7 @@ public class Database {
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
-	public static LinkedList<Integer> getBooksFromGenre(String genre) throws SQLException {
+	public static LinkedList<Integer> getBookRecommendations(String genre) throws SQLException {
 		String sql = "SELECT BookId FROM Books LEFT JOIN BookGenres USING(BookId) WHERE Genre = ? ORDER BY PublishDate DESC LIMIT 10";
 		LinkedList<Integer> books = new LinkedList<>();
 
@@ -835,6 +840,76 @@ public class Database {
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
 			pstmt.setString(1, genre);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				books.addLast(rs.getInt("BookId"));
+			}
+			return books;
+		}
+	}
+
+	/**
+	 * Finds books that belong to the given genre and
+	 * returns them.
+	 * 
+	 * @return a LinkedList containing BookIds
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("resource")
+	public static LinkedList<Integer> getBooksFromGenre(String genre) throws SQLException {
+		String sql = "SELECT BookId FROM Books LEFT JOIN BookGenres USING(BookId) WHERE Genre LIKE ? ORDER BY PublishDate DESC LIMIT 10";
+		LinkedList<Integer> books = new LinkedList<>();
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, "%" + genre + "%");
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				books.addLast(rs.getInt("BookId"));
+			}
+			return books;
+		}
+	}
+
+	/**
+	 * Finds books by the given author.
+	 * 
+	 * @return a LinkedList containing BookIds
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("resource")
+	public static LinkedList<Integer> getBooksFromAuthor(String authorName) throws SQLException {
+		String sql = "SELECT BookId FROM Books WHERE Author LIKE ? ORDER BY Title";
+		LinkedList<Integer> books = new LinkedList<>();
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, "%" + authorName + "%");
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				books.addLast(rs.getInt("BookId"));
+			}
+			return books;
+		}
+	}
+
+	/**
+	 * Finds books by the given book name.
+	 * 
+	 * @return a LinkedList containing BookIds
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("resource")
+	public static LinkedList<Integer> getBooksFromTitle(String bookTitle) throws SQLException {
+		String sql = "SELECT BookId FROM Books WHERE Title LIKE ? ORDER BY Title";
+		LinkedList<Integer> books = new LinkedList<>();
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setString(1, "%" + bookTitle + "%");
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				books.addLast(rs.getInt("BookId"));
@@ -912,6 +987,29 @@ public class Database {
 		}
 	}
 
+	/**
+	 * Finds all of the genres of the book and returns them.
+	 * 
+	 * @return a LinkedList containing genres
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("resource")
+	public static String getGenreFromBook(int bookId) throws SQLException {
+		String sql = "SELECT Genre FROM BookGenres WHERE BookId = ? LIMIT 1";
+		String genre = null;
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+			pstmt.setInt(1, bookId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				genre = rs.getString("Genre");
+			}
+			return genre;
+		}
+	}
+	
 	/**
 	 * Donates an existing book to a library. If there is no such book, then creates
 	 * a new book and donates that.
