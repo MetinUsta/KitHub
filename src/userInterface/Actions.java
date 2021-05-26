@@ -3,6 +3,7 @@ package userInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
@@ -15,6 +16,83 @@ import javax.swing.event.ListSelectionListener;
 public class Actions {
 
 }
+
+class UserProfileHandler implements ActionListener{
+	
+	static HashMap<String, Object> info;
+	static LinkedList<String> comments = new LinkedList<>();
+	static DefaultListModel<String> commentsJList = new DefaultListModel<>();
+	
+	public UserProfileHandler() {
+		
+	}
+	private static HashMap<String, Object> GetInfo() {
+		// TODO: Daha sonra giriş yapan kullanıcının id değeri getirilecek
+		int testUserId=33;
+		
+		if(info==null) {
+			try {
+				info= Database.getUserInfo(testUserId);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return info;
+	}
+	public static String GetName() {
+		return GetInfo().get("Name").toString();
+	}
+	
+	public static String GetLastName() {
+		return GetInfo().get("Surname").toString();
+	}
+	
+	public static String GetEmail() {
+		return GetInfo().get("Email").toString();
+	}
+	
+	public static DefaultListModel<String> GetPreComments(){
+		int testUserId=33;
+		try {
+			comments = Database.getUserComments(testUserId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		for(int i =0;i<comments.size();i++) {
+			commentsJList.addElement(comments.get(i));
+		}
+		return commentsJList;
+	}
+	
+	public static DefaultListModel<LibraryBook> GetBookCovers(){
+		int testUserId = 5;
+		DefaultListModel<LibraryBook> libraryBookList = new DefaultListModel<>();
+		LinkedList<Integer> loanedBooks = new LinkedList<>();
+		try {
+			loanedBooks = Database.getLoanedBooks(testUserId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i = 0;i<loanedBooks.size();i++) {
+			LibraryBook temp = new LibraryBook(loanedBooks.get(i),Book.smallIcon);
+			libraryBookList.addElement(temp);
+		}
+		return libraryBookList;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}
+
 
 class BookSearchListHandler implements ActionListener {
 	private JTextField searchBar;
