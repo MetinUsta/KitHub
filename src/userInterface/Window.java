@@ -713,7 +713,7 @@ public class Window {
 		ScrollBarColor scrollBarTakenBooks = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		takenBooksScroll.getHorizontalScrollBar().setUI(scrollBarTakenBooks);
 		
-		DefaultListModel<LibraryBook> takenBooks = new DefaultListModel<>();
+		DefaultListModel<LibraryBook> takenBooks = UserProfileHandler.GetBookCovers();
 		JList<LibraryBook> takenBooksList = new JList<>(takenBooks);
 		takenBooksList.setSelectionBackground(textColor);
 		takenBooksScroll.setViewportView(takenBooksList);

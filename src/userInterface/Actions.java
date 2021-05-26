@@ -67,6 +67,24 @@ class UserProfileHandler implements ActionListener{
 		return commentsJList;
 	}
 	
+	public static DefaultListModel<LibraryBook> GetBookCovers(){
+		int testUserId = 5;
+		DefaultListModel<LibraryBook> libraryBookList = new DefaultListModel<>();
+		LinkedList<Integer> loanedBooks = new LinkedList<>();
+		try {
+			loanedBooks = Database.getLoanedBooks(testUserId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i = 0;i<loanedBooks.size();i++) {
+			LibraryBook temp = new LibraryBook(loanedBooks.get(i),Book.smallIcon);
+			libraryBookList.addElement(temp);
+		}
+		return libraryBookList;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

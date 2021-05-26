@@ -16,8 +16,8 @@ public class LibraryBook extends Book{
 			
 			HashMap<String, Object> bookInfo = Database.getBookInfo(bookId);
 			setISBN((String) bookInfo.get("Isbn13"));
-			setName((String) bookInfo.get("Name"));
-			String coverPath = "/bookCovers/" + getISBN() + ".png";
+			setName((String) bookInfo.get("Title"));
+			String coverPath = "/bookCovers/" + getISBN() + ".jpg";
 			setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
