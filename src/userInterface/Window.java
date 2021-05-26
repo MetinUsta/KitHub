@@ -671,6 +671,7 @@ public class Window {
 		personValueName.setHorizontalAlignment(SwingConstants.LEFT);
 		personValueName.setForeground(textColorLight);
 		personValueName.setFont(info);
+		personValueName.setText(UserProfileHandler.GetName());
 		
 		JLabel personLabelLastName = new JLabel("Last Name:");
 		personLabelLastName.setBounds(10, 55, 112, 33);
@@ -679,12 +680,14 @@ public class Window {
 		personLabelLastName.setForeground(textColor);
 		personLabelLastName.setFont(systemText);
 		
+		
 		personValueLastName = new JLabel("Value");
 		personValueLastName.setBounds(119, 55, 82, 33);
 		personalInfoPanel.add(personValueLastName);
 		personValueLastName.setHorizontalAlignment(SwingConstants.LEFT);
 		personValueLastName.setForeground(textColorLight);
 		personValueLastName.setFont(info);
+		personValueLastName.setText(UserProfileHandler.GetLastName());
 		
 		JLabel personLabelEmail = new JLabel("Email:");
 		personLabelEmail.setBounds(10, 99, 112, 33);
@@ -694,11 +697,12 @@ public class Window {
 		personLabelEmail.setFont(systemText);
 		
 		JLabel personValueEmail = new JLabel("Value");
-		personValueEmail.setBounds(119, 99, 82, 33);
+		personValueEmail.setBounds(119, 99, 191, 33);
 		personalInfoPanel.add(personValueEmail);
 		personValueEmail.setHorizontalAlignment(SwingConstants.LEFT);
 		personValueEmail.setForeground(textColorLight);
 		personValueEmail.setFont(info);
+		personValueEmail.setText(UserProfileHandler.GetEmail());
 		
 		JScrollPane takenBooksScroll = new JScrollPane();
 		takenBooksScroll.setBounds(122, 210, 320, 200);
@@ -734,7 +738,7 @@ public class Window {
 		ScrollBarColor scrollBarPreComment = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		preCommentsScrollPane.getHorizontalScrollBar().setUI(scrollBarPreComment);
 		
-		DefaultListModel<String> takenBooksModel = new DefaultListModel<>();
+		DefaultListModel<String> takenBooksModel = UserProfileHandler.GetPreComments();
 		JList<String> preCommentsList = new JList<String>(takenBooksModel);
 		preCommentsList.setSelectionForeground(Color.WHITE);
 		preCommentsList.setSelectionBackground(textColor);
@@ -743,9 +747,9 @@ public class Window {
 		preCommentsList.setCellRenderer(new CommentListRenderer(textColor));
 		preCommentsScrollPane.setViewportView(preCommentsList);
 		
-		takenBooksModel.addElement("A tensely written, shocking book that will hold readers on the edge of their seats to the very last page.");
+		/*takenBooksModel.addElement("A tensely written, shocking book that will hold readers on the edge of their seats to the very last page.");
 		takenBooksModel.addElement("Both compelling and addictive, The Favorite Daughter is a roller coaster of a ride that will have you twisting and turning.");
-		takenBooksModel.addElement("Will hit you right in the heart.");
+		takenBooksModel.addElement("Will hit you right in the heart.");*/
 		
 		JLabel lblNewLabel = new JLabel("Personal Info:");
 		lblNewLabel.setFont(systemText);
