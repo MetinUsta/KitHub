@@ -873,7 +873,7 @@ public class Database {
 	}
 
 	/**
-	 * Finds books by the given author.
+	 * Finds books of the given author.
 	 * 
 	 * @return a LinkedList containing BookIds
 	 * @throws SQLException
@@ -896,7 +896,7 @@ public class Database {
 	}
 
 	/**
-	 * Finds books by the given book name.
+	 * Finds books by the given book title.
 	 * 
 	 * @return a LinkedList containing BookIds
 	 * @throws SQLException
@@ -988,9 +988,9 @@ public class Database {
 	}
 
 	/**
-	 * Finds all of the genres of the book and returns them.
+	 * Finds one genre of the given book returns it
 	 * 
-	 * @return a LinkedList containing genres
+	 * @return a genre
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
