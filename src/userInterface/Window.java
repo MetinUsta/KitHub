@@ -878,7 +878,6 @@ public class Window {
 		bookDonationSidemenuBar.addMouseListener(select);
 		profileSidemenuBar.addMouseListener(select);
 		btnReturnBook.addActionListener(new UserProfileHandler(takenBooks,takenBooksList,takenBooksScroll,frame));
-		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList));
 		//TODO
 		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList, list));
 		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, bookList, overviewHoverButton, overviewTextLabel));

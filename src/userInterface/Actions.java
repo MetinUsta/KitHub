@@ -2,14 +2,18 @@ package userInterface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.time.Clock;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
@@ -116,19 +120,22 @@ class UserProfileHandler implements ActionListener{
 
 class BookSearchListHandler implements ActionListener {
 	private JTextField searchBar;
-	JComboBox<String> searchTypeComboBox;
-	DefaultListModel<GeneralBook> bookList;
+	private JComboBox<String> searchTypeComboBox;
+	private DefaultListModel<GeneralBook> bookList;
+	private JList<GeneralBook> list;
 
 	public BookSearchListHandler(JTextField searchBar, JComboBox<String> searchTypeComboBox,
-			DefaultListModel<GeneralBook> bookList) {
+			DefaultListModel<GeneralBook> bookList, JList<GeneralBook> list) {
 		this.searchBar = searchBar;
 		this.searchTypeComboBox = searchTypeComboBox;
 		this.bookList = bookList;
+		this.list = list;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		bookList.clear();
+		list.clearSelection();
 		
 		String selectedType = (String) searchTypeComboBox.getSelectedItem();
 		LinkedList<Integer> bookIds = null;
@@ -171,18 +178,17 @@ class BookSearchListHandler implements ActionListener {
 
 }
 
-/*
- * list.addListSelectionListener(new ListSelectionListener() {
- * public void valueChanged(ListSelectionEvent e) {
- * }
- * });
- */
-
 class BookInfoListHandler implements ListSelectionListener {
-	DefaultListModel<GeneralBook> bookSuggestList;
+	private DefaultListModel<GeneralBook> bookSuggestList;
+	private DefaultListModel<GeneralBook> bookList;
+	private JButton overviewHoverButton;
+	private JLabel overviewTextLabel;
 
-	public BookInfoListHandler(DefaultListModel<GeneralBook> bookSuggestList) {
+	public BookInfoListHandler(DefaultListModel<GeneralBook> bookSuggestList, DefaultListModel<GeneralBook> bookList, JButton overviewHoverButton, JLabel overviewTextLabel) {
 		this.bookSuggestList = bookSuggestList;
+		this.bookList = bookList;
+		this.overviewHoverButton = overviewHoverButton;
+		this.overviewTextLabel = overviewTextLabel;
 	}
 
 	@Override
@@ -190,19 +196,26 @@ class BookInfoListHandler implements ListSelectionListener {
 		bookSuggestList.clear();
 		try {
 			if (!e.getValueIsAdjusting()) {
+				if(((JList<GeneralBook>) e.getSource()).getSelectedValue() == null) {
+					return;
+				}
 				int bookId = ((JList<GeneralBook>) e.getSource()).getSelectedValue().getBookId();
+				GeneralBook selectedBook = new GeneralBook(bookId, 494);
+				
+				overviewHoverButton.setIcon(selectedBook.getCover());
+				overviewTextLabel.setText("<html>" + selectedBook.getOverview() + "</html>");
+				
 				String bookGenre = Database.getGenreFromBook(bookId);
 				LinkedList<Integer> recommendedBooks = Database.getBooksFromGenre(bookGenre);
 				for(Integer recommendedBook : recommendedBooks) {
 					if(bookId != recommendedBook) {
-					bookSuggestList.addElement(new GeneralBook(recommendedBook, Book.smallIcon));
+						bookSuggestList.addElement(new GeneralBook(recommendedBook, Book.smallIcon));
 					}
 				}
 			}
 		} catch (SQLException error) {
 			error.printStackTrace();
 		}
-
 	}
 
 }
