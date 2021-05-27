@@ -3,12 +3,14 @@ package userInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.time.Clock;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -18,18 +20,19 @@ public class Actions {
 }
 
 class UserProfileHandler implements ActionListener{
-	
+	static int testUserId = 5;
+	// TODO: Daha sonra giriş yapan kullanıcının id değeri getirilecek
 	static HashMap<String, Object> info;
 	static LinkedList<String> comments = new LinkedList<>();
 	static DefaultListModel<String> commentsJList = new DefaultListModel<>();
+	JList<LibraryBook> libraryBooks;
+	JScrollPane takenBooksScroll;
 	
-	public UserProfileHandler() {
-		
+	public UserProfileHandler(JList<LibraryBook> takenBooksList, JScrollPane pane) {
+		this.libraryBooks = takenBooksList;
+		this.takenBooksScroll=pane;
 	}
-	private static HashMap<String, Object> GetInfo() {
-		// TODO: Daha sonra giriş yapan kullanıcının id değeri getirilecek
-		int testUserId=33;
-		
+	private static HashMap<String, Object> GetInfo() {		
 		if(info==null) {
 			try {
 				info= Database.getUserInfo(testUserId);
@@ -54,7 +57,6 @@ class UserProfileHandler implements ActionListener{
 	}
 	
 	public static DefaultListModel<String> GetPreComments(){
-		int testUserId=33;
 		try {
 			comments = Database.getUserComments(testUserId);
 		} catch (SQLException e) {
@@ -68,7 +70,6 @@ class UserProfileHandler implements ActionListener{
 	}
 	
 	public static DefaultListModel<LibraryBook> GetBookCovers(){
-		int testUserId = 5;
 		DefaultListModel<LibraryBook> libraryBookList = new DefaultListModel<>();
 		LinkedList<Integer> loanedBooks = new LinkedList<>();
 		try {
@@ -87,7 +88,22 @@ class UserProfileHandler implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		Clock clock = Clock.systemUTC();
+		String returnDate = clock.instant().toString();
+		int bookCopyId = libraryBooks.getSelectedValue().getBookCopyId();	
+		
+		try {
+			Database.userReturnBook(testUserId,bookCopyId,returnDate);
+			
+			var newList=UserProfileHandler.GetBookCovers();
+			libraryBooks=new JList<>(newList);
+			takenBooksScroll.setViewportView(libraryBooks);
+			
+		}catch(Exception ex) {
+			if(ex instanceof LateBookReturnException) {
+				
+			}
+		}
 		
 	}
 	
