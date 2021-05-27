@@ -39,6 +39,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class Window {
 	
@@ -877,7 +879,9 @@ public class Window {
 		profileSidemenuBar.addMouseListener(select);
 		btnReturnBook.addActionListener(new UserProfileHandler(takenBooks,takenBooksList,takenBooksScroll,frame));
 		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList));
-		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList));
+		//TODO
+		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList, list));
+		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, bookList, overviewHoverButton, overviewTextLabel));
 		frame.setVisible(false);
 	}
 

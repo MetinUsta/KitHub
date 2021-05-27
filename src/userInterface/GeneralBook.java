@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 
 public class GeneralBook extends Book{
 	private int bookId;
+	private String Overview;
 	
 	public GeneralBook(int bookId, int imageHeight) {
 		this.bookId = bookId;
@@ -17,6 +18,7 @@ public class GeneralBook extends Book{
 			setISBN((String) bookInfo.get("Isbn13"));
 			String coverPath = "/bookCovers/" + getISBN() + ".jpg";
 			setName((String) bookInfo.get("Title"));
+			setOverview((String) bookInfo.get("Overview"));
 			setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -27,5 +29,12 @@ public class GeneralBook extends Book{
 	public int getBookId() {
 		return bookId;
 	}
-	
+
+	public String getOverview() {
+		return Overview;
+	}
+
+	public void setOverview(String Overview) {
+		this.Overview = Overview;
+	}
 }
