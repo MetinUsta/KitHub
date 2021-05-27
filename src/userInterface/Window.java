@@ -713,7 +713,7 @@ public class Window {
 		ScrollBarColor scrollBarTakenBooks = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		takenBooksScroll.getHorizontalScrollBar().setUI(scrollBarTakenBooks);
 		
-		DefaultListModel<LibraryBook> takenBooks = UserProfileHandler.GetBookCovers();
+		DefaultListModel<LibraryBook> takenBooks = UserProfileHandler.GetBooks();
 		JList<LibraryBook> takenBooksList = new JList<>(takenBooks);
 		takenBooksList.setSelectionBackground(textColor);
 		takenBooksScroll.setViewportView(takenBooksList);
@@ -875,7 +875,7 @@ public class Window {
 		bookLoanSidemenuBar.addMouseListener(select);
 		bookDonationSidemenuBar.addMouseListener(select);
 		profileSidemenuBar.addMouseListener(select);
-		btnReturnBook.addActionListener(new UserProfileHandler(takenBooksList,takenBooksScroll));
+		btnReturnBook.addActionListener(new UserProfileHandler(takenBooks,takenBooksList,takenBooksScroll,frame));
 		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList));
 		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList));
 		frame.setVisible(false);
