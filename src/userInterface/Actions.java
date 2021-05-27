@@ -3,12 +3,16 @@ package userInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.time.Clock;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -18,18 +22,23 @@ public class Actions {
 }
 
 class UserProfileHandler implements ActionListener{
-	
+	static int testUserId = 5;
+	// TODO: Daha sonra giriş yapan kullanıcının id değeri getirilecek
 	static HashMap<String, Object> info;
 	static LinkedList<String> comments = new LinkedList<>();
 	static DefaultListModel<String> commentsJList = new DefaultListModel<>();
+	DefaultListModel<LibraryBook> libraryBooks;
+	JList <LibraryBook> libraryBooksJList;
+	JScrollPane takenBooksScroll;
+	JFrame frame;
 	
-	public UserProfileHandler() {
-		
+	public UserProfileHandler(DefaultListModel<LibraryBook> takenBooks, JList <LibraryBook> libraryBooksJList, JScrollPane pane, JFrame frame) {
+		this.frame = frame;
+		this.libraryBooks = takenBooks;
+		this.takenBooksScroll=pane;
+		this.libraryBooksJList = libraryBooksJList;
 	}
-	private static HashMap<String, Object> GetInfo() {
-		// TODO: Daha sonra giriş yapan kullanıcının id değeri getirilecek
-		int testUserId=33;
-		
+	private static HashMap<String, Object> GetInfo() {		
 		if(info==null) {
 			try {
 				info= Database.getUserInfo(testUserId);
@@ -54,7 +63,6 @@ class UserProfileHandler implements ActionListener{
 	}
 	
 	public static DefaultListModel<String> GetPreComments(){
-		int testUserId=33;
 		try {
 			comments = Database.getUserComments(testUserId);
 		} catch (SQLException e) {
@@ -67,8 +75,7 @@ class UserProfileHandler implements ActionListener{
 		return commentsJList;
 	}
 	
-	public static DefaultListModel<LibraryBook> GetBookCovers(){
-		int testUserId = 5;
+	public static DefaultListModel<LibraryBook> GetBooks(){
 		DefaultListModel<LibraryBook> libraryBookList = new DefaultListModel<>();
 		LinkedList<Integer> loanedBooks = new LinkedList<>();
 		try {
@@ -87,7 +94,20 @@ class UserProfileHandler implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		Clock clock = Clock.systemUTC();
+		String returnDate = clock.instant().toString();
+		int bookCopyId = libraryBooksJList.getSelectedValue().getBookCopyId();
+		
+		try {
+			Database.userReturnBook(testUserId,bookCopyId,returnDate);
+			libraryBooks.remove(libraryBooksJList.getSelectedIndex());
+			JOptionPane.showMessageDialog(frame, "Book returned succesfully!");
+			
+		}catch(Exception ex) {
+			if(ex instanceof LateBookReturnException) {
+				JOptionPane.showMessageDialog(frame, "Book returned succesfully. \nYou will not be able to buy new books for 15 days because you bring the book late");
+			}
+		}
 		
 	}
 	
