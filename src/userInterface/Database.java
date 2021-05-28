@@ -30,6 +30,7 @@ class LateBookReturnException extends Exception {
 
 public class Database {
 	public final static int MAX_DAYS_TO_RETURN = 20;
+	public final static int LATE_RETURN_PENALTY = 15;
 
 	private static String dbPath = "src/databases/libraryManagement.db";
 	private static String dbUrl = "jdbc:sqlite:" + dbPath;
@@ -42,7 +43,7 @@ public class Database {
 		/*callPython("src/scripts/importBooks.py", "src/databases/importFiles/Books.csv",
 				"src/databases/libraryManagement.db");*/
 
-//		System.out.println(isAdmin("123456789"));
+		//		System.out.println(isAdmin("123456789"));
 
 		/*
 		 * HashMap<String, Object> info;
@@ -191,15 +192,16 @@ public class Database {
 		 */
 
 		/*
-		 * try {
-		 * LinkedList<String> comments = getBookComments(10);
-		 * for (String comment : comments) {
-		 * System.out.println(comment);
-		 * }
-		 * } catch (SQLException e) {
-		 * e.printStackTrace();
-		 * }
-		 */
+		try {
+			var comments = getCommentsOfBook(10);
+			for (var comment : comments) {
+				System.out.println(comment.get("UserId"));
+				System.out.println(comment.get("Comment"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
 
 		/*
 		 * try {
@@ -921,13 +923,13 @@ public class Database {
 	/**
 	 * Finds all of the written comments of the given book and returns them.
 	 * 
-	 * @return LinkedList containing the comments
+	 * @return a LinkedList containing HashMaps of the comments and their users
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
-	public static LinkedList<String> getCommentsOfBook(int bookId) throws SQLException {
-		String sql = "SELECT Comment FROM Comments WHERE BookId = ?";
-		LinkedList<String> comments = new LinkedList<>();
+	public static LinkedList<HashMap<String, Object>> getCommentsOfBook(int bookId) throws SQLException {
+		String sql = "SELECT UserId, Comment FROM Comments WHERE BookId = ?";
+		LinkedList<HashMap<String, Object>> comments = new LinkedList<>();
 
 		try (Connection conn = connectToDatabase();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -935,7 +937,10 @@ public class Database {
 			pstmt.setInt(1, bookId);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				comments.addLast(rs.getString("Comment"));
+				HashMap<String, Object> comment = new HashMap<>();
+				comment.put("UserId", rs.getInt("UserId"));
+				comment.put("Comment", rs.getString("Comment"));
+				comments.add(comment);
 			}
 			return comments;
 		}
@@ -1009,7 +1014,7 @@ public class Database {
 			return genre;
 		}
 	}
-	
+
 	/**
 	 * Donates an existing book to a library. If there is no such book, then creates
 	 * a new book and donates that.
