@@ -21,18 +21,16 @@ public class Book {
 		return Cover;
 	}
 	public void setCover(ImageIcon cover, int imageHeight) {
-		Image coverImage = cover.getImage();
 		Image scaledImage;
-		
-		ImageIcon coverImageIcon = new ImageIcon(coverImage);
-		int imageIconWidth = coverImageIcon.getIconWidth();
-		if(imageIconWidth < 10) {
+		if(cover == null) {
 			String coverPath = "/bookCovers/default.png";
 			Cover = new ImageIcon(getClass().getResource(coverPath));
 			scaledImage = Cover.getImage().getScaledInstance((int) (imageHeight*0.62), imageHeight, Image.SCALE_SMOOTH);
 			Cover = new ImageIcon(scaledImage);
 			return;
 		}
+		
+		Image coverImage = cover.getImage();
 		
 		scaledImage = coverImage.getScaledInstance((int) (imageHeight*0.62), imageHeight, Image.SCALE_SMOOTH);
 		Cover = new ImageIcon(scaledImage);

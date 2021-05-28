@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.HashMap;
 import java.awt.Color;
 import java.awt.Component;
 
@@ -275,80 +276,87 @@ public class Window {
 		panel.add(bookInfoTitleLabel);
 		
 		JLabel bookInfoTitleValue = new JLabel("Value");
-		bookInfoTitleValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoTitleValue.setVerticalAlignment(SwingConstants.TOP);
+		bookInfoTitleValue.setMaximumSize(new Dimension(194, 33));
+		bookInfoTitleValue.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoTitleValue.setForeground(textColorLight);
 		bookInfoTitleValue.setFont(info);
-		bookInfoTitleValue.setBounds(119, 11, 82, 33);
+		bookInfoTitleValue.setBounds(20, 46, 194, 33);
 		panel.add(bookInfoTitleValue);
 		
 		JLabel bookInfoAuthorLabel = new JLabel("Author:");
 		bookInfoAuthorLabel.setForeground(textColor);
 		bookInfoAuthorLabel.setFont(systemText);
 		bookInfoAuthorLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		bookInfoAuthorLabel.setBounds(10, 55, 60, 33);
+		bookInfoAuthorLabel.setBounds(10, 80, 60, 33);
 		panel.add(bookInfoAuthorLabel);
 		
 		JLabel bookInfoAuthorValue = new JLabel("Value");
+		bookInfoAuthorValue.setVerticalAlignment(SwingConstants.TOP);
 		bookInfoAuthorValue.setFont(info);
 		bookInfoAuthorValue.setForeground(textColorLight);
-		bookInfoAuthorValue.setHorizontalAlignment(SwingConstants.RIGHT);
-		bookInfoAuthorValue.setBounds(119, 55, 82, 33);
+		bookInfoAuthorValue.setHorizontalAlignment(SwingConstants.LEFT);
+		bookInfoAuthorValue.setBounds(20, 115, 194, 33);
 		panel.add(bookInfoAuthorValue);
 		
 		JLabel bookInfoPublishDateLabel = new JLabel("Publish Date:");
 		bookInfoPublishDateLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoPublishDateLabel.setForeground(textColor);
 		bookInfoPublishDateLabel.setFont(systemText);
-		bookInfoPublishDateLabel.setBounds(10, 99, 112, 33);
+		bookInfoPublishDateLabel.setBounds(10, 149, 112, 33);
 		panel.add(bookInfoPublishDateLabel);
 		
 		JLabel bookInfoPublishDateValue = new JLabel("Value");
-		bookInfoPublishDateValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoPublishDateValue.setVerticalAlignment(SwingConstants.TOP);
+		bookInfoPublishDateValue.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoPublishDateValue.setForeground(textColorLight);
 		bookInfoPublishDateValue.setFont(info);
-		bookInfoPublishDateValue.setBounds(119, 99, 82, 33);
+		bookInfoPublishDateValue.setBounds(20, 184, 194, 33);
 		panel.add(bookInfoPublishDateValue);
 		
 		JLabel bookInfoPageCountLabel = new JLabel("Page Count:");
 		bookInfoPageCountLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoPageCountLabel.setForeground(textColor);
 		bookInfoPageCountLabel.setFont(systemText);
-		bookInfoPageCountLabel.setBounds(10, 143, 112, 33);
+		bookInfoPageCountLabel.setBounds(10, 218, 112, 33);
 		panel.add(bookInfoPageCountLabel);
 		
 		JLabel bookInfoPageCountValue = new JLabel("Value");
-		bookInfoPageCountValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoPageCountValue.setVerticalAlignment(SwingConstants.TOP);
+		bookInfoPageCountValue.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoPageCountValue.setForeground(textColorLight);
 		bookInfoPageCountValue.setFont(info);
-		bookInfoPageCountValue.setBounds(119, 143, 82, 33);
+		bookInfoPageCountValue.setBounds(20, 253, 194, 33);
 		panel.add(bookInfoPageCountValue);
 		
 		JLabel bookInfoISBNLabel = new JLabel("ISBN:");
 		bookInfoISBNLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoISBNLabel.setForeground(textColor);
 		bookInfoISBNLabel.setFont(systemText);
-		bookInfoISBNLabel.setBounds(10, 187, 60, 33);
+		bookInfoISBNLabel.setBounds(10, 287, 60, 33);
 		panel.add(bookInfoISBNLabel);
 		
 		JLabel bookInfoISBNValue = new JLabel("Value");
-		bookInfoISBNValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoISBNValue.setVerticalAlignment(SwingConstants.TOP);
+		bookInfoISBNValue.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoISBNValue.setForeground(textColorLight);
 		bookInfoISBNValue.setFont(info);
-		bookInfoISBNValue.setBounds(119, 187, 82, 33);
+		bookInfoISBNValue.setBounds(20, 322, 194, 33);
 		panel.add(bookInfoISBNValue);
 		
 		JLabel bookInfoGenresLabel = new JLabel("Genres:");
 		bookInfoGenresLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoGenresLabel.setForeground(textColor);
 		bookInfoGenresLabel.setFont(systemText);
-		bookInfoGenresLabel.setBounds(10, 231, 82, 33);
+		bookInfoGenresLabel.setBounds(10, 356, 82, 33);
 		panel.add(bookInfoGenresLabel);
 		
 		JLabel bookInfoGenresValue = new JLabel("Value");
-		bookInfoGenresValue.setHorizontalAlignment(SwingConstants.RIGHT);
+		bookInfoGenresValue.setVerticalAlignment(SwingConstants.TOP);
+		bookInfoGenresValue.setHorizontalAlignment(SwingConstants.LEFT);
 		bookInfoGenresValue.setForeground(Color.WHITE);
 		bookInfoGenresValue.setFont(new Font("Arial", Font.PLAIN, 15));
-		bookInfoGenresValue.setBounds(119, 231, 82, 33);
+		bookInfoGenresValue.setBounds(20, 391, 194, 33);
 		panel.add(bookInfoGenresValue);
 		
 		JPanel libraryInfoPanel = new JPanel();
@@ -870,14 +878,26 @@ public class Window {
 				}
 			}
 		};
+		
+		HashMap<String, JLabel> bookInfoLabels = new HashMap<>();
+		
+		bookInfoLabels.put("Title", bookInfoTitleValue);
+		bookInfoLabels.put("Author", bookInfoAuthorValue);
+		bookInfoLabels.put("Genres", bookInfoGenresValue);
+		bookInfoLabels.put("ISBN", bookInfoISBNValue);
+		bookInfoLabels.put("PageCount", bookInfoPageCountValue);
+		bookInfoLabels.put("PublishDate", bookInfoPublishDateValue);
+		
+		System.out.println(bookInfoLabels.get("Title").getText());
 		mainPageSidemenuBar.addMouseListener(select);
 		bookLoanSidemenuBar.addMouseListener(select);
 		bookDonationSidemenuBar.addMouseListener(select);
 		profileSidemenuBar.addMouseListener(select);
+		
 		btnReturnBook.addActionListener(new UserProfileHandler(takenBooks,takenBooksList,takenBooksScroll,frame));
 		//TODO
 		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList, list));
-		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, bookList, overviewHoverButton, overviewTextLabel));
+		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, bookList, overviewHoverButton, overviewTextLabel, bookInfoLabels));
 		frame.setVisible(false);
 	}
 

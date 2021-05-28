@@ -1,5 +1,7 @@
 package userInterface;
 
+import java.io.File;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -19,7 +21,18 @@ public class GeneralBook extends Book{
 			String coverPath = "/bookCovers/" + getISBN() + ".jpg";
 			setName((String) bookInfo.get("Title"));
 			setOverview((String) bookInfo.get("Overview"));
-			setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
+			URL url = getClass().getResource(coverPath);
+			
+			/*File tmpDir = new File(url.getPath());
+			boolean exists = tmpDir.exists();*/
+			
+			if(url != null) {
+				ImageIcon cover = new ImageIcon(getClass().getResource(coverPath));
+				setCover(cover, imageHeight);
+			}else {
+				setCover(null, imageHeight);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,5 +1,6 @@
 package userInterface;
 
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -18,7 +19,16 @@ public class LibraryBook extends Book{
 			setISBN((String) bookInfo.get("Isbn13"));
 			setName((String) bookInfo.get("Title"));
 			String coverPath = "/bookCovers/" + getISBN() + ".jpg";
-			setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
+			URL url = getClass().getResource(coverPath);
+			
+			if(url != null) {
+				ImageIcon cover = new ImageIcon(getClass().getResource(coverPath));
+				setCover(cover, imageHeight);
+			}else {
+				setCover(null, imageHeight);
+			}
+			
+			//setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
