@@ -2,8 +2,6 @@ package userInterface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.time.Clock;
 import java.util.HashMap;
@@ -47,7 +45,6 @@ class UserProfileHandler implements ActionListener{
 			try {
 				info= Database.getUserInfo(testUserId);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -70,7 +67,6 @@ class UserProfileHandler implements ActionListener{
 		try {
 			comments = Database.getUserComments(testUserId);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for(int i =0;i<comments.size();i++) {
@@ -85,7 +81,6 @@ class UserProfileHandler implements ActionListener{
 		try {
 			loanedBooks = Database.getLoanedBooks(testUserId);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

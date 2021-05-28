@@ -22,7 +22,19 @@ public class Book {
 	}
 	public void setCover(ImageIcon cover, int imageHeight) {
 		Image coverImage = cover.getImage();
-		Image scaledImage = coverImage.getScaledInstance((int) (imageHeight*0.62), imageHeight, Image.SCALE_SMOOTH);
+		Image scaledImage;
+		
+		ImageIcon coverImageIcon = new ImageIcon(coverImage);
+		int imageIconWidth = coverImageIcon.getIconWidth();
+		if(imageIconWidth < 10) {
+			String coverPath = "/bookCovers/default.png";
+			Cover = new ImageIcon(getClass().getResource(coverPath));
+			scaledImage = Cover.getImage().getScaledInstance((int) (imageHeight*0.62), imageHeight, Image.SCALE_SMOOTH);
+			Cover = new ImageIcon(scaledImage);
+			return;
+		}
+		
+		scaledImage = coverImage.getScaledInstance((int) (imageHeight*0.62), imageHeight, Image.SCALE_SMOOTH);
 		Cover = new ImageIcon(scaledImage);
 	}
 	public String getISBN() {

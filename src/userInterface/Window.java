@@ -35,12 +35,6 @@ import javax.swing.JTextArea;
 import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 
 public class Window {
 	
@@ -119,6 +113,8 @@ public class Window {
 		bookListScrollPane.setBorder(bottomLine);
 		bookListScrollPane.getVerticalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
 		bookListScrollPane.getHorizontalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
+		bookListScrollPane.getVerticalScrollBar().setBackground(backgroundColor);
+		bookListScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
 		
 		DefaultListModel<GeneralBook> bookList = new DefaultListModel<>();
 		JList<GeneralBook> list = new JList<>(bookList);
@@ -186,6 +182,8 @@ public class Window {
 		bookSuggestionsScrollPanel.getHorizontalScrollBar().setBackground(backgroundColor);
 		ScrollBarColor scrollBarBookSuggest = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		bookSuggestionsScrollPanel.getHorizontalScrollBar().setUI(scrollBarBookSuggest);
+		bookSuggestionsScrollPanel.getVerticalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
+		bookSuggestionsScrollPanel.getVerticalScrollBar().setBackground(backgroundColor);
 		
 		bookSuggest.setCellRenderer(new BookListRenderer());
 		
@@ -236,7 +234,6 @@ public class Window {
 		overviewTextLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		overviewTextLabel.setForeground(Color.WHITE);
 		overviewShadingPanel.add(overviewTextLabel);
-		//overviewHoverButton.setIcon(new ImageIcon(dimg));
 		overviewHoverButton.setBounds(0, 0, 310, 494);
 		bookCoverPanel.add(overviewHoverButton);
 		bookLoanPanel.add(bookReview);
@@ -982,7 +979,7 @@ class BookNameListRenderer extends DefaultListCellRenderer {
 	
 	public BookNameListRenderer(Color bottomLineColor) {
 		this.bottomLineColor = bottomLineColor;
-		this.bottomLine = new MatteBorder(0, 0, 2, 0, bottomLineColor);
+		this.bottomLine = new MatteBorder(0, 0, 2, 0, this.bottomLineColor);
 	}
 	
     @Override

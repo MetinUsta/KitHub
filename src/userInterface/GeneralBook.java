@@ -21,7 +21,6 @@ public class GeneralBook extends Book{
 			setOverview((String) bookInfo.get("Overview"));
 			setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

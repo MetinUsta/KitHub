@@ -19,7 +19,6 @@ public class Library {
 			this.PhoneNumber = (String) libraryInfo.get("PhoneNumber");
 			this.Email = (String) libraryInfo.get("Email");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

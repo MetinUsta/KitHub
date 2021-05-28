@@ -19,7 +19,6 @@ public class User {
 			this.Email = (String) userInfo.get("Email");
 			this.LateReturnStatus = (boolean) userInfo.get("LateReturnStatus");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 	}

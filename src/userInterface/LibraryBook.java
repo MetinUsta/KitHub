@@ -20,7 +20,6 @@ public class LibraryBook extends Book{
 			String coverPath = "/bookCovers/" + getISBN() + ".jpg";
 			setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
