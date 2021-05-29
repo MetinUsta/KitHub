@@ -897,7 +897,9 @@ public class Window {
 		btnReturnBook.addActionListener(new UserProfileHandler(takenBooks,takenBooksList,takenBooksScroll,frame));
 		//TODO
 		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList, list));
-		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, bookList, overviewHoverButton, overviewTextLabel, bookInfoLabels));
+		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, overviewHoverButton, overviewTextLabel, bookInfoLabels, reviewListModel));
+		bookSuggest.addListSelectionListener(new SuggestedBookInfo(overviewHoverButton, overviewTextLabel, bookInfoLabels, reviewListModel));
+		commentButton.addActionListener(new NewCommentHandler(textArea, reviewListModel, bookInfoISBNValue));
 		frame.setVisible(false);
 	}
 

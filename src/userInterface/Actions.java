@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -178,23 +179,24 @@ class BookSearchListHandler implements ActionListener {
 
 class BookInfoListHandler implements ListSelectionListener {
 	private DefaultListModel<GeneralBook> bookSuggestList;
-	private DefaultListModel<GeneralBook> bookList;
+	private DefaultListModel<String> reviewListModel;
 	private JButton overviewHoverButton;
 	private JLabel overviewTextLabel;
 	private HashMap<String, JLabel> bookInfoLabels;
 
-	public BookInfoListHandler(DefaultListModel<GeneralBook> bookSuggestList, DefaultListModel<GeneralBook> bookList,
-			JButton overviewHoverButton, JLabel overviewTextLabel, HashMap<String, JLabel> bookInfoLabels) {
+	public BookInfoListHandler(DefaultListModel<GeneralBook> bookSuggestList, JButton overviewHoverButton, JLabel overviewTextLabel, HashMap<String, JLabel> bookInfoLabels,
+			DefaultListModel<String> reviewListModel) {
 		this.bookSuggestList = bookSuggestList;
-		this.bookList = bookList;
 		this.overviewHoverButton = overviewHoverButton;
 		this.overviewTextLabel = overviewTextLabel;
 		this.bookInfoLabels = bookInfoLabels;
+		this.reviewListModel = reviewListModel;
 	}
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		bookSuggestList.clear();
+		reviewListModel.clear();
 		try {
 			if (!e.getValueIsAdjusting()) {
 				if (((JList<GeneralBook>) e.getSource()).getSelectedValue() == null) {
@@ -213,8 +215,9 @@ class BookInfoListHandler implements ListSelectionListener {
 						bookSuggestList.addElement(new GeneralBook(recommendedBook, Book.smallIcon));
 					}
 				}
-				
+
 				bookInfoWriter(bookId, bookInfoLabels);
+				bookCommentWriter(bookId, reviewListModel);
 			}
 		} catch (SQLException error) {
 			error.printStackTrace();
@@ -232,14 +235,134 @@ class BookInfoListHandler implements ListSelectionListener {
 			bookInfoLabels.get("PublishDate").setText((String) bookInfo.get("PublishDate"));
 			bookInfoLabels.get("PageCount").setText(Integer.toString((Integer) bookInfo.get("PageCount")));
 			bookInfoLabels.get("ISBN").setText((String) bookInfo.get("Isbn13"));
-			
+
 			LinkedList<String> genresList = Database.getGenresOfBook(bookId);
 			String genres = String.join(",", genresList);
-			
+
 			bookInfoLabels.get("Genres").setText(genres);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 	}
+
+	public void bookCommentWriter(int bookId, DefaultListModel<String> reviewListModel) {
+		try {
+			LinkedList<HashMap<String, Object>> comments = Database.getCommentsOfBook(bookId);
+
+			for (var comment : comments) {
+				HashMap<String, Object> userInfo = Database.getUserInfo((int) comment.get("UserId"));
+				String userName = (String) userInfo.get("Name");
+				String commentText = userName + ": " + (String) comment.get("Comment");
+				reviewListModel.addElement(commentText);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class SuggestedBookInfo implements ListSelectionListener {
+	private DefaultListModel<String> reviewListModel;
+	private JButton overviewHoverButton;
+	private JLabel overviewTextLabel;
+	private HashMap<String, JLabel> bookInfoLabels;
+
+	public SuggestedBookInfo(JButton overviewHoverButton, JLabel overviewTextLabel,
+			HashMap<String, JLabel> bookInfoLabels,
+			DefaultListModel<String> reviewListModel) {
+		this.overviewHoverButton = overviewHoverButton;
+		this.overviewTextLabel = overviewTextLabel;
+		this.bookInfoLabels = bookInfoLabels;
+		this.reviewListModel = reviewListModel;
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		reviewListModel.clear();
+		if (!e.getValueIsAdjusting()) {
+			if (((JList<GeneralBook>) e.getSource()).getSelectedValue() == null) {
+				return;
+			}
+			int bookId = ((JList<GeneralBook>) e.getSource()).getSelectedValue().getBookId();
+			GeneralBook selectedBook = new GeneralBook(bookId, 494);
+
+			overviewHoverButton.setIcon(selectedBook.getCover());
+			overviewTextLabel.setText("<html>" + selectedBook.getOverview() + "</html>");
+
+			bookInfoWriter(bookId, bookInfoLabels);
+			bookCommentWriter(bookId, reviewListModel);
+		}
+
+	}
+
+	public void bookInfoWriter(int bookId, HashMap<String, JLabel> bookInfoLabels) {
+
+		HashMap<String, Object> bookInfo;
+		try {
+			bookInfo = Database.getBookInfo(bookId);
+
+			bookInfoLabels.get("Title").setText("<html>" + (String) bookInfo.get("Title") + "</html>");
+			bookInfoLabels.get("Author").setText((String) bookInfo.get("Author"));
+			bookInfoLabels.get("PublishDate").setText((String) bookInfo.get("PublishDate"));
+			bookInfoLabels.get("PageCount").setText(Integer.toString((Integer) bookInfo.get("PageCount")));
+			bookInfoLabels.get("ISBN").setText((String) bookInfo.get("Isbn13"));
+
+			LinkedList<String> genresList = Database.getGenresOfBook(bookId);
+			String genres = String.join(",", genresList);
+
+			bookInfoLabels.get("Genres").setText(genres);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void bookCommentWriter(int bookId, DefaultListModel<String> reviewListModel) {
+		try {
+			LinkedList<HashMap<String, Object>> comments = Database.getCommentsOfBook(bookId);
+
+			for (var comment : comments) {
+				HashMap<String, Object> userInfo = Database.getUserInfo((int) comment.get("UserId"));
+				String userName = (String) userInfo.get("Name");
+				String commentText = userName + ": " + (String) comment.get("Comment");
+				reviewListModel.addElement(commentText);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+class NewCommentHandler implements ActionListener{
+	private final static int userId = 1;
+	private JTextArea commentArea;
+	private DefaultListModel<String> reviewListModel;
+	private JLabel bookInfoISBNValue;
+	
+	public NewCommentHandler(JTextArea commentArea, DefaultListModel<String> reviewListModel, JLabel bookInfoISBNValue) {
+		this.commentArea = commentArea;
+		this.reviewListModel = reviewListModel;
+		this.bookInfoISBNValue = bookInfoISBNValue;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String newComment = commentArea.getText();
+		try {
+			int bookId = Database.getBookFromIsbn(bookInfoISBNValue.getText());
+			HashMap<String, Object> bookInfo = Database.getBookInfo(bookId);
+			Database.addNewComment(userId, bookId, newComment);
+			
+			HashMap<String, Object> userInfo = Database.getUserInfo(userId);
+			String userName = (String) userInfo.get("Name");
+			String commentText = userName + ": " + newComment;
+			reviewListModel.addElement(commentText);
+			commentArea.setText("");
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
 }
