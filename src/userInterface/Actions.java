@@ -1,7 +1,10 @@
 package userInterface;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
@@ -16,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -444,4 +448,39 @@ class loanBookAction implements ActionListener{
 		
 	}
 	
+}
+
+
+
+class SignUpHandler extends MouseAdapter {
+	private JTextField name;
+	private JTextField lastName;
+	private JTextField email;
+	private JPasswordField password;
+	private JFrame frame;
+	
+	
+	public SignUpHandler(JTextField NameTextField, JTextField LastNameTextField, JTextField EmailTextField, JPasswordField passwordField, JFrame frame) {
+		super();
+		this.name = NameTextField;
+		this.lastName = LastNameTextField;
+		this.email = EmailTextField;
+		this.password = passwordField;
+		this.frame = frame;
+	}
+	
+	public void mousePressed(MouseEvent e) {
+		try {
+            Database.addNewUser(name.getText(), lastName.getText(), email.getText(), Security.getPasswordHash(String.valueOf(password.getPassword())));
+            System.out.println("Success");
+            JOptionPane.showMessageDialog(null, "Kaydedildi");
+            Window window = new Window(new Color(253, 65, 60), new Color(254, 188, 44));
+			window.getFrame().setVisible(true);
+			frame.setVisible(false);
+        } catch (SQLException e1) {
+            // TODO Auto-generated catch block
+            JOptionPane.showMessageDialog(null, "Bu email kullanılıyor");
+        }
+
+	}
 }
