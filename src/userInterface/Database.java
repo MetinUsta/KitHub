@@ -112,16 +112,15 @@ public class Database {
 		 * }
 		 */
 
-		/*
-		 * try {
-		 * LinkedList<Integer> libraryIds = getLibrariesOfBook(20);
-		 * for (int libraryId : libraryIds) {
-		 * System.out.println(libraryId);
-		 * }
-		 * } catch (SQLException e) {
-		 * e.printStackTrace();
-		 * }
-		 */
+		try {
+			var libraries = getLibrariesOfBook(6);
+			for (var library : libraries) {
+				System.out.println(library.get("LibraryId"));
+				System.out.println(library.get("StockCount"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		/*
 		 * HashMap<String, Object> info;
@@ -568,7 +567,7 @@ public class Database {
 	 * @return true if the library has the book available in stock, otherwise
 	 *         returns false
 	 */
-	private static boolean isBookInStock(int bookCopyId) throws SQLException {
+	private static int getBookStockCount(int bookCopyId) throws SQLException {
 		int loanCount = 0;
 		int copyCount = 0;
 
@@ -594,11 +593,9 @@ public class Database {
 				}
 			}
 			if (copyCount == 0) {
-				return false;
-			} else if (loanCount < copyCount) {
-				return true;
+				return 0;
 			} else {
-				return false;
+				return copyCount - loanCount;
 			}
 		}
 	}
@@ -688,8 +685,8 @@ public class Database {
 	 * This method does not include book stock check.
 	 * 
 	 * @throws SQLException
-	 * @throws LateBookReturnException if the person has pending late return
-	 *                                 penalties
+	 * @throws LateBookReturnException  if the person has pending late return
+	 *                                  penalties
 	 * @throws CurrentlyLoanedException if the person currently loans that copy
 	 */
 	public static void userLoanBook(int userId, int bookId, int libraryId, String loanDateInstant)
@@ -1127,9 +1124,9 @@ public class Database {
 	 * @throws SQLException
 	 */
 	@SuppressWarnings("resource")
-	public static LinkedList<Integer> getLibrariesOfBook(int bookId) throws SQLException {
+	public static LinkedList<HashMap<String, Integer>> getLibrariesOfBook(int bookId) throws SQLException {
 		String sql = "SELECT LibraryId FROM BookCopies WHERE BookId = ? ORDER BY CopyCount DESC";
-		LinkedList<Integer> libraries = new LinkedList<>();
+		LinkedList<HashMap<String, Integer>> libraries = new LinkedList<>();
 
 		try (Connection conn = connectToDatabase();
 				PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -1139,10 +1136,15 @@ public class Database {
 			while (rs.next()) {
 				int bookCopyId;
 				int libraryId = rs.getInt("LibraryId");
+				int stockCount;
 
 				bookCopyId = convertToCopyId(bookId, libraryId);
-				if (isBookInStock(bookCopyId)) {
-					libraries.addLast(rs.getInt("LibraryId"));
+				stockCount = getBookStockCount(bookCopyId);
+				if (stockCount > 0) {
+					HashMap<String, Integer> library = new HashMap<>();
+					library.put("LibraryId", libraryId);
+					library.put("StockCount", stockCount);
+					libraries.add(library);
 				}
 			}
 			return libraries;
@@ -1251,11 +1253,11 @@ public class Database {
 					pstmt.executeUpdate();
 				}
 			} else { // book already in the books table
-				LinkedList<Integer> libraries = getLibrariesOfBook(bookId);
+				var libraries = getLibrariesOfBook(bookId);
 				boolean registered = false;
 
-				for (int lib : libraries) {
-					if (lib == libraryId) {
+				for (var lib : libraries) {
+					if (lib.get("LibraryId") == libraryId) {
 						registered = true;
 					}
 				}
