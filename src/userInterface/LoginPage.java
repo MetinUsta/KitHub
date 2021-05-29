@@ -10,10 +10,13 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -139,13 +142,24 @@ public class LoginPage {
 		JLabel signInButton = new JLabel("SIGN IN");
 		signInButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
-				if(!verified){
-					verified = true;
-					Window window = new Window(getTextColor(), getbuttonTextColor());
-					window.getFrame().setVisible(true);
-					frame.setVisible(false);
+			public void mouseClicked(MouseEvent e) {
+				HashMap<String, Object> information;
+				
+				try {
+					information = Database.getUserInfo(emailLoginInput.getText(), Security.getPasswordHash(String.valueOf(passwordFieldLogin.getPassword())));
+					if(information.get("Surname") != null){
+						//verified = true;
+						Window window = new Window(getTextColor(), getbuttonTextColor());
+						window.getFrame().setVisible(true);
+						frame.setVisible(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "Kullanıcı adı veya şifre hatalı");
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
+								
 			}
 		});
 		signInButton.setBounds(174, 302, 172, 43);
@@ -281,6 +295,33 @@ public class LoginPage {
 		infoTextSignUp.setForeground(textColor);
 		JLabel signUpButton = new JLabel("SIGN UP");
 		signUpButton.setBackground(textColor);
+		
+
+		
+		/*signUpButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String name = NameTextField.getText();
+                String lastName = LastNameTextField.getText();
+                String email = EmailTextField.getText();
+                String password = String.valueOf(passwordField.getPassword());
+
+                try {
+                    Database.addNewUser(name, lastName, email, Security.getPasswordHash(password));
+                    System.out.println("Success");
+                    JOptionPane.showMessageDialog(null, "Kaydedildi");
+                    Window window = new Window(getTextColor(), getbuttonTextColor());
+					window.getFrame().setVisible(true);
+					frame.setVisible(false);
+                } catch (SQLException e1) {
+                    // TODO Auto-generated catch block
+                    JOptionPane.showMessageDialog(null, "Bu email kullanılıyor");
+                }
+
+
+
+            }
+        });*/
 		
 		MouseAdapter colorChooser = new MouseAdapter() {
 			@Override
@@ -450,6 +491,7 @@ public class LoginPage {
 		
 
 		// cards.show(panel, "signupPanel");
+		signUpButton.addMouseListener(new SignUpHandler(NameTextField, LastNameTextField, EmailTextField, passwordField, frame));
 		frame.setVisible(true);
 	}
 
@@ -508,4 +550,5 @@ public class LoginPage {
 		Color newColor = new Color(r, g, b);
 		this.buttonTextColor = newColor;
 	}
+	
 }
