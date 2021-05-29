@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 import java.time.Clock;
 import java.util.HashMap;
@@ -188,7 +190,8 @@ class BookInfoListHandler implements ListSelectionListener {
 	private JLabel overviewTextLabel;
 	private HashMap<String, JLabel> bookInfoLabels;
 
-	public BookInfoListHandler(DefaultListModel<GeneralBook> bookSuggestList, JButton overviewHoverButton, JLabel overviewTextLabel, HashMap<String, JLabel> bookInfoLabels,
+	public BookInfoListHandler(DefaultListModel<GeneralBook> bookSuggestList, JButton overviewHoverButton,
+			JLabel overviewTextLabel, HashMap<String, JLabel> bookInfoLabels,
 			DefaultListModel<String> reviewListModel) {
 		this.bookSuggestList = bookSuggestList;
 		this.overviewHoverButton = overviewHoverButton;
@@ -338,13 +341,14 @@ class SuggestedBookInfo implements ListSelectionListener {
 	}
 }
 
-class NewCommentHandler implements ActionListener{
+class NewCommentHandler implements ActionListener {
 	private final static int userId = 1;
 	private JTextArea commentArea;
 	private DefaultListModel<String> reviewListModel;
 	private JLabel bookInfoISBNValue;
-	
-	public NewCommentHandler(JTextArea commentArea, DefaultListModel<String> reviewListModel, JLabel bookInfoISBNValue) {
+
+	public NewCommentHandler(JTextArea commentArea, DefaultListModel<String> reviewListModel,
+			JLabel bookInfoISBNValue) {
 		this.commentArea = commentArea;
 		this.reviewListModel = reviewListModel;
 		this.bookInfoISBNValue = bookInfoISBNValue;
@@ -353,20 +357,95 @@ class NewCommentHandler implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String newComment = commentArea.getText();
+		if(newComment.isBlank() || newComment.isEmpty()) {
+			return;
+		}
 		try {
 			int bookId = Database.getBookFromIsbn(bookInfoISBNValue.getText());
 			HashMap<String, Object> bookInfo = Database.getBookInfo(bookId);
 			Database.addNewComment(userId, bookId, newComment);
-			
+
 			HashMap<String, Object> userInfo = Database.getUserInfo(userId);
 			String userName = (String) userInfo.get("Name");
 			String commentText = userName + ": " + newComment;
 			reviewListModel.addElement(commentText);
 			commentArea.setText("");
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e1.printStackTrace();//19
 		}
+	}
+
+}
+
+class LibraryListHandler implements PropertyChangeListener {
+	private JLabel bookISBN;
+	private DefaultListModel<Library> libraryList;
+	private JList<Library> librarySelectionList;
+
+	public LibraryListHandler(JLabel bookISBN, DefaultListModel<Library> libraryList,
+			JList<Library> librarySelectionList) {
+		this.bookISBN = bookISBN;
+		this.libraryList = libraryList;
+		this.librarySelectionList = librarySelectionList;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		libraryList.clear();
+		librarySelectionList.clearSelection();
+		String Isbn13 = bookISBN.getText();
+		if (Isbn13.compareTo("Value") == 0) {
+			return;
+		}
+		try {
+			int bookId = Database.getBookFromIsbn(Isbn13);
+			LinkedList<HashMap<String, Integer>> libraries = Database.getLibrariesOfBook(bookId);
+			if (libraries.size() == 0) {
+				return;
+			}
+			for (var library : libraries) {
+				libraryList.addElement(new Library(library.get("LibraryId"), library.get("StockCount"), bookId));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+}
+
+class libraryListListener implements ListSelectionListener {
+	private HashMap<String, JLabel> bookInfoLabels;
+
+	public libraryListListener(HashMap<String, JLabel> bookInfoLabels) {
+		this.bookInfoLabels = bookInfoLabels;
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (!e.getValueIsAdjusting()) {
+			if ( ((JList<Library>) e.getSource()).getSelectedValue() != null) {
+				Library selectedLibrary = ((JList<Library>) e.getSource()).getSelectedValue();
+				bookInfoLabels.get("Name").setText(selectedLibrary.getName());
+				bookInfoLabels.get("PhoneNumber").setText(selectedLibrary.getPhoneNumber());
+				bookInfoLabels.get("Address").setText(selectedLibrary.getAddress());
+				bookInfoLabels.get("Email").setText(selectedLibrary.getEmail());
+
+				bookInfoLabels.get("Name").setToolTipText(selectedLibrary.getName());
+				bookInfoLabels.get("PhoneNumber").setToolTipText(selectedLibrary.getPhoneNumber());
+				bookInfoLabels.get("Address").setToolTipText(selectedLibrary.getAddress());
+				bookInfoLabels.get("Email").setToolTipText(selectedLibrary.getEmail());
+			}
+		}
+	}
+
+}
+
+class loanBookAction implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		
 	}
 	
 }

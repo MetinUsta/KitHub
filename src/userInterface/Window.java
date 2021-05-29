@@ -148,7 +148,7 @@ public class Window {
 		bookLoanButton.setFont(systemText);
 		bookLoanButton.setForeground(buttonTextColor);
 		bookLoanButton.setBackground(elevation1);
-		bookLoanButton.setBounds(892, 445, 127, 60);
+		bookLoanButton.setBounds(980, 445, 127, 60);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(Color.BLACK);
@@ -200,7 +200,7 @@ public class Window {
 		MatteBorder bottomLineCover = new MatteBorder(2, 2, 2, 2, (Color) buttonTextColor);
 		overviewShadingPanel.setBorder(bottomLineCover);
 		JButton overviewHoverButton = new JButton("");
-		overviewHoverButton.setBorder(bottomLine);
+		overviewHoverButton.setBackground(elevation1);
 		overviewHoverButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -217,8 +217,6 @@ public class Window {
 		});
 		
 		overviewHoverButton.setBorder(null);
-		/*Image original = new ImageIcon(Window.class.getResource("/bookCovers/kissingCouple.png")).getImage();
-		Image dimg = original.getScaledInstance(bookCoverPanel.getWidth(), bookCoverPanel.getHeight(), Image.SCALE_SMOOTH);*/
 		bookCoverPanel.setLayout(null);
 		
 		overviewShadingPanel.setVisible(false);
@@ -227,7 +225,7 @@ public class Window {
 		bookCoverPanel.add(overviewShadingPanel);
 		overviewShadingPanel.setLayout(null);
 		
-		JLabel overviewTextLabel = new JLabel("<html>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sollicitudin sed libero in sagittis. Sed venenatis laoreet est, sed sollicitudin sapien porttitor sit amet. Aliquam quis sem sit amet ex molestie tristique tristique nec urna. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vel dapibus.</html>");
+		JLabel overviewTextLabel = new JLabel("<html>No books selected yet.</html>");
 		overviewTextLabel.setBorder(new LineBorder(new Color(0, 0, 0, 0), 10));
 		overviewTextLabel.setBounds(0, 0, 310, 494);
 		overviewTextLabel.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -370,74 +368,70 @@ public class Window {
 		libraryInfoNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		libraryInfoNameLabel.setForeground(textColor);
 		libraryInfoNameLabel.setFont(systemText);
-		libraryInfoNameLabel.setBounds(10, 11, 60, 33);
+		libraryInfoNameLabel.setBounds(10, 11, 82, 33);
 		libraryInfoPanel.add(libraryInfoNameLabel);
 		
 		JLabel libraryInfoNameValue = new JLabel("Value");
 		libraryInfoNameValue.setHorizontalAlignment(SwingConstants.LEFT);
 		libraryInfoNameValue.setForeground(textColorLight);
 		libraryInfoNameValue.setFont(info);
-		libraryInfoNameValue.setBounds(119, 11, 82, 33);
+		libraryInfoNameValue.setBounds(102, 11, 191, 33);
 		libraryInfoPanel.add(libraryInfoNameValue);
 		
 		JLabel libraryInfoPhoneLabel = new JLabel("Phone:");
 		libraryInfoPhoneLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		libraryInfoPhoneLabel.setForeground(textColor);
 		libraryInfoPhoneLabel.setFont(systemText);
-		libraryInfoPhoneLabel.setBounds(10, 44, 60, 33);
+		libraryInfoPhoneLabel.setBounds(10, 44, 82, 33);
 		libraryInfoPanel.add(libraryInfoPhoneLabel);
 		
 		JLabel libraryInfoPhoneValue = new JLabel("Value");
 		libraryInfoPhoneValue.setHorizontalAlignment(SwingConstants.LEFT);
 		libraryInfoPhoneValue.setForeground(textColorLight);
 		libraryInfoPhoneValue.setFont(info);
-		libraryInfoPhoneValue.setBounds(119, 44, 82, 33);
+		libraryInfoPhoneValue.setBounds(102, 44, 191, 33);
 		libraryInfoPanel.add(libraryInfoPhoneValue);
 		
 		JLabel libraryInfoAddressLabel = new JLabel("Address:");
 		libraryInfoAddressLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		libraryInfoAddressLabel.setForeground(textColor);
 		libraryInfoAddressLabel.setFont(systemText);
-		libraryInfoAddressLabel.setBounds(10, 77, 112, 33);
+		libraryInfoAddressLabel.setBounds(10, 77, 82, 33);
 		libraryInfoPanel.add(libraryInfoAddressLabel);
 		
 		JLabel libraryInfoAddressValue = new JLabel("Value");
 		libraryInfoAddressValue.setHorizontalAlignment(SwingConstants.LEFT);
 		libraryInfoAddressValue.setForeground(textColorLight);
 		libraryInfoAddressValue.setFont(info);
-		libraryInfoAddressValue.setBounds(119, 77, 82, 33);
+		libraryInfoAddressValue.setBounds(102, 77, 191, 33);
 		libraryInfoPanel.add(libraryInfoAddressValue);
 		
 		JLabel libraryInfoEmailLabel = new JLabel("Email:");
 		libraryInfoEmailLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		libraryInfoEmailLabel.setForeground(textColor);
 		libraryInfoEmailLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
-		libraryInfoEmailLabel.setBounds(10, 110, 112, 33);
+		libraryInfoEmailLabel.setBounds(10, 110, 82, 33);
 		libraryInfoPanel.add(libraryInfoEmailLabel);
 		
 		JLabel libraryInfoEmailValue = new JLabel("Value");
 		libraryInfoEmailValue.setHorizontalAlignment(SwingConstants.LEFT);
 		libraryInfoEmailValue.setForeground(Color.WHITE);
 		libraryInfoEmailValue.setFont(new Font("Arial", Font.PLAIN, 15));
-		libraryInfoEmailValue.setBounds(119, 110, 82, 33);
+		libraryInfoEmailValue.setBounds(102, 110, 191, 33);
 		libraryInfoPanel.add(libraryInfoEmailValue);
-		
-		JButton bookLocationButton = new JButton("Find Location");
-		bookLocationButton.setBorder(null);
-		bookLocationButton.setForeground(buttonTextColor);
-		bookLocationButton.setFont(systemText);
-		bookLocationButton.setBounds(1068, 445, 127, 60);
-		bookLocationButton.setBackground(elevation1);
-		bookLoanPanel.add(bookLocationButton);
 		
 		JScrollPane librarySelectionScrollPanel = new JScrollPane();
 		librarySelectionScrollPanel.setBorder(bottomLine);
 		librarySelectionScrollPanel.setBounds(892, 34, 303, 214);
 		bookLoanPanel.add(librarySelectionScrollPanel);
+		librarySelectionScrollPanel.getVerticalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
+		librarySelectionScrollPanel.getHorizontalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
+		librarySelectionScrollPanel.getVerticalScrollBar().setBackground(backgroundColor);
+		librarySelectionScrollPanel.getHorizontalScrollBar().setBackground(backgroundColor);
 		
 		DefaultListModel<Library> libraryList = new DefaultListModel<>();
 		JList<Library> librarySelectionList = new JList<>(libraryList);
-		librarySelectionList.setCellRenderer(new LibraryListRenderer());
+		librarySelectionList.setCellRenderer(new LibraryListRenderer(textColor));
 		librarySelectionList.setSelectionForeground(Color.WHITE);
 		librarySelectionList.setSelectionBackground(textColor);
 		librarySelectionList.setBackground(elevation1);
@@ -566,7 +560,7 @@ public class Window {
 		libraryDonationScrollPanel.getVerticalScrollBar().setBackground(backgroundColor);
 		ScrollBarColor scrollBarDonation = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		libraryDonationScrollPanel.getVerticalScrollBar().setUI(scrollBarDonation);
-		librarySelectionListDonation.setCellRenderer(new LibraryListRenderer());
+		librarySelectionListDonation.setCellRenderer(new LibraryListRenderer(textColor));
 		
 		JLabel infoText = new JLabel("Choose a library from the below list:");
 		infoText.setBounds(413, 11, 303, 24);
@@ -888,6 +882,12 @@ public class Window {
 		bookInfoLabels.put("PageCount", bookInfoPageCountValue);
 		bookInfoLabels.put("PublishDate", bookInfoPublishDateValue);
 		
+		HashMap<String, JLabel> libraryInfoLabels = new HashMap<>();
+		libraryInfoLabels.put("Name", libraryInfoNameValue);
+		libraryInfoLabels.put("Address", libraryInfoAddressValue);
+		libraryInfoLabels.put("PhoneNumber", libraryInfoPhoneValue);
+		libraryInfoLabels.put("Email", libraryInfoEmailValue);
+		
 		System.out.println(bookInfoLabels.get("Title").getText());
 		mainPageSidemenuBar.addMouseListener(select);
 		bookLoanSidemenuBar.addMouseListener(select);
@@ -900,6 +900,9 @@ public class Window {
 		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, overviewHoverButton, overviewTextLabel, bookInfoLabels, reviewListModel));
 		bookSuggest.addListSelectionListener(new SuggestedBookInfo(overviewHoverButton, overviewTextLabel, bookInfoLabels, reviewListModel));
 		commentButton.addActionListener(new NewCommentHandler(textArea, reviewListModel, bookInfoISBNValue));
+		bookInfoISBNValue.addPropertyChangeListener(new LibraryListHandler(bookInfoISBNValue, libraryList, librarySelectionList));
+		librarySelectionList.addListSelectionListener(new libraryListListener(libraryInfoLabels));
+		//button.addActionListener(new libraryListListener());
 		frame.setVisible(false);
 	}
 
@@ -969,22 +972,33 @@ class BookListRenderer extends DefaultListCellRenderer {
 }
 
 class LibraryListRenderer extends DefaultListCellRenderer {
-	MatteBorder bottomLine = new MatteBorder(0, 0, 2, 0, new Color(54, 199, 208));
+	private Color textColor;
+	private MatteBorder bottomLine;// = new MatteBorder(0, 0, 2, 0, new Color(54, 199, 208));
 	
 	private static final long serialVersionUID = 1L;
 	Font font = new Font("helvetica", Font.BOLD, 14);
+	
+	
+	
+    public LibraryListRenderer(Color textColor) {
+		this.textColor = textColor;
+		this.bottomLine = new MatteBorder(0, 0, 2, 0, textColor);
+	}
 
-    @Override
+
+
+	@Override
     public Component getListCellRendererComponent(
             JList<?> list, Object value, int index,
             boolean isSelected, boolean cellHasFocus) {
 
         JLabel label = (JLabel) super.getListCellRendererComponent(
                 list, value, index, isSelected, cellHasFocus);
-        label.setText(((Library) value).getName());
+        String labelText = String.format("%3d - %s",((Library) value).getStockCount(), ((Library) value).getName());
+        label.setText(labelText);
         label.setHorizontalTextPosition(JLabel.CENTER);
         label.setVerticalTextPosition(JLabel.BOTTOM);
-        list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
+        //list.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));;
         label.setBorder(bottomLine);
         label.setFont(font);
         label.setForeground(Color.white);
