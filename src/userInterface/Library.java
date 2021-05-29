@@ -4,16 +4,18 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class Library {
-	private int LibraryId;
+	private int libraryId;
 	private String Name;
 	private String Address;
 	private String PhoneNumber;
 	private String Email;
+	private int stockCount;
+	private static int bookId;
 	
-	public Library(int LibraryId) {
+	public Library(int libraryId) {
 		try {
-			this.LibraryId = LibraryId;
-			HashMap<String, Object> libraryInfo = Database.getLibraryContactInfo(LibraryId);
+			this.libraryId = libraryId;
+			HashMap<String, Object> libraryInfo = Database.getLibraryContactInfo(libraryId);
 			this.Name = (String) libraryInfo.get("Name");
 			this.Address = (String) libraryInfo.get("Address");
 			this.PhoneNumber = (String) libraryInfo.get("PhoneNumber");
@@ -23,8 +25,14 @@ public class Library {
 		}
 	}
 	
-	public int getLibraryId() {
-		return LibraryId;
+	public Library(int libraryId, int stockCount, int bookId) {
+		this(libraryId);
+		this.stockCount = stockCount;
+		Library.bookId = bookId;
+	}
+	
+	public int getlibraryId() {
+		return libraryId;
 	}
 
 	public String getName() {
@@ -42,5 +50,10 @@ public class Library {
 	public String getEmail() {
 		return Email;
 	}
+
+	public int getStockCount() {
+		return stockCount;
+	}
+	
 	
 }
