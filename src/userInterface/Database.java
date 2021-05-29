@@ -23,8 +23,15 @@ import java.util.Scanner;
 
 @SuppressWarnings("serial")
 class LateBookReturnException extends Exception {
-	public LateBookReturnException() {
-		super();
+	public LateBookReturnException(String errorMessage) {
+		super(errorMessage);
+	}
+}
+
+@SuppressWarnings("serial")
+class CurrentlyLoanedException extends Exception {
+	public CurrentlyLoanedException(String errorMessage) {
+		super(errorMessage);
 	}
 }
 
@@ -227,23 +234,39 @@ public class Database {
 		 */
 
 		/*
-		 * Clock clock = Clock.systemUTC();
-		 * 
-		 * try {
-		 * userLoanBook(15, 28, 5, clock.instant().toString());
-		 * } catch (SQLException e) {
-		 * // Duplicate handling here
-		 * if(e.getErrorCode() == 19) {
-		 * System.out.println("error");
-		 * }
-		 * e.printStackTrace();
-		 * }
-		 * // Demo code to show how to turn clock instant string into printable
-		 * YYYY-MM-DD string
-		 * Instant instant = Instant.parse("2021-05-22T10:22:04.912340600Z");
-		 * LocalDate date = LocalDate.ofInstant(instant, clock.getZone());
-		 * System.out.println(date.toString());
-		 */
+		try {
+			System.out.println(isBookInStock(5));
+			System.out.println(isBookInStock(10));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+
+		/*
+		try {
+			System.out.println(isCurrentlyLoaned(5, 14));
+			System.out.println(isCurrentlyLoaned(5, 9));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		*/
+
+		/*
+		Clock clock = Clock.systemUTC();
+		
+		try {
+			userLoanBook(8, 68, 1, clock.instant().toString());
+		} catch (SQLException | LateBookReturnException | CurrentlyLoanedException e) {
+			e.printStackTrace();
+		}
+		*/
+
+		/*
+		// Demo code to show how to turn clock instant string into printable YYYY-MM-DD string
+		Instant instant = Instant.parse("2021-05-22T10:22:04.912340600Z");
+		LocalDate date = LocalDate.ofInstant(instant, clock.getZone());
+		System.out.println(date.toString());
+		*/
 
 		/*
 		 * try {
@@ -539,40 +562,165 @@ public class Database {
 		}
 	}
 
-	// TODO isReturned kontrolü ve library CopyCount kontrolü ekle
-	// TODO LateReturnStatus kontrolü ekle
 	/**
-	 * Registers the new book loan to the BookLoans table.
+	 * Checks the availability of the book copy in its library
 	 * 
+	 * @return true if the library has the book available in stock, otherwise
+	 *         returns false
+	 */
+	private static boolean isBookInStock(int bookCopyId) throws SQLException {
+		int loanCount = 0;
+		int copyCount = 0;
+
+		String sqlCopyCount = "SELECT CopyCount FROM BookCopies WHERE BookCopyId = ?";
+		String sqlLoanCount = "SELECT COUNT(*) as LoanCount FROM BookLoans "
+				+ "WHERE BookCopyId = ? AND IsReturned = 0 GROUP BY BookCopyId";
+
+		try (Connection conn = connectToDatabase()) {
+			try (PreparedStatement pstmt = conn.prepareStatement(sqlCopyCount)) {
+				pstmt.setInt(1, bookCopyId);
+
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					copyCount = rs.getInt("CopyCount");
+				}
+			}
+			try (PreparedStatement pstmt = conn.prepareStatement(sqlLoanCount)) {
+				pstmt.setInt(1, bookCopyId);
+
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					loanCount = rs.getInt("LoanCount");
+				}
+			}
+			if (copyCount == 0) {
+				return false;
+			} else if (loanCount < copyCount) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * Checks if the user currently loans a copy of the book.
+	 * 
+	 * @return true if the user has loaned a copy of this book and did not return
+	 *         yet, otherwise returns false.
 	 * @throws SQLException
 	 */
-	public static void userLoanBook(int userId, int bookId, int libraryId, String loanDateInstant) throws SQLException {
+
+	@SuppressWarnings("resource")
+	private static boolean isCurrentlyLoaned(int userId, int bookCopyId) throws SQLException {
+		String sql = "SELECT UserId FROM BookLoans WHERE UserId = ? AND BookCopyId = ? AND IsReturned = 0";
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setInt(1, userId);
+			pstmt.setInt(2, bookCopyId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * Checks BookLoans table and finds late returned book records of the user. If
+	 * the needed time has passed, penalty is removed. Removes all of the served
+	 * penalties of the user.
+	 * 
+	 * @return true if the user has served all of his/her penalties, otherwise
+	 *         returns false
+	 */
+	@SuppressWarnings("resource")
+	public static boolean serveUserPenalties(int userId) throws SQLException {
+		boolean servedAll = true;
+		String sqlGetPenalties = "SELECT BookCopyId, LoanDate FROM BookLoans"
+				+ " WHERE UserId = ? AND IsReturned = -1";
+		String sqlSetServed = "UPDATE BookLoans SET IsReturned = 1 WHERE UserId = ? AND BookCopyId = ?";
+		String sqlChangeStatus = "UPDATE Users SET LateReturnStatus = 0 WHERE UserId = ?";
+		Clock clock = Clock.systemUTC();
+		LocalDate today = LocalDate.ofInstant(clock.instant(), clock.getZone());
+
+		if ((boolean) getUserInfo(userId).get("LateReturnStatus") == false) {
+			return true;
+		}
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sqlGetPenalties);
+				PreparedStatement pstmt2 = conn.prepareStatement(sqlSetServed)) {
+
+			pstmt.setInt(1, userId);
+
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String loanDateInstant = rs.getString("LoanDate");
+				LocalDate loanDate = LocalDate.ofInstant(Instant.parse(loanDateInstant), clock.getZone());
+				int bookCopyId = rs.getInt("BookCopyId");
+
+				if (ChronoUnit.DAYS.between(loanDate, today) >= LATE_RETURN_PENALTY) {
+					pstmt2.setInt(1, userId);
+					pstmt2.setInt(2, bookCopyId);
+					pstmt2.executeUpdate();
+				} else {
+					servedAll = false;
+				}
+			}
+			if (servedAll) {
+				try (PreparedStatement pstmt3 = conn.prepareStatement(sqlChangeStatus)) {
+					pstmt3.setInt(1, userId);
+					pstmt3.executeUpdate();
+				}
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	/**
+	 * Registers the new book loan to the BookLoans table. You must provide a
+	 * library that has this book in stock.
+	 * This method does not include book stock check.
+	 * 
+	 * @throws SQLException
+	 * @throws LateBookReturnException if the person has pending late return
+	 *                                 penalties
+	 * @throws CurrentlyLoanedException if the person currently loans that copy
+	 */
+	public static void userLoanBook(int userId, int bookId, int libraryId, String loanDateInstant)
+			throws SQLException, LateBookReturnException, CurrentlyLoanedException {
 		String sql = "INSERT INTO BookLoans (UserId, BookCopyId, LoanDate)"
 				+ "VALUES (?, ?, ?)";
-		String sqlGetCopyId = "SELECT BookCopyId FROM BookCopies WHERE BookId = ? AND LibraryId = ?";
+		Integer bookCopyId;
 
-		Connection conn = connectToDatabase();
-		PreparedStatement pstmt;
-		ResultSet rs;
-		int bookCopyId;
-
-		pstmt = conn.prepareStatement(sqlGetCopyId);
-
-		pstmt.setInt(1, bookId);
-		pstmt.setInt(2, libraryId);
-		rs = pstmt.executeQuery();
-		if (rs.next()) {
-			bookCopyId = rs.getInt("BookCopyId");
-		} else {
-			throw new SQLException();
+		try (Connection conn = connectToDatabase()) {
+			bookCopyId = convertToCopyId(bookId, libraryId);
+			if (bookCopyId == null) {
+				throw new SQLException(
+						"BookCopyId not found with the columns BookId = " + bookId + ", LibraryId = " + libraryId);
+			}
+			if (isCurrentlyLoaned(userId, bookCopyId)) {
+				throw new CurrentlyLoanedException("user: " + userId
+						+ " currently loans a copy with the bookCopyId = " + bookCopyId
+						+ ". He/she cannot loan another copy until he returns the one he owns.");
+			}
+			if (serveUserPenalties(userId)) {
+				try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+					pstmt.setInt(1, userId);
+					pstmt.setInt(2, bookCopyId);
+					pstmt.setString(3, loanDateInstant);
+					pstmt.executeUpdate();
+				}
+			} else {
+				throw new LateBookReturnException(
+						"User: " + userId + " has pending late return penalties. He/she cannot loan new books.");
+			}
 		}
-		pstmt = conn.prepareStatement(sql);
-
-		pstmt.setInt(1, userId);
-		pstmt.setInt(2, bookCopyId);
-		pstmt.setString(3, loanDateInstant);
-		pstmt.executeUpdate();
-
 	}
 
 	/**
@@ -636,7 +784,8 @@ public class Database {
 					pstmt.setInt(3, bookCopyId);
 					pstmt.executeUpdate();
 				}
-				throw new LateBookReturnException();
+				throw new LateBookReturnException("user: " + userId + " returned the bookCopy: " + bookCopyId
+						+ " late. He/she will receive a penalty.");
 			} else {
 				try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
 					pstmt.setInt(1, userId);
@@ -680,7 +829,7 @@ public class Database {
 	 */
 	@SuppressWarnings("resource")
 	public static LinkedList<Integer> getReturnedBooks(int userId) throws SQLException {
-		String sql = "SELECT BookCopyId FROM BookLoans INNER JOIN BookCopies USING(BookCopyId) WHERE UserId = ? AND (IsReturned = 1 OR IsReturned = -1)";
+		String sql = "SELECT DISTINCT BookCopyId FROM BookLoans INNER JOIN BookCopies USING(BookCopyId) WHERE UserId = ? AND (IsReturned = 1 OR IsReturned = -1)";
 		String sqlBookCopy = "SELECT BookId FROM BookCopies WHERE BookCopyId = ?";
 		LinkedList<Integer> books = new LinkedList<>();
 
@@ -827,6 +976,31 @@ public class Database {
 	}
 
 	/**
+	 * Finds bookCopyId of the book copy with the given bookId and libraryId
+	 * 
+	 * @return a Integer object which contains BookCopyId or null (must put this
+	 *         return value inside an Integer object to be able to detect null
+	 *         values)
+	 * @throws SQLException
+	 */
+	@SuppressWarnings("resource")
+	public static Integer convertToCopyId(int bookId, int libraryId) throws SQLException {
+		String sqlGetCopyId = "SELECT BookCopyId FROM BookCopies WHERE BookId = ? AND LibraryId = ?";
+		Integer bookCopyId = null;
+
+		try (Connection conn = connectToDatabase();
+				PreparedStatement pstmt = conn.prepareStatement(sqlGetCopyId)) {
+			pstmt.setInt(1, bookId);
+			pstmt.setInt(2, libraryId);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				bookCopyId = rs.getInt("BookCopyId");
+			}
+			return bookCopyId;
+		}
+	}
+
+	/**
 	 * Finds 10 most recent published books that belong to the given genre and
 	 * returns them.
 	 * 
@@ -947,7 +1121,7 @@ public class Database {
 	}
 
 	/**
-	 * Finds the libraries that has the given book and returns them.
+	 * Finds the libraries that has the given book in stock and returns them.
 	 * 
 	 * @return a LinkedList containing LibraryIds, ordered by CopyCount (desc)
 	 * @throws SQLException
@@ -963,7 +1137,13 @@ public class Database {
 			pstmt.setInt(1, bookId);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				libraries.addLast(rs.getInt("LibraryId"));
+				int bookCopyId;
+				int libraryId = rs.getInt("LibraryId");
+
+				bookCopyId = convertToCopyId(bookId, libraryId);
+				if (isBookInStock(bookCopyId)) {
+					libraries.addLast(rs.getInt("LibraryId"));
+				}
 			}
 			return libraries;
 		}

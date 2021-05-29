@@ -51,7 +51,7 @@ create table if not exists BookLoans (
         on delete cascade,
     LoanDate text not null,
     IsReturned integer not null default 0,
-    primary key (UserId, BookCopyId)
+    primary key (UserId, BookCopyId, LoanDate)
 );
 
 create table if not exists Comments (
