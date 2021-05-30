@@ -8,7 +8,7 @@ public class Security {
 
 	public static void main(String[] args) {
 		String password = "123456789";
-		
+
 		System.out.println(getPasswordHash(password));
 	}
 

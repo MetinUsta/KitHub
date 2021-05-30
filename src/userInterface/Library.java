@@ -11,7 +11,7 @@ public class Library {
 	private String Email;
 	private int stockCount;
 	private static int bookId;
-	
+
 	public Library(int libraryId) {
 		try {
 			this.libraryId = libraryId;
@@ -24,13 +24,13 @@ public class Library {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Library(int libraryId, int stockCount, int bookId) {
 		this(libraryId);
 		this.stockCount = stockCount;
 		Library.bookId = bookId;
 	}
-	
+
 	public int getlibraryId() {
 		return libraryId;
 	}
@@ -58,6 +58,5 @@ public class Library {
 	public static int getBookId() {
 		return bookId;
 	}
-	
-	
+
 }

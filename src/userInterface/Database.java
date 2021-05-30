@@ -47,10 +47,13 @@ public class Database {
 		fillTables();
 
 		// CALL PYTHON SCRIPT FROM JAVA
-		/*callPython("src/scripts/importBooks.py", "src/databases/importFiles/Books.csv",
-				"src/databases/libraryManagement.db");*/
+		/*
+		 * callPython("src/scripts/importBooks.py",
+		 * "src/databases/importFiles/Books.csv",
+		 * "src/databases/libraryManagement.db");
+		 */
 
-		//		System.out.println(isAdmin("123456789"));
+		// System.out.println(isAdmin("123456789"));
 
 		/*
 		 * HashMap<String, Object> info;
@@ -198,16 +201,16 @@ public class Database {
 		 */
 
 		/*
-		try {
-			var comments = getCommentsOfBook(10);
-			for (var comment : comments) {
-				System.out.println(comment.get("UserId"));
-				System.out.println(comment.get("Comment"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * var comments = getCommentsOfBook(10);
+		 * for (var comment : comments) {
+		 * System.out.println(comment.get("UserId"));
+		 * System.out.println(comment.get("Comment"));
+		 * }
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
 		 * try {
@@ -233,39 +236,41 @@ public class Database {
 		 */
 
 		/*
-		try {
-			System.out.println(isBookInStock(5));
-			System.out.println(isBookInStock(10));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * System.out.println(isBookInStock(5));
+		 * System.out.println(isBookInStock(10));
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		try {
-			System.out.println(isCurrentlyLoaned(5, 14));
-			System.out.println(isCurrentlyLoaned(5, 9));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * try {
+		 * System.out.println(isCurrentlyLoaned(5, 14));
+		 * System.out.println(isCurrentlyLoaned(5, 9));
+		 * } catch (SQLException e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		Clock clock = Clock.systemUTC();
-		
-		try {
-			userLoanBook(8, 68, 1, clock.instant().toString());
-		} catch (SQLException | LateBookReturnException | CurrentlyLoanedException e) {
-			e.printStackTrace();
-		}
-		*/
+		 * Clock clock = Clock.systemUTC();
+		 * 
+		 * try {
+		 * userLoanBook(8, 68, 1, clock.instant().toString());
+		 * } catch (SQLException | LateBookReturnException | CurrentlyLoanedException e)
+		 * {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		/*
-		// Demo code to show how to turn clock instant string into printable YYYY-MM-DD string
-		Instant instant = Instant.parse("2021-05-22T10:22:04.912340600Z");
-		LocalDate date = LocalDate.ofInstant(instant, clock.getZone());
-		System.out.println(date.toString());
-		*/
+		 * // Demo code to show how to turn clock instant string into printable
+		 * YYYY-MM-DD string
+		 * Instant instant = Instant.parse("2021-05-22T10:22:04.912340600Z");
+		 * LocalDate date = LocalDate.ofInstant(instant, clock.getZone());
+		 * System.out.println(date.toString());
+		 */
 
 		/*
 		 * try {

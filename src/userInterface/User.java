@@ -9,7 +9,7 @@ public class User {
 	private String Surname;
 	private String Email;
 	private boolean LateReturnStatus;
-	
+
 	public User(int UserId) {
 		this.UserId = UserId;
 		try {
@@ -20,7 +20,7 @@ public class User {
 			this.LateReturnStatus = (boolean) userInfo.get("LateReturnStatus");
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
 
 	public int getUserId() {
@@ -42,6 +42,5 @@ public class User {
 	public boolean isLateReturnStatus() {
 		return LateReturnStatus;
 	}
-	
-	
+
 }

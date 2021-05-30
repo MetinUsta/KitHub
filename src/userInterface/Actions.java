@@ -45,7 +45,8 @@ class SideBarSelectionHandler extends MouseAdapter {
 
 	public SideBarSelectionHandler(CardLayout card, JPanel contentPanel, JPanel[] selectionList, JPanel[] barList,
 			Color sideBarSelectionColor, Color sideBarMenuColor, DefaultListModel<LibraryBook> takenBooks,
-			DefaultListModel<String> reviewListProfileModel, DefaultListModel<GeneralBook> oldBooksListModel, DefaultListModel<Library> librarySelectionForm) {
+			DefaultListModel<String> reviewListProfileModel, DefaultListModel<GeneralBook> oldBooksListModel,
+			DefaultListModel<Library> librarySelectionForm) {
 		this.card = card;
 		this.contentPanel = contentPanel;
 		this.selectionList = selectionList;
@@ -84,10 +85,10 @@ class SideBarSelectionHandler extends MouseAdapter {
 			librarySelectionForm.clear();
 			card.show(contentPanel, "bookDonation");
 			selectionList[2].setBackground(sideBarSelectionColor);
-			
+
 			try {
 				LinkedList<Integer> allLibraries = Database.getLibraries();
-				for(var library : allLibraries) {
+				for (var library : allLibraries) {
 					librarySelectionForm.addElement(new Library(library));
 				}
 			} catch (SQLException e1) {

@@ -62,13 +62,13 @@ public class LoginPage {
 	 */
 	private void initialize() {
 		Color backgroundColor = new Color(33, 37, 41);
-		
+
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(245, 245, 245));
 		frame.setTitle("myLibrary");
 		frame.setBounds(100, 100, 800, 500);
 		frame.setUndecorated(true);
-		
+
 		Image icon = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/icon.png")).getImage();
 		frame.setIconImage(icon);
 
@@ -78,14 +78,11 @@ public class LoginPage {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
-		
+
 		sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
 		sideBarIcon.setBounds(0, 0, 284, 500);
 		frame.getContentPane().add(sideBarIcon);
-		
-		
-		
+
 		JPanel panel = new JPanel();
 		panel.setBounds(283, 0, 517, 500);
 		frame.getContentPane().add(panel);
@@ -135,7 +132,7 @@ public class LoginPage {
 		infoTextAccount.setFont(new Font("Arial", Font.BOLD, 17));
 
 		JLabel signInButton = new JLabel("SIGN IN");
-		
+
 		signInButton.setBounds(174, 302, 172, 43);
 		signinPanel.add(signInButton);
 		signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -161,7 +158,7 @@ public class LoginPage {
 		TextPrompt emailLoginPlaceholder = new TextPrompt("Email ", emailLoginInput);
 		@SuppressWarnings("unused")
 		TextPrompt passwordLoginPlaceholder = new TextPrompt("Password ", passwordFieldLogin);
-		
+
 		JLabel iconifyButton = new JLabel("");
 		iconifyButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -177,7 +174,7 @@ public class LoginPage {
 		iconifyButton.setBackground(Color.WHITE);
 		iconifyButton.setBounds(462, 25, 17, 6);
 		signinPanel.add(iconifyButton);
-		
+
 		JLabel closeButton = new JLabel("X");
 		closeButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -191,144 +188,152 @@ public class LoginPage {
 		closeButton.setFont(new Font("Arial", Font.BOLD, 23));
 		closeButton.setBounds(485, 11, 22, 27);
 		signinPanel.add(closeButton);
-		
+
 		JPanel colorOptionsPanel = new JPanel();
 		colorOptionsPanel.setLayout(null);
 		colorOptionsPanel.setBackground(new Color(39, 43, 47));
 		colorOptionsPanel.setBounds(80, 385, 360, 61);
 		signinPanel.add(colorOptionsPanel);
-		
+
 		ImageIcon moryesil = scaleColorOption("/SystemAssets/ColorOptions/moryesil.png");
 		ImageIcon turkuazsomon = scaleColorOption("/SystemAssets/ColorOptions/turkuazsomon.png");
 		ImageIcon turuncumavi = scaleColorOption("/SystemAssets/ColorOptions/turuncumavi.png");
 		ImageIcon turuncusari = scaleColorOption("/SystemAssets/ColorOptions/turuncusari.png");
 		ImageIcon yesilsari = scaleColorOption("/SystemAssets/ColorOptions/yesilsari.png");
-		
+
 		JLabel turuncusariIcon = new JLabel("");
 		turuncusariIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		turuncusariIcon.setIcon(turuncusari);
 		turuncusariIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		turuncusariIcon.setBounds(10, 11, 60, 41);
 		colorOptionsPanel.add(turuncusariIcon);
-		
+
 		JLabel turkuazsomonIcon = new JLabel("");
 		turkuazsomonIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		turkuazsomonIcon.setIcon(turkuazsomon);
 		turkuazsomonIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		turkuazsomonIcon.setBounds(80, 11, 60, 41);
 		colorOptionsPanel.add(turkuazsomonIcon);
-		
+
 		JLabel yesilsariIcon = new JLabel("");
 		yesilsariIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		yesilsariIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		yesilsariIcon.setIcon(yesilsari);
 		yesilsariIcon.setBounds(150, 11, 60, 41);
 		colorOptionsPanel.add(yesilsariIcon);
-		
+
 		JLabel moryesilIcon = new JLabel("");
 		moryesilIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		moryesilIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		moryesilIcon.setIcon(moryesil);
 		moryesilIcon.setBounds(220, 11, 60, 41);
 		colorOptionsPanel.add(moryesilIcon);
-		
+
 		JLabel turuncumaviIcon = new JLabel("");
 		turuncumaviIcon.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		turuncumaviIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		turuncumaviIcon.setIcon(turuncumavi);
 		turuncumaviIcon.setBounds(290, 11, 60, 41);
 		colorOptionsPanel.add(turuncumaviIcon);
-		
+
 		JToggleButton passwordVisibilityButton = new JToggleButton("");
-		passwordVisibilityButton.setSelectedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		passwordVisibilityButton
+				.setSelectedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
 		passwordVisibilityButton.setBackground(Color.white);
-		passwordVisibilityButton.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/closeEyeGray.png")));
-		passwordVisibilityButton.setPressedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		passwordVisibilityButton
+				.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/closeEyeGray.png")));
+		passwordVisibilityButton
+				.setPressedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
 		passwordVisibilityButton.setBounds(354, 249, 32, 32);
 		signinPanel.add(passwordVisibilityButton);
-		
+
 		ItemListener passwordVisibility = new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				int state = e.getStateChange();
-				
-				if(state == ItemEvent.SELECTED) {
-					passwordFieldLogin.setEchoChar((char)0);
-				}else {
+
+				if (state == ItemEvent.SELECTED) {
+					passwordFieldLogin.setEchoChar((char) 0);
+				} else {
 					passwordFieldLogin.setEchoChar('●');
 				}
-				
+
 			}
-			
+
 		};
-		
+
 		passwordVisibilityButton.addItemListener(passwordVisibility);
-		
+
 		JLabel infoTextSignUp = new JLabel("Sign up to myLibrary");
 		infoTextSignUp.setForeground(textColor);
 		JLabel signUpButton = new JLabel("SIGN UP");
 		signUpButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		signUpButton.setBackground(textColor);
-		
+
 		MouseAdapter colorChooser = new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(e.getSource() == turkuazsomonIcon) {
+				if (e.getSource() == turkuazsomonIcon) {
 					infoTextSignIn.setForeground(new Color(54, 199, 208));
 					signInButton.setBackground(new Color(54, 199, 208));
 					infoTextSignUp.setForeground(new Color(54, 199, 208));
 					signUpButton.setBackground(new Color(54, 199, 208));
-					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridCyan.png")));
+					sideBarIcon
+							.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridCyan.png")));
 					setTextColor(54, 199, 208);
 					setbuttonTextColor(255, 164, 142);
-					
+
 				}
-				if(e.getSource() == yesilsariIcon) {
+				if (e.getSource() == yesilsariIcon) {
 					infoTextSignIn.setForeground(new Color(63, 139, 76));
 					signInButton.setBackground(new Color(63, 139, 76));
 					infoTextSignUp.setForeground(new Color(63, 139, 76));
 					signUpButton.setBackground(new Color(63, 139, 76));
-					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridGreen.png")));
+					sideBarIcon
+							.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridGreen.png")));
 					setTextColor(63, 139, 76);
 					setbuttonTextColor(198, 192, 19);
 				}
-				if(e.getSource() == moryesilIcon) {
+				if (e.getSource() == moryesilIcon) {
 					infoTextSignIn.setForeground(new Color(187, 134, 252));
 					signInButton.setBackground(new Color(187, 134, 252));
 					infoTextSignUp.setForeground(new Color(187, 134, 252));
 					signUpButton.setBackground(new Color(187, 134, 252));
-					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridPurple.png")));
+					sideBarIcon
+							.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridPurple.png")));
 					setTextColor(187, 134, 252);
 					setbuttonTextColor(3, 218, 196);
 				}
-				if(e.getSource() == turuncumaviIcon) {
+				if (e.getSource() == turuncumaviIcon) {
 					infoTextSignIn.setForeground(new Color(253, 65, 60));
 					signInButton.setBackground(new Color(253, 65, 60));
 					infoTextSignUp.setForeground(new Color(253, 65, 60));
 					signUpButton.setBackground(new Color(253, 65, 60));
-					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
+					sideBarIcon.setIcon(
+							new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
 					setTextColor(253, 65, 60);
 					setbuttonTextColor(2, 129, 255);
 				}
-				if(e.getSource() == turuncusariIcon) {
+				if (e.getSource() == turuncusariIcon) {
 					infoTextSignIn.setForeground(new Color(253, 65, 60));
 					signInButton.setBackground(new Color(253, 65, 60));
 					infoTextSignUp.setForeground(new Color(253, 65, 60));
 					signUpButton.setBackground(new Color(253, 65, 60));
-					sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
+					sideBarIcon.setIcon(
+							new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
 					setTextColor(253, 65, 60);
 					setbuttonTextColor(254, 188, 44);
 				}
 			}
 		};
-		
+
 		turkuazsomonIcon.addMouseListener(colorChooser);
 		yesilsariIcon.addMouseListener(colorChooser);
 		moryesilIcon.addMouseListener(colorChooser);
 		turuncumaviIcon.addMouseListener(colorChooser);
 		turuncusariIcon.addMouseListener(colorChooser);
-		
+
 		NameTextField = new JTextField();
 		NameTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		NameTextField.setForeground(Color.GRAY);
@@ -350,17 +355,14 @@ public class LoginPage {
 		passwordField.setBounds(122, 307, 185, 33);
 		signupPanel.add(passwordField);
 
-		
 		signUpButton.setOpaque(true);
 		signUpButton.setHorizontalAlignment(SwingConstants.CENTER);
 		signUpButton.setForeground(Color.WHITE);
 		signUpButton.setFont(new Font("Arial", Font.BOLD, 24));
-		//signUpButton.setBackground(new Color(6, 214, 160));
+		// signUpButton.setBackground(new Color(6, 214, 160));
 		signUpButton.setBounds(146, 351, 172, 43);
 		signupPanel.add(signUpButton);
-		
-		
-		
+
 		LastNameTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		LastNameTextField.setForeground(Color.GRAY);
 
@@ -378,9 +380,8 @@ public class LoginPage {
 		@SuppressWarnings("unused")
 		TextPrompt passwordPlaceholder = new TextPrompt("Password ", passwordField);
 
-		
 		infoTextSignUp.setHorizontalAlignment(SwingConstants.CENTER);
-		//infoTextSignUp.setForeground(new Color(6, 214, 160));
+		// infoTextSignUp.setForeground(new Color(6, 214, 160));
 		infoTextSignUp.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 27));
 		infoTextSignUp.setBounds(66, 66, 328, 77);
 		signupPanel.add(infoTextSignUp);
@@ -405,7 +406,7 @@ public class LoginPage {
 		returnButton.setFont(new Font("Arial", Font.BOLD, 17));
 		returnButton.setBounds(350, 446, 157, 43);
 		signupPanel.add(returnButton);
-		
+
 		JLabel iconifyButtonSignUp = new JLabel("");
 		iconifyButtonSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		iconifyButtonSignUp.addMouseListener(new MouseAdapter() {
@@ -421,7 +422,7 @@ public class LoginPage {
 		iconifyButtonSignUp.setBackground(Color.WHITE);
 		iconifyButtonSignUp.setBounds(462, 25, 17, 6);
 		signupPanel.add(iconifyButtonSignUp);
-		
+
 		JLabel closeButtonSignUp = new JLabel("X");
 		closeButtonSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		closeButtonSignUp.addMouseListener(new MouseAdapter() {
@@ -435,40 +436,48 @@ public class LoginPage {
 		closeButtonSignUp.setFont(new Font("Arial", Font.BOLD, 23));
 		closeButtonSignUp.setBounds(485, 11, 22, 27);
 		signupPanel.add(closeButtonSignUp);
-		
-		
 
 		// cards.show(panel, "signupPanel");
-		
-		signUpButton.addMouseListener(new SignUpHandler(NameTextField, LastNameTextField, EmailTextField, passwordField, this));
-		
+
+		signUpButton.addMouseListener(
+				new SignUpHandler(NameTextField, LastNameTextField, EmailTextField, passwordField, this));
+
 		JToggleButton passwordVisibilityButton_1 = new JToggleButton("");
-		passwordVisibilityButton_1.setSelectedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		passwordVisibilityButton_1
+				.setSelectedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
 		passwordVisibilityButton_1.setBackground(Color.white);
-		passwordVisibilityButton_1.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/closeEyeGray.png")));
-		passwordVisibilityButton_1.setPressedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		passwordVisibilityButton_1
+				.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/closeEyeGray.png")));
+		passwordVisibilityButton_1
+				.setPressedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
 		passwordVisibilityButton_1.setBounds(307, 307, 32, 32);
 		signupPanel.add(passwordVisibilityButton_1);
-		
+
 		ItemListener passwordSignUpVisibility = new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				int state = e.getStateChange();
-				
-				if(state == ItemEvent.SELECTED) {
-					passwordField.setEchoChar((char)0);
-				}else {
+
+				if (state == ItemEvent.SELECTED) {
+					passwordField.setEchoChar((char) 0);
+				} else {
 					passwordField.setEchoChar('●');
 				}
-				
+
 			}
-			
+
 		};
-		
+
 		passwordVisibilityButton_1.addItemListener(passwordSignUpVisibility);
-		
-		signInButton.addMouseListener(new SignInHandler(emailLoginInput, passwordFieldLogin, frame, this/*, getTextColor(), getbuttonTextColor()*/));
+
+		signInButton.addMouseListener(new SignInHandler(emailLoginInput, passwordFieldLogin, frame, this/*
+																										 * ,
+																										 * getTextColor(
+																										 * ),
+																										 * getbuttonTextColor
+																										 * ()
+																										 */));
 		frame.setVisible(true);
 	}
 
@@ -498,17 +507,19 @@ public class LoginPage {
 	public JFrame getFrame() {
 		return frame;
 	}
-	
+
 	public ImageIcon scaleColorOption(String path) {
 		Image colorImage = new ImageIcon(Window.class.getResource(path)).getImage();
-		Image scaledColorImage = colorImage.getScaledInstance((int) (28*1.91), 28, Image.SCALE_SMOOTH);
+		Image scaledColorImage = colorImage.getScaledInstance((int) (28 * 1.91), 28, Image.SCALE_SMOOTH);
 		ImageIcon scaledColorImageIcon = new ImageIcon(scaledColorImage);
 		return scaledColorImageIcon;
 	}
 
-	/*public Color getTextColor() {
-		return textColor;
-	}*/
+	/*
+	 * public Color getTextColor() {
+	 * return textColor;
+	 * }
+	 */
 
 	public void setTextColor(int r, int g, int b) {
 		Color newColor = new Color(r, g, b);
@@ -523,7 +534,7 @@ public class LoginPage {
 		Color newColor = new Color(r, g, b);
 		this.buttonTextColor = newColor;
 	}
-	
+
 	public void createWindow(int userId) {
 		Window window = new Window(textColor, buttonTextColor, userId);
 		window.getFrame().setVisible(true);
