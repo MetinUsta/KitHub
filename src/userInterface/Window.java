@@ -18,10 +18,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 import java.awt.Color;
 import java.awt.Component;
@@ -916,7 +914,6 @@ public class Window {
 		bookDonationSidemenuBar.addMouseListener(new SideBarSelectionHandler(card, contentPanel, selectionList, barList, sideBarSelectionColor, sideBarMenuColor, takenBooks, reviewListProfileModel, oldBooksListModel, librarySelectionForm));
 		profileSidemenuBar.addMouseListener(new SideBarSelectionHandler(card, contentPanel, selectionList, barList, sideBarSelectionColor, sideBarMenuColor, takenBooks, reviewListProfileModel, oldBooksListModel, librarySelectionForm));
 		
-		//TODO
 		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList, list));
 		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, overviewHoverButton, overviewTextLabel, bookInfoLabels, reviewListModel));
 		bookSuggest.addListSelectionListener(new SuggestedBookInfo(overviewHoverButton, overviewTextLabel, bookInfoLabels, reviewListModel));
