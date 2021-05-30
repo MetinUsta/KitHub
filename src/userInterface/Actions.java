@@ -642,7 +642,7 @@ class SignInHandler extends MouseAdapter {
 			if (information.get("Surname") != null) {
 				loginPage.createWindow((int) information.get("UserId"));
 			} else {
-				JOptionPane.showMessageDialog(null, "Kullanıcı adı veya şifre hatalı");
+				JOptionPane.showMessageDialog(null, "The email address or password is incorrect!");
 			}
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -676,11 +676,11 @@ class SignUpHandler extends MouseAdapter {
 					Security.getPasswordHash(String.valueOf(password.getPassword())));
 			information = Database.getUserInfo(email.getText(),
 					Security.getPasswordHash(String.valueOf(password.getPassword())));
-			JOptionPane.showMessageDialog(null, "Kaydedildi");
+			JOptionPane.showMessageDialog(null, "You have successfully signed up");
 
 			loginPage.createWindow((int) information.get("UserId"));
 		} catch (SQLException e1) {
-			JOptionPane.showMessageDialog(null, "Bu email kullanılıyor");
+			JOptionPane.showMessageDialog(null, "There is an account with the same email.");
 		}
 
 	}
