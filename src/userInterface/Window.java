@@ -570,10 +570,12 @@ public class Window {
 		libraryDonationScrollPanel.setBounds(413, 38, 303, 214);
 		panelMiddle.add(libraryDonationScrollPanel);
 		libraryDonationScrollPanel.setBorder(bottomLine);
-		
+		libraryDonationScrollPanel.getHorizontalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
+		libraryDonationScrollPanel.getHorizontalScrollBar().setBackground(backgroundColor);
 		DefaultListModel<Library> librarySelectionForm = new DefaultListModel<>();
 		JList<Library> librarySelectionListDonation = new JList<>(librarySelectionForm);
 		librarySelectionListDonation.setBackground(new Color(56, 56, 61));
+		librarySelectionListDonation.setSelectionBackground(textColor);
 		libraryDonationScrollPanel.setViewportView(librarySelectionListDonation);
 		libraryDonationScrollPanel.getVerticalScrollBar().setBackground(backgroundColor);
 		ScrollBarColor scrollBarDonation = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
