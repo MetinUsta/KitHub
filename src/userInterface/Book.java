@@ -9,7 +9,7 @@ public class Book {
 	private ImageIcon Cover;
 	private String ISBN;
 	public static final int smallIcon = 150;
-	public static final int bigIcon = 310;
+	public static final int largeIcon = 310;
 	
 	public String getName() {
 		return Name;

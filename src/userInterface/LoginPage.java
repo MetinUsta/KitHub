@@ -10,13 +10,10 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
-import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -34,7 +31,6 @@ public class LoginPage {
 	private JTextField EmailTextField;
 	private JPasswordField passwordField;
 	private JPasswordField passwordFieldLogin;
-	private boolean verified = false;
 	private Color textColor = new Color(253, 65, 60);
 	private Color buttonTextColor = new Color(254, 188, 44);
 
@@ -95,7 +91,6 @@ public class LoginPage {
 		frame.getContentPane().add(panel);
 		CardLayout cards = new CardLayout();
 		panel.setLayout(cards);
-		// cards.show(panel, "signupPanel");
 
 		JPanel signinPanel = new JPanel();
 		signinPanel.setBackground(backgroundColor);
@@ -140,28 +135,7 @@ public class LoginPage {
 		infoTextAccount.setFont(new Font("Arial", Font.BOLD, 17));
 
 		JLabel signInButton = new JLabel("SIGN IN");
-		signInButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				HashMap<String, Object> information;
-				
-				try {
-					information = Database.getUserInfo(emailLoginInput.getText(), Security.getPasswordHash(String.valueOf(passwordFieldLogin.getPassword())));
-					if(information.get("Surname") != null){
-						//verified = true;
-						Window window = new Window(getTextColor(), getbuttonTextColor());
-						window.getFrame().setVisible(true);
-						frame.setVisible(false);
-					} else {
-						JOptionPane.showMessageDialog(null, "Kullanıcı adı veya şifre hatalı");
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-								
-			}
-		});
+		
 		signInButton.setBounds(174, 302, 172, 43);
 		signinPanel.add(signInButton);
 		signInButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -294,34 +268,8 @@ public class LoginPage {
 		JLabel infoTextSignUp = new JLabel("Sign up to myLibrary");
 		infoTextSignUp.setForeground(textColor);
 		JLabel signUpButton = new JLabel("SIGN UP");
+		signUpButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		signUpButton.setBackground(textColor);
-		
-
-		
-		/*signUpButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                String name = NameTextField.getText();
-                String lastName = LastNameTextField.getText();
-                String email = EmailTextField.getText();
-                String password = String.valueOf(passwordField.getPassword());
-
-                try {
-                    Database.addNewUser(name, lastName, email, Security.getPasswordHash(password));
-                    System.out.println("Success");
-                    JOptionPane.showMessageDialog(null, "Kaydedildi");
-                    Window window = new Window(getTextColor(), getbuttonTextColor());
-					window.getFrame().setVisible(true);
-					frame.setVisible(false);
-                } catch (SQLException e1) {
-                    // TODO Auto-generated catch block
-                    JOptionPane.showMessageDialog(null, "Bu email kullanılıyor");
-                }
-
-
-
-            }
-        });*/
 		
 		MouseAdapter colorChooser = new MouseAdapter() {
 			@Override
@@ -399,7 +347,7 @@ public class LoginPage {
 		signupPanel.add(EmailTextField);
 
 		passwordField = new JPasswordField();
-		passwordField.setBounds(122, 307, 217, 33);
+		passwordField.setBounds(122, 307, 185, 33);
 		signupPanel.add(passwordField);
 
 		
@@ -491,7 +439,36 @@ public class LoginPage {
 		
 
 		// cards.show(panel, "signupPanel");
-		signUpButton.addMouseListener(new SignUpHandler(NameTextField, LastNameTextField, EmailTextField, passwordField, frame));
+		
+		signUpButton.addMouseListener(new SignUpHandler(NameTextField, LastNameTextField, EmailTextField, passwordField, this));
+		
+		JToggleButton passwordVisibilityButton_1 = new JToggleButton("");
+		passwordVisibilityButton_1.setSelectedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		passwordVisibilityButton_1.setBackground(Color.white);
+		passwordVisibilityButton_1.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/closeEyeGray.png")));
+		passwordVisibilityButton_1.setPressedIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/openEyeGray.png")));
+		passwordVisibilityButton_1.setBounds(307, 307, 32, 32);
+		signupPanel.add(passwordVisibilityButton_1);
+		
+		ItemListener passwordSignUpVisibility = new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				int state = e.getStateChange();
+				
+				if(state == ItemEvent.SELECTED) {
+					passwordField.setEchoChar((char)0);
+				}else {
+					passwordField.setEchoChar('●');
+				}
+				
+			}
+			
+		};
+		
+		passwordVisibilityButton_1.addItemListener(passwordSignUpVisibility);
+		
+		signInButton.addMouseListener(new SignInHandler(emailLoginInput, passwordFieldLogin, frame, this/*, getTextColor(), getbuttonTextColor()*/));
 		frame.setVisible(true);
 	}
 
@@ -529,13 +506,9 @@ public class LoginPage {
 		return scaledColorImageIcon;
 	}
 
-	public boolean isVerified() {
-		return verified;
-	}
-
-	public Color getTextColor() {
+	/*public Color getTextColor() {
 		return textColor;
-	}
+	}*/
 
 	public void setTextColor(int r, int g, int b) {
 		Color newColor = new Color(r, g, b);
@@ -551,4 +524,9 @@ public class LoginPage {
 		this.buttonTextColor = newColor;
 	}
 	
+	public void createWindow(int userId) {
+		Window window = new Window(textColor, buttonTextColor, userId);
+		window.getFrame().setVisible(true);
+		frame.setVisible(false);
+	}
 }

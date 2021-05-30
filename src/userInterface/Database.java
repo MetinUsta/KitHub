@@ -826,7 +826,7 @@ public class Database {
 	 */
 	@SuppressWarnings("resource")
 	public static LinkedList<Integer> getReturnedBooks(int userId) throws SQLException {
-		String sql = "SELECT DISTINCT BookCopyId FROM BookLoans INNER JOIN BookCopies USING(BookCopyId) WHERE UserId = ? AND (IsReturned = 1 OR IsReturned = -1)";
+		String sql = "SELECT DISTINCT BookCopyId FROM BookLoans INNER JOIN BookCopies USING(BookCopyId) WHERE UserId = ? AND (IsReturned = 1 OR IsReturned = -1) GROUP BY BookId";
 		String sqlBookCopy = "SELECT BookId FROM BookCopies WHERE BookCopyId = ?";
 		LinkedList<Integer> books = new LinkedList<>();
 

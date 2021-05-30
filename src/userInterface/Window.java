@@ -15,7 +15,14 @@ import javax.swing.JLabel;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Scanner;
 import java.awt.Color;
 import java.awt.Component;
 
@@ -37,6 +44,8 @@ import java.awt.Cursor;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import java.util.Random;
+
 public class Window {
 	
 	private JFrame frame;
@@ -57,13 +66,25 @@ public class Window {
 	private Color textColorLight = new Color(255, 255, 255);
 	private Color buttonTextColor = new Color(255, 164, 142);
 	
+	private static int userId;
+	private static User loggedUser;// = null;
+	private JTextField donateFieldGenres;
+	private JTextField donateFieldOverview;
+	
+	/*static {
+		loggedUser = new User(getUserId());
+	}*/
+	
 	/**
 	 * Create the application.
+	 * @param userId 
 	 */
-	public Window(Color textColor, Color buttonTextColor) {
+	public Window(Color textColor, Color buttonTextColor, int userId) {
 		this.textColor = textColor;
 		this.buttonTextColor = buttonTextColor;
 		this.sideBarSelectionColor = textColor;
+		Window.userId = userId;
+		Window.loggedUser = new User(getUserId());
 		initialize();
 	}
 
@@ -85,7 +106,7 @@ public class Window {
 		
 		Image icon = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/icon.png")).getImage();
 		frame.setIconImage(icon);
-		frame.setTitle("Test");
+		frame.setTitle("Library App");
 		
 		JPanel sideBarPanel = new JPanel();
 		sideBarPanel.setBounds(0, 0, 141, 739);
@@ -255,9 +276,6 @@ public class Window {
 		reviewList.setBackground(elevation1);
 		scrollPane.setViewportView(reviewList);
 		reviewList.setCellRenderer(new CommentListRenderer(textColor));
-		reviewListModel.addElement("Will hit you right in the heart. —Bustle");
-		reviewListModel.addElement("Delightfully wicked fun! —Kirkus Reviews");
-		reviewListModel.addElement("Gosh awful narrator. Sorry. In its favor I could only stomach 3 pages. -Washington Post");
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(bottomLine);
@@ -568,6 +586,32 @@ public class Window {
 		infoText.setForeground(Color.WHITE);
 		infoText.setFont(systemText);
 		
+		JLabel bookDonateGenresLabel = new JLabel("Genres:");
+		bookDonateGenresLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonateGenresLabel.setForeground(textColor);
+		bookDonateGenresLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		bookDonateGenresLabel.setBounds(10, 246, 97, 33);
+		panelMiddle.add(bookDonateGenresLabel);
+		
+		donateFieldGenres = new JTextField();
+		donateFieldGenres.setColumns(10);
+		donateFieldGenres.setBounds(171, 254, 183, 25);
+		donateFieldGenres.setBorder(bottomLineTextField);
+		panelMiddle.add(donateFieldGenres);
+		
+		JLabel bookDonateOverviewLabel = new JLabel("Overview:");
+		bookDonateOverviewLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		bookDonateOverviewLabel.setForeground(textColor);
+		bookDonateOverviewLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 17));
+		bookDonateOverviewLabel.setBounds(10, 290, 97, 33);
+		panelMiddle.add(bookDonateOverviewLabel);
+		
+		donateFieldOverview = new JTextField();
+		donateFieldOverview.setColumns(10);
+		donateFieldOverview.setBounds(171, 298, 183, 25);
+		donateFieldOverview.setBorder(bottomLineTextField);
+		panelMiddle.add(donateFieldOverview);
+		
 		JButton bookDonateButton = new JButton("Donate Book");
 		bookDonateButton.setBounds(515, 263, 127, 60);
 		panelMiddle.add(bookDonateButton);
@@ -577,7 +621,7 @@ public class Window {
 		bookDonateButton.setBackground(backgroundColor);
 		
 		JLabel bookDonateTitleLabel = new JLabel("Title:");
-		bookDonateTitleLabel.setBounds(10, 43, 97, 33);
+		bookDonateTitleLabel.setBounds(10, 26, 97, 33);
 		panelMiddle.add(bookDonateTitleLabel);
 		bookDonateTitleLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookDonateTitleLabel.setForeground(textColor);
@@ -585,12 +629,12 @@ public class Window {
 		
 		donateFieldTitle = new JTextField();
 		donateFieldTitle.setBorder(bottomLineTextField);
-		donateFieldTitle.setBounds(171, 51, 183, 25);
+		donateFieldTitle.setBounds(171, 34, 183, 25);
 		panelMiddle.add(donateFieldTitle);
 		donateFieldTitle.setColumns(10);
 		
 		JLabel bookDonateAuthorLabel = new JLabel("Author:");
-		bookDonateAuthorLabel.setBounds(10, 87, 97, 33);
+		bookDonateAuthorLabel.setBounds(10, 70, 97, 33);
 		panelMiddle.add(bookDonateAuthorLabel);
 		bookDonateAuthorLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookDonateAuthorLabel.setForeground(textColor);
@@ -598,19 +642,19 @@ public class Window {
 		
 		donateFieldAuthor = new JTextField();
 		donateFieldAuthor.setBorder(bottomLineTextField);
-		donateFieldAuthor.setBounds(171, 95, 183, 25);
+		donateFieldAuthor.setBounds(171, 78, 183, 25);
 		panelMiddle.add(donateFieldAuthor);
 		donateFieldAuthor.setColumns(10);
 		
 		JLabel bookDonatePageLabel = new JLabel("Page Count:");
-		bookDonatePageLabel.setBounds(10, 175, 118, 33);
+		bookDonatePageLabel.setBounds(10, 158, 118, 33);
 		panelMiddle.add(bookDonatePageLabel);
 		bookDonatePageLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookDonatePageLabel.setForeground(textColor);
 		bookDonatePageLabel.setFont(systemText);
 		
 		JLabel bookDonatePublishDateLabel = new JLabel("Publish Date:");
-		bookDonatePublishDateLabel.setBounds(10, 131, 118, 33);
+		bookDonatePublishDateLabel.setBounds(10, 114, 118, 33);
 		panelMiddle.add(bookDonatePublishDateLabel);
 		bookDonatePublishDateLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookDonatePublishDateLabel.setForeground(textColor);
@@ -618,24 +662,24 @@ public class Window {
 		
 		donateFieldPublishDate = new JTextField();
 		donateFieldPublishDate.setBorder(bottomLineTextField);
-		donateFieldPublishDate.setBounds(171, 139, 183, 25);
+		donateFieldPublishDate.setBounds(171, 122, 183, 25);
 		panelMiddle.add(donateFieldPublishDate);
 		donateFieldPublishDate.setColumns(10);
 		
 		donateFieldPageCount = new JTextField();
 		donateFieldPageCount.setBorder(bottomLineTextField);
-		donateFieldPageCount.setBounds(171, 183, 183, 25);
+		donateFieldPageCount.setBounds(171, 166, 183, 25);
 		panelMiddle.add(donateFieldPageCount);
 		donateFieldPageCount.setColumns(10);
 		
 		donateFieldISBN = new JTextField();
 		donateFieldISBN.setBorder(bottomLineTextField);
-		donateFieldISBN.setBounds(171, 227, 183, 25);
+		donateFieldISBN.setBounds(171, 210, 183, 25);
 		panelMiddle.add(donateFieldISBN);
 		donateFieldISBN.setColumns(10);
 		
 		JLabel bookDonateISBNLabel = new JLabel("ISBN:");
-		bookDonateISBNLabel.setBounds(10, 219, 97, 33);
+		bookDonateISBNLabel.setBounds(10, 202, 97, 33);
 		panelMiddle.add(bookDonateISBNLabel);
 		bookDonateISBNLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		bookDonateISBNLabel.setForeground(textColor);
@@ -672,7 +716,7 @@ public class Window {
 		personValueName.setHorizontalAlignment(SwingConstants.LEFT);
 		personValueName.setForeground(textColorLight);
 		personValueName.setFont(info);
-		personValueName.setText(UserProfileHandler.GetName());
+		personValueName.setText(loggedUser.getName());
 		
 		JLabel personLabelLastName = new JLabel("Last Name:");
 		personLabelLastName.setBounds(10, 55, 112, 33);
@@ -688,7 +732,7 @@ public class Window {
 		personValueLastName.setHorizontalAlignment(SwingConstants.LEFT);
 		personValueLastName.setForeground(textColorLight);
 		personValueLastName.setFont(info);
-		personValueLastName.setText(UserProfileHandler.GetLastName());
+		personValueLastName.setText(loggedUser.getSurname());
 		
 		JLabel personLabelEmail = new JLabel("Email:");
 		personLabelEmail.setBounds(10, 99, 112, 33);
@@ -703,7 +747,7 @@ public class Window {
 		personValueEmail.setHorizontalAlignment(SwingConstants.LEFT);
 		personValueEmail.setForeground(textColorLight);
 		personValueEmail.setFont(info);
-		personValueEmail.setText(UserProfileHandler.GetEmail());
+		personValueEmail.setText(loggedUser.getEmail());
 		
 		JScrollPane takenBooksScroll = new JScrollPane();
 		takenBooksScroll.setBounds(122, 210, 320, 200);
@@ -711,10 +755,13 @@ public class Window {
 		takenBooksScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		takenBooksScroll.setBorder(null);
 		takenBooksScroll.getHorizontalScrollBar().setBackground(backgroundColor);
+		takenBooksScroll.getVerticalScrollBar().setBackground(backgroundColor);
 		ScrollBarColor scrollBarTakenBooks = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
+		ScrollBarColor scrollBarTakenBooks1 = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		takenBooksScroll.getHorizontalScrollBar().setUI(scrollBarTakenBooks);
+		takenBooksScroll.getVerticalScrollBar().setUI(scrollBarTakenBooks1);
 		
-		DefaultListModel<LibraryBook> takenBooks = UserProfileHandler.GetBooks();
+		DefaultListModel<LibraryBook> takenBooks = new DefaultListModel<>();// = UserProfileHandler.GetBooks();
 		JList<LibraryBook> takenBooksList = new JList<>(takenBooks);
 		takenBooksList.setSelectionBackground(textColor);
 		takenBooksScroll.setViewportView(takenBooksList);
@@ -739,18 +786,14 @@ public class Window {
 		ScrollBarColor scrollBarPreComment = new ScrollBarColor(textColor, buttonTextColor, backgroundColor);
 		preCommentsScrollPane.getHorizontalScrollBar().setUI(scrollBarPreComment);
 		
-		DefaultListModel<String> takenBooksModel = UserProfileHandler.GetPreComments();
-		JList<String> preCommentsList = new JList<String>(takenBooksModel);
+		DefaultListModel<String> reviewListProfileModel = new DefaultListModel<>();//UserProfileHandler.GetPreComments();
+		JList<String> preCommentsList = new JList<String>(reviewListProfileModel);
 		preCommentsList.setSelectionForeground(Color.WHITE);
 		preCommentsList.setSelectionBackground(textColor);
 		preCommentsList.setForeground(Color.WHITE);
 		preCommentsList.setBackground(new Color(56, 56, 61));
 		preCommentsList.setCellRenderer(new CommentListRenderer(textColor));
 		preCommentsScrollPane.setViewportView(preCommentsList);
-		
-		/*takenBooksModel.addElement("A tensely written, shocking book that will hold readers on the edge of their seats to the very last page.");
-		takenBooksModel.addElement("Both compelling and addictive, The Favorite Daughter is a roller coaster of a ride that will have you twisting and turning.");
-		takenBooksModel.addElement("Will hit you right in the heart.");*/
 		
 		JLabel lblNewLabel = new JLabel("Personal Info:");
 		lblNewLabel.setFont(systemText);
@@ -800,6 +843,7 @@ public class Window {
 		quoteLabel.setForeground(Color.WHITE);
 		quoteLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 24));
 		quoteLabel.setBounds(54, 64, 1112, 42);
+		quoteLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		panel_1.add(quoteLabel);
 		
 		JLabel quoteBackgroundLabel = new JLabel("");
@@ -820,6 +864,10 @@ public class Window {
 		oldBooksScrollPane.setBounds(10, 163, 1195, 362);
 		oldBooksScrollPane.setBorder(bottomLine);
 		oldBooksScrollPane.setBackground(elevation1);
+		oldBooksScrollPane.getVerticalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
+		oldBooksScrollPane.getHorizontalScrollBar().setUI(new ScrollBarColor(textColor, buttonTextColor, backgroundColor));
+		oldBooksScrollPane.getVerticalScrollBar().setBackground(backgroundColor);
+		oldBooksScrollPane.getHorizontalScrollBar().setBackground(backgroundColor);
 		mainPagePanel.add(oldBooksScrollPane);
 		
 		DefaultListModel<GeneralBook> oldBooksListModel = new DefaultListModel<>();
@@ -846,33 +894,6 @@ public class Window {
 		JPanel[] selectionList = {mainPageSidemenuSelection, bookLoanSidemenuSelection, bookDonationSidemenuSelection, profileSidemenuSelection};
 		JPanel[] barList = {mainPageSidemenuBar, bookLoanSidemenuBar, bookDonationSidemenuBar, profileSidemenuBar};
 		
-		MouseAdapter select = new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if(e.getSource() == mainPageSidemenuBar) {
-					card.show(contentPanel, "mainPage");
-					mainPageSidemenuSelection.setBackground(sideBarSelectionColor);
-				}
-				if(e.getSource() == bookLoanSidemenuBar) {
-					card.show(contentPanel, "bookLoan");
-					bookLoanSidemenuSelection.setBackground(sideBarSelectionColor);
-				}
-				if(e.getSource() == bookDonationSidemenuBar) {
-					card.show(contentPanel, "bookDonation");
-					bookDonationSidemenuSelection.setBackground(sideBarSelectionColor);
-				}
-				if(e.getSource() == profileSidemenuBar) {
-					card.show(contentPanel, "profile");
-					profileSidemenuSelection.setBackground(sideBarSelectionColor);
-				}
-				for(int i = 0;i<4;i++) {
-					if(e.getSource() != barList[i]) {
-						selectionList[i].setBackground(sideBarMenuColor);
-					}
-				}
-			}
-		};
-		
 		HashMap<String, JLabel> bookInfoLabels = new HashMap<>();
 		
 		bookInfoLabels.put("Title", bookInfoTitleValue);
@@ -888,13 +909,11 @@ public class Window {
 		libraryInfoLabels.put("PhoneNumber", libraryInfoPhoneValue);
 		libraryInfoLabels.put("Email", libraryInfoEmailValue);
 		
-		System.out.println(bookInfoLabels.get("Title").getText());
-		mainPageSidemenuBar.addMouseListener(select);
-		bookLoanSidemenuBar.addMouseListener(select);
-		bookDonationSidemenuBar.addMouseListener(select);
-		profileSidemenuBar.addMouseListener(select);
+		mainPageSidemenuBar.addMouseListener(new SideBarSelectionHandler(card, contentPanel, selectionList, barList, sideBarSelectionColor, sideBarMenuColor, takenBooks, reviewListProfileModel, oldBooksListModel, librarySelectionForm));
+		bookLoanSidemenuBar.addMouseListener(new SideBarSelectionHandler(card, contentPanel, selectionList, barList, sideBarSelectionColor, sideBarMenuColor, takenBooks, reviewListProfileModel, oldBooksListModel, librarySelectionForm));
+		bookDonationSidemenuBar.addMouseListener(new SideBarSelectionHandler(card, contentPanel, selectionList, barList, sideBarSelectionColor, sideBarMenuColor, takenBooks, reviewListProfileModel, oldBooksListModel, librarySelectionForm));
+		profileSidemenuBar.addMouseListener(new SideBarSelectionHandler(card, contentPanel, selectionList, barList, sideBarSelectionColor, sideBarMenuColor, takenBooks, reviewListProfileModel, oldBooksListModel, librarySelectionForm));
 		
-		btnReturnBook.addActionListener(new UserProfileHandler(takenBooks,takenBooksList,takenBooksScroll,frame));
 		//TODO
 		searchBar.addActionListener(new BookSearchListHandler(searchBar, searchTypeComboBox, bookList, list));
 		list.addListSelectionListener(new BookInfoListHandler(bookSuggestList, overviewHoverButton, overviewTextLabel, bookInfoLabels, reviewListModel));
@@ -902,6 +921,38 @@ public class Window {
 		commentButton.addActionListener(new NewCommentHandler(textArea, reviewListModel, bookInfoISBNValue));
 		bookInfoISBNValue.addPropertyChangeListener(new LibraryListHandler(bookInfoISBNValue, libraryList, librarySelectionList));
 		librarySelectionList.addListSelectionListener(new libraryListListener(libraryInfoLabels));
+		bookLoanButton.addActionListener(new LoanBookAction(loggedUser.getUserId(), librarySelectionList, bookInfoISBNValue));
+		btnReturnBook.addActionListener(new ReturnBookButtonAction(takenBooksList, takenBooks));
+		bookDonateButton.addActionListener(new bookDonationHandler(donateFieldAuthor, donateFieldISBN, donateFieldPageCount, donateFieldPublishDate, donateFieldTitle, donateFieldGenres, donateFieldOverview, librarySelectionListDonation));
+		
+		
+		
+		LinkedList<Integer> returnedBooks;
+		try {
+			returnedBooks = Database.getReturnedBooks(Window.getLoggedUser().getUserId());
+			for(var returnedBook : returnedBooks) {
+				oldBooksListModel.addElement(new GeneralBook(returnedBook, Book.largeIcon));
+			}
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try {
+		      File myObj = new File("src/databases/Quotes.txt");
+		      Scanner myReader = new Scanner(myObj);
+		      //List<String> quotesList = new ArrayList<>();
+		      int count = new Random().nextInt(779);
+		      int i = 0;
+		      while (i < count-1 && myReader.hasNextLine()) {
+		        myReader.nextLine();
+		        i++;
+		      }
+		      quoteLabel.setText(myReader.nextLine());
+		      myReader.close();
+		    } catch (FileNotFoundException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
+		
 		//button.addActionListener(new libraryListListener());
 		frame.setVisible(false);
 	}
@@ -935,6 +986,14 @@ public class Window {
 		Image scaledColorImage = colorImage.getScaledInstance((int) (28*1.91), 28, Image.SCALE_SMOOTH);
 		ImageIcon scaledColorImageIcon = new ImageIcon(scaledColorImage);
 		return scaledColorImageIcon;
+	}
+	
+	public static int getUserId() {
+		return userId;
+	}
+
+	public static User getLoggedUser() {
+		return loggedUser;
 	}
 }
 
@@ -982,7 +1041,7 @@ class LibraryListRenderer extends DefaultListCellRenderer {
 	
     public LibraryListRenderer(Color textColor) {
 		this.textColor = textColor;
-		this.bottomLine = new MatteBorder(0, 0, 2, 0, textColor);
+		this.bottomLine = new MatteBorder(0, 0, 2, 0, this.textColor);
 	}
 
 

@@ -28,7 +28,6 @@ public class LibraryBook extends Book{
 				setCover(null, imageHeight);
 			}
 			
-			//setCover(new ImageIcon(getClass().getResource(coverPath)), imageHeight);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

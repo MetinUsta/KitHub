@@ -15,7 +15,7 @@ def create_connection(dbFile):
 def selectLibrary(conn, libraryId):
     cursor = conn.cursor()
     queryString = "SELECT StartPointX, StartPointY, RowCount, ColumnCount, ShelfWidth, ShelfHeight, ShelfHorizontalGap, ShelfVerticalGap FROM Libraries WHERE LibraryId = ?"
-    cursor.execute(queryString, libraryId)
+    cursor.execute(queryString, (libraryId, ))
     libraryInfo = cursor.fetchall()
     return libraryInfo
 
@@ -25,7 +25,7 @@ def findBook(isbnTwoDigit):
     Buffer = cv2.rectangle(Buffer, start_point, end_point, COLOR, THICKNESS)
     return Buffer
 
-dbPath = "libraryManagement.db"
+dbPath = "src/databases/libraryManagement.db"
 conn = create_connection(dbPath)
 libraryId = sys.argv[1]
 bookISBN = sys.argv[2]
@@ -35,11 +35,10 @@ if conn == None:
     print("Couldn't connect to the database!")
     exit(1)
 
-libraryInfo = list(selectLibrary(conn, libraryId)[0])
-#print(libraryInfo)
+libraryInfo = selectLibrary(conn, libraryId)[0]
 
 libraryPlanNames = ["Beyazit.png", "IstanbulUni.png", "Beykoz.png", "YildizUni.png", "MarmaraUni.png"]
-planPath = "libraryPlans/" + libraryPlanNames[int(libraryId)-1]
+planPath = "src/scripts/LibraryPlans/" + libraryPlanNames[int(libraryId)-1]
 image = cv2.imread(planPath)
 
 START_POINT = (libraryInfo[0], libraryInfo[1])

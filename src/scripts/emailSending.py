@@ -40,7 +40,7 @@ def getPrivateKey(conn):
     return privateKey[0]
 
 
-dbPath = "libraryManagement.db"
+dbPath = "src/databases/libraryManagement.db"
 conn = create_connection(dbPath)
 
 if conn == None:
@@ -54,7 +54,7 @@ bookName = selectBook(conn, bookISBN)
 subject = "Kutuphane Bilgi Sistemi Kitap konumu"
 body = "Bugün içerisinde ödünç aldığınız \"" + (bookName[0])[0] + "\" kitabının kütüphanedeki konumu ektedir. İyi okumalar dileriz."
 sender_email = "infokutuphanebilgisistemi@gmail.com"
-receiver_email = "l1119003@std.yildiz.edu.tr"
+receiver_email = sys.argv[2]
 encryptedPassword = b'\xaa\xaf~W\xc2\xc9{l\x88{\xc7T\xeb\x07\xf7pN\x8b\x03 \x8a\xee\x1f\x9d\xff\x14\x97\xcc\xf5Z\x90n\x060I\xa0l\xac\x01\x17.\x1a\xde\xbca\xc44\xa8\xc3y\xde\xbcSw\x8a$\x96\xcdyn2\'\xc2-\xc5l\x81\xa3\x1anBf\x8b\xc3a\xd7\x9b\xa7\xa3\xbbZ\xda\x88\xc1\x17MiG\x8d\xc4\x892\x0f"m\xa3\x96FL\xda\xd3\xd0*\xf2\xec\xad\xd2\xdcY:X\xe3\\k+\x06\xb8\n\xee\xd8O\xe1Z\xd4y\xe9\xd1P;\xc9]\x08\xd7+L\r\x86\x96\xda&\x9fOX\x86\xdd\'\xff!F\xf8PNv\xc9$\x90\x8f\x14\x0c5\x87\xf4\x86\xb3\xdd\xfb\x83\xa1\x7fl\x14\xabal1x\xbci \x01\xbd\xb4\xaa\x8b\x83N\x19\xa2\xa8b\x08W\x1b\x0e\xed\xc2@\xab\x0c\xb25\xf4$t\x86m\x11,z\xd0\xcf\xf7\x96y;\xe5\x15/\xc2m\xa9e\xdd\xb2\xfc\xfc{\xbe]\xdb\x89P~\x14\x80\x0c\x7f\tlU#\xc8\xae\x06\xce\x9b\xfa`\xce\xa9P\xf0\xd7\x13\xdf\xfc'
 
 private_key = serialization.load_pem_private_key(
@@ -111,3 +111,5 @@ context = ssl.create_default_context()
 with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
     server.login(sender_email, password)
     server.sendmail(sender_email, receiver_email, text)
+
+os.remove("result.png")

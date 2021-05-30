@@ -54,6 +54,10 @@ public class Library {
 	public int getStockCount() {
 		return stockCount;
 	}
+
+	public static int getBookId() {
+		return bookId;
+	}
 	
 	
 }
