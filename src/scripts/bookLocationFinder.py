@@ -3,14 +3,16 @@ from sqlite3 import Error
 import sys
 import cv2
 
+
 def create_connection(dbFile):
     conn = None
     try:
         conn = sqlite3.connect(dbFile)
     except Error as e:
         print(e)
-    
+
     return conn
+
 
 def selectLibrary(conn, libraryId):
     cursor = conn.cursor()
@@ -19,11 +21,13 @@ def selectLibrary(conn, libraryId):
     libraryInfo = cursor.fetchall()
     return libraryInfo
 
+
 def findBook(isbnTwoDigit):
     Buffer = image.copy()
-    start_point, end_point = coordinatesDict[isbnTwoDigit % (ROWS*COLUMNS)]
+    start_point, end_point = coordinatesDict[isbnTwoDigit % (ROWS * COLUMNS)]
     Buffer = cv2.rectangle(Buffer, start_point, end_point, COLOR, THICKNESS)
     return Buffer
+
 
 dbPath = "src/databases/libraryManagement.db"
 conn = create_connection(dbPath)
@@ -31,18 +35,18 @@ libraryId = sys.argv[1]
 bookISBN = sys.argv[2]
 
 
-if conn == None:
+if conn is None:
     print("Couldn't connect to the database!")
     exit(1)
 
 libraryInfo = selectLibrary(conn, libraryId)[0]
 
 libraryPlanNames = ["Beyazit.png", "IstanbulUni.png", "Beykoz.png", "YildizUni.png", "MarmaraUni.png"]
-planPath = "src/scripts/LibraryPlans/" + libraryPlanNames[int(libraryId)-1]
+planPath = "src/scripts/LibraryPlans/" + libraryPlanNames[int(libraryId) - 1]
 image = cv2.imread(planPath)
 
 START_POINT = (libraryInfo[0], libraryInfo[1])
-COLOR = (0, 0, 255) #BGR
+COLOR = (0, 0, 255)  # BGR
 THICKNESS = 3
 ROWS = libraryInfo[2]
 COLUMNS = libraryInfo[3]

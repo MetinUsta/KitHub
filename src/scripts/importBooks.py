@@ -42,11 +42,12 @@ if __name__ == '__main__':
                                 VALUES(?, ?)'''
 
         cursor = conn.cursor()
-        lastBookId = cursor.execute('SELECT BookId FROM Books ORDER BY BookId DESC LIMIT 1').fetchone()
-        if lastBookId is None:
-            lastBookId = 1
-        else:
-            lastBookId = int(lastBookId[0]) + 1
+        #  lastBookId = cursor.execute('SELECT BookId FROM Books ORDER BY BookId DESC LIMIT 1').fetchone()
+        lastBookId = 1
+        #  if lastBookId is None:
+        #      lastBookId = 1
+        #  else:
+        #      lastBookId = int(lastBookId[0]) + 1
 
         for row in reader:
             cursor.execute(fillBooksSql, (lastBookId, row['Title'], row['Author'], row['PublishDate'], row['PageCount'], row['Isbn13'], row['Overview']))

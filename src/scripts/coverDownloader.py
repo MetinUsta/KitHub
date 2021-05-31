@@ -5,6 +5,7 @@ import threading
 
 folderName = "bookCovers/"
 
+
 def download_image(info):
     url, isbn = info.split(",")
     response = requests.get(url).content
@@ -12,12 +13,13 @@ def download_image(info):
     with open(fileName, 'wb') as handler:
         handler.write(response)
 
+
 urls = []
 isbns = []
 infos = []
 with open("Books.csv", 'r', encoding='utf8') as csvFile:
-    
-    if csvFile == None:
+
+    if csvFile is None:
         print("a")
 
     reader = csv.reader(csvFile)

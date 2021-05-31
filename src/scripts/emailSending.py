@@ -1,4 +1,6 @@
-import email, smtplib, ssl
+import email
+import smtplib
+import ssl
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
@@ -16,14 +18,16 @@ from email.mime.text import MIMEText
 import sqlite3
 from sqlite3 import Error
 
+
 def create_connection(dbFile):
     conn = None
     try:
         conn = sqlite3.connect(dbFile)
     except Error as e:
         print(e)
-    
+
     return conn
+
 
 def selectBook(conn, bookISBN):
     cursor = conn.cursor()
@@ -31,6 +35,7 @@ def selectBook(conn, bookISBN):
     cursor.execute(queryString, (bookISBN, ))
     bookInfo = cursor.fetchall()
     return bookInfo
+
 
 def getPrivateKey(conn):
     cursor = conn.cursor()
@@ -43,7 +48,7 @@ def getPrivateKey(conn):
 dbPath = "src/databases/libraryManagement.db"
 conn = create_connection(dbPath)
 
-if conn == None:
+if conn is None:
     print("Couldn't connect to the database!")
     exit(1)
 
@@ -93,7 +98,7 @@ with open(filename, "rb") as attachment:
     part = MIMEBase("application", "octet-stream")
     part.set_payload(attachment.read())
 
-# Encode file in ASCII characters to send by email    
+# Encode file in ASCII characters to send by email
 encoders.encode_base64(part)
 
 # Add header as key/value pair to attachment part
