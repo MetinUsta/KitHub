@@ -37,7 +37,9 @@ create table if not exists Libraries (
 );
 
 create table if not exists BookGenres (
-    BookId integer not null,
+    BookId integer references Books(BookId)
+        on update cascade
+        on delete cascade,
     Genre text not null,
     primary key(BookId, Genre)
 );
