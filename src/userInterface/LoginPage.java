@@ -65,7 +65,7 @@ public class LoginPage {
 
 		frame = new JFrame();
 		frame.getContentPane().setBackground(new Color(245, 245, 245));
-		frame.setTitle("myLibrary");
+		frame.setTitle("KitHub");
 		frame.setBounds(100, 100, 800, 500);
 		frame.setUndecorated(true);
 
@@ -95,7 +95,7 @@ public class LoginPage {
 		panel.add(signinPanel, "signinPanel");
 		signinPanel.setLayout(null);
 
-		JLabel infoTextSignIn = new JLabel("Sign in to myLibrary");
+		JLabel infoTextSignIn = new JLabel("Sign in to KitHub");
 		infoTextSignIn.setBounds(94, 85, 328, 77);
 		signinPanel.add(infoTextSignIn);
 		infoTextSignIn.setForeground(new Color(253, 65, 60));

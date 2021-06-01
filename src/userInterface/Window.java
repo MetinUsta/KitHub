@@ -46,7 +46,7 @@ import java.util.Random;
 
 public class Window {
 
-	private JFrame frame;
+	private JFrame frmKithub;
 	private JTextField donateFieldTitle;
 	private JTextField donateFieldAuthor;
 	private JTextField donateFieldPageCount;
@@ -98,16 +98,16 @@ public class Window {
 
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
-		frame = new JFrame();
-		frame.getContentPane().setBackground(Color.DARK_GRAY);
-		frame.setBounds(100, 100, 1366, 768);
-		frame.setLocation(screenSize.width / 2 - 1366 / 2, screenSize.height / 2 - 768 / 2);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
+		frmKithub = new JFrame();
+		frmKithub.getContentPane().setBackground(Color.DARK_GRAY);
+		frmKithub.setBounds(100, 100, 1366, 768);
+		frmKithub.setLocation(screenSize.width / 2 - 1366 / 2, screenSize.height / 2 - 768 / 2);
+		frmKithub.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmKithub.setResizable(false);
 
 		Image icon = new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/icon.png")).getImage();
-		frame.setIconImage(icon);
-		frame.setTitle("Library App");
+		frmKithub.setIconImage(icon);
+		frmKithub.setTitle("KitHub");
 
 		JPanel sideBarPanel = new JPanel();
 		sideBarPanel.setBounds(0, 0, 141, 739);
@@ -485,9 +485,9 @@ public class Window {
 		commentButton.setBackground(new Color(39, 43, 47));
 		commentButton.setBounds(994, 672, 98, 44);
 		bookLoanPanel.add(commentButton);
-		frame.getContentPane().setLayout(null);
+		frmKithub.getContentPane().setLayout(null);
 		sideBarPanel.setLayout(null);
-		frame.getContentPane().add(sideBarPanel);
+		frmKithub.getContentPane().add(sideBarPanel);
 
 		JPanel bookLoanSidemenuBar = new JPanel();
 		bookLoanSidemenuBar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -561,7 +561,7 @@ public class Window {
 		mainPageSidemenuSelection.setBackground(sideBarSelectionColor);
 		mainPageSidemenuSelection.setBounds(0, 114, 16, 89);
 		sideBarPanel.add(mainPageSidemenuSelection);
-		frame.getContentPane().add(contentPanel);
+		frmKithub.getContentPane().add(contentPanel);
 
 		bookDonationPanel.setBackground(backgroundColor);
 
@@ -894,7 +894,7 @@ public class Window {
 		oldBooksScrollPane.setViewportView(oldBooksList);
 		oldBooksList.setCellRenderer(new BookListRenderer());
 
-		JLabel appNameLabel = new JLabel("Library Management App");
+		JLabel appNameLabel = new JLabel("KitHub");
 		appNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		appNameLabel.setForeground(Color.WHITE);
 		appNameLabel.setFont(new Font("Arial Rounded MT Bold", Font.PLAIN, 32));
@@ -980,7 +980,7 @@ public class Window {
 		}
 
 		// button.addActionListener(new libraryListListener());
-		frame.setVisible(false);
+		frmKithub.setVisible(false);
 	}
 
 	public Color getTextColor() {
@@ -1002,7 +1002,7 @@ public class Window {
 	}
 
 	public JFrame getFrame() {
-		return frame;
+		return frmKithub;
 	}
 
 	public ImageIcon scaleColorOption(String path) {
