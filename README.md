@@ -1,7 +1,7 @@
 [![Contributors][contributors-shield]][contributors-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![GNU GPLv3 License][license-shield]][license-url]
 
 
 
@@ -17,10 +17,10 @@
   <p align="center">
     A library app that uses union catalog and combines books from multiple libraries into a database which users can interact with.
     <br />
-    <a href="https://github.com/MetinUsta/KitHub"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/MetinUsta/KitHub#database-methods"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/MetinUsta/KitHub">View Demo</a>
+    <a href="https://github.com/MetinUsta/KitHub#usage">View Demo</a>
     ·
     <a href="https://github.com/MetinUsta/KitHub/issues">Report Bug</a>
     ·
@@ -48,7 +48,12 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Contributing</a></li>
+    <li>
+	  <a href="#contributing">Contributing</a>
+	  <ul>
+		<li><a href="#database-methods">Database Methods</a>
+	  </ul>
+	</li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#contributers">Contributers</a></li>
@@ -165,7 +170,53 @@ Contributions are what make the open source community such an amazing place to b
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+### Database Methods
 
+```java
+User Methods
+------------
+
+* getUserInfo(email, hashedPassword)
+* getUserInfo(userId)
+* addNewUser(name, surname, email, hashedPassword)
+* serveUserPenalties(userId)
+* userLoanBook(userId, bookId, libraryId, loanDateInstant)
+* userReturnBook(userId, bookCopyId, returnDateInstant)
+* getLoanedBooks(userId)
+* getReturnedBooks(userId)
+* getUserComments(userId)
+
+Comment Methods
+---------------
+
+* addNewComment(userId, bookId, comment)
+
+Book Methods
+------------
+
+* getBookInfo(bookId)
+* getBookFromIsbn(isbn13)
+* getBookFromCopyId(bookCopyId)
+* convertToCopyId(bookId, libraryId)
+* getBooksFromGenre(genre)
+* getBooksFromAuthor(author)
+* getBooksFromTitle(title)
+* getBookRecommendations(genre)
+* getCommentsOfBook(bookId)
+* getLibrariesOfBook(bookId)
+* getGenresOfBook(bookId)
+* getGenreFromBook(bookId)
+* donateBook(title, author, publishDate, pageCount, isbn13, overview, genres, libraryId)
+* getSearchedBooks(searchStr)
+* getUniqueGenres()
+
+Library Methods
+---------------
+
+* getLibraryContactInfo(libraryId)
+* getLibraryShelfInfo(libraryId)
+* getLibraries()
+```
 
 <!-- LICENSE -->
 ## License
