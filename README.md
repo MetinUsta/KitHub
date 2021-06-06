@@ -266,5 +266,5 @@ Project Link: [https://github.com/MetinUsta/KitHub](https://github.com/MetinUsta
 [issues-shield]: https://img.shields.io/github/issues/MetinUsta/KitHub.svg?style=for-the-badge
 [issues-url]: https://github.com/MetinUsta/KitHub/issues
 [license-shield]: https://img.shields.io/github/license/MetinUsta/KitHub.svg?style=for-the-badge
-[license-url]: https://github.com/MetinUsta/KitHub/blob/master/LICENSE.txt
+[license-url]: https://github.com/MetinUsta/KitHub/blob/main/LICENSE
 
