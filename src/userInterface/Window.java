@@ -955,6 +955,7 @@ public class Window {
 			e1.printStackTrace();
 		}
 		try {
+			//TODO
 			File myObj = new File("src/databases/Quotes.txt");
 			Scanner myReader = new Scanner(myObj);
 			// List<String> quotesList = new ArrayList<>();

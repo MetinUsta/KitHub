@@ -466,13 +466,7 @@ public class LoginPage {
 
 		passwordVisibilityButton_1.addItemListener(passwordSignUpVisibility);
 
-		signInButton.addMouseListener(new SignInHandler(emailLoginInput, passwordFieldLogin, frame, this/*
-																										 * ,
-																										 * getTextColor(
-																										 * ),
-																										 * getbuttonTextColor
-																										 * ()
-																										 */));
+		signInButton.addMouseListener(new SignInHandler(emailLoginInput, passwordFieldLogin, frame, this));
 		frame.setVisible(true);
 	}
 
