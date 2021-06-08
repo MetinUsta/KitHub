@@ -47,12 +47,6 @@ import java.util.Random;
 public class Window {
 
 	private JFrame frmKithub;
-	private JTextField donateFieldTitle;
-	private JTextField donateFieldAuthor;
-	private JTextField donateFieldPageCount;
-	private JTextField donateFieldISBN;
-	private JTextField donateFieldPublishDate;
-	private JLabel personValueLastName;
 	private Color sideBarColor = new Color(39, 43, 47);
 	private Color sideBarMenuColor = new Color(33, 37, 41);
 
@@ -66,8 +60,6 @@ public class Window {
 
 	private static int userId;
 	private static User loggedUser;// = null;
-	private JTextField donateFieldGenres;
-	private JTextField donateFieldOverview;
 
 	/*
 	 * static {
@@ -604,7 +596,7 @@ public class Window {
 		bookDonateGenresLabel.setBounds(10, 246, 97, 33);
 		panelMiddle.add(bookDonateGenresLabel);
 
-		donateFieldGenres = new JTextField();
+		JTextField donateFieldGenres = new JTextField();
 		donateFieldGenres.setColumns(10);
 		donateFieldGenres.setBounds(171, 254, 183, 25);
 		donateFieldGenres.setBorder(bottomLineTextField);
@@ -617,7 +609,7 @@ public class Window {
 		bookDonateOverviewLabel.setBounds(10, 290, 97, 33);
 		panelMiddle.add(bookDonateOverviewLabel);
 
-		donateFieldOverview = new JTextField();
+		JTextField donateFieldOverview = new JTextField();
 		donateFieldOverview.setColumns(10);
 		donateFieldOverview.setBounds(171, 298, 183, 25);
 		donateFieldOverview.setBorder(bottomLineTextField);
@@ -638,7 +630,7 @@ public class Window {
 		bookDonateTitleLabel.setForeground(textColor);
 		bookDonateTitleLabel.setFont(systemText);
 
-		donateFieldTitle = new JTextField();
+		JTextField donateFieldTitle = new JTextField();
 		donateFieldTitle.setBorder(bottomLineTextField);
 		donateFieldTitle.setBounds(171, 34, 183, 25);
 		panelMiddle.add(donateFieldTitle);
@@ -651,7 +643,7 @@ public class Window {
 		bookDonateAuthorLabel.setForeground(textColor);
 		bookDonateAuthorLabel.setFont(systemText);
 
-		donateFieldAuthor = new JTextField();
+		JTextField donateFieldAuthor = new JTextField();
 		donateFieldAuthor.setBorder(bottomLineTextField);
 		donateFieldAuthor.setBounds(171, 78, 183, 25);
 		panelMiddle.add(donateFieldAuthor);
@@ -671,19 +663,19 @@ public class Window {
 		bookDonatePublishDateLabel.setForeground(textColor);
 		bookDonatePublishDateLabel.setFont(systemText);
 
-		donateFieldPublishDate = new JTextField();
+		JTextField donateFieldPublishDate = new JTextField();
 		donateFieldPublishDate.setBorder(bottomLineTextField);
 		donateFieldPublishDate.setBounds(171, 122, 183, 25);
 		panelMiddle.add(donateFieldPublishDate);
 		donateFieldPublishDate.setColumns(10);
 
-		donateFieldPageCount = new JTextField();
+		JTextField donateFieldPageCount = new JTextField();
 		donateFieldPageCount.setBorder(bottomLineTextField);
 		donateFieldPageCount.setBounds(171, 166, 183, 25);
 		panelMiddle.add(donateFieldPageCount);
 		donateFieldPageCount.setColumns(10);
 
-		donateFieldISBN = new JTextField();
+		JTextField donateFieldISBN = new JTextField();
 		donateFieldISBN.setBorder(bottomLineTextField);
 		donateFieldISBN.setBounds(171, 210, 183, 25);
 		panelMiddle.add(donateFieldISBN);
@@ -736,7 +728,7 @@ public class Window {
 		personLabelLastName.setForeground(textColor);
 		personLabelLastName.setFont(systemText);
 
-		personValueLastName = new JLabel("Value");
+		JLabel personValueLastName = new JLabel("Value");
 		personValueLastName.setBounds(119, 55, 82, 33);
 		personalInfoPanel.add(personValueLastName);
 		personValueLastName.setHorizontalAlignment(SwingConstants.LEFT);

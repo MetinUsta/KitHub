@@ -24,13 +24,7 @@ import javax.swing.JToggleButton;
 public class LoginPage {
 
 	private JFrame frame;
-	private final JLabel sideBarIcon = new JLabel("");
-	private JTextField emailLoginInput;
-	private JTextField NameTextField;
-	private JTextField LastNameTextField;
-	private JTextField EmailTextField;
-	private JPasswordField passwordField;
-	private JPasswordField passwordFieldLogin;
+	//private final JLabel sideBarIcon = new JLabel("");
 	private Color textColor = new Color(253, 65, 60);
 	private Color buttonTextColor = new Color(254, 188, 44);
 
@@ -78,7 +72,8 @@ public class LoginPage {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
+		
+		JLabel sideBarIcon = new JLabel("");
 		sideBarIcon.setIcon(new ImageIcon(LoginPage.class.getResource("/LoginPageAssets/IconGridUpdated.png")));
 		sideBarIcon.setBounds(0, 0, 284, 500);
 		frame.getContentPane().add(sideBarIcon);
@@ -109,7 +104,7 @@ public class LoginPage {
 		infoTextDetails.setFont(new Font("Arial", Font.BOLD, 15));
 		infoTextDetails.setHorizontalAlignment(SwingConstants.CENTER);
 
-		emailLoginInput = new JTextField();
+		JTextField emailLoginInput = new JTextField();
 		emailLoginInput.setBounds(137, 206, 249, 32);
 		signinPanel.add(emailLoginInput);
 		emailLoginInput.setBackground(new Color(244, 244, 244));
@@ -142,7 +137,7 @@ public class LoginPage {
 		signInButton.setOpaque(true);
 		signInButton.setBackground(new Color(253, 65, 60));
 
-		passwordFieldLogin = new JPasswordField();
+		JPasswordField passwordFieldLogin = new JPasswordField();
 		passwordFieldLogin.setBackground(new Color(244, 244, 244));
 		passwordFieldLogin.setForeground(Color.GRAY);
 		passwordFieldLogin.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -334,24 +329,24 @@ public class LoginPage {
 		turuncumaviIcon.addMouseListener(colorChooser);
 		turuncusariIcon.addMouseListener(colorChooser);
 
-		NameTextField = new JTextField();
+		JTextField NameTextField = new JTextField();
 		NameTextField.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		NameTextField.setForeground(Color.GRAY);
 		NameTextField.setBounds(122, 175, 217, 33);
 		signupPanel.add(NameTextField);
 		NameTextField.setColumns(10);
 
-		LastNameTextField = new JTextField();
+		JTextField LastNameTextField = new JTextField();
 		LastNameTextField.setColumns(10);
 		LastNameTextField.setBounds(122, 219, 217, 33);
 		signupPanel.add(LastNameTextField);
 
-		EmailTextField = new JTextField();
+		JTextField EmailTextField = new JTextField();
 		EmailTextField.setColumns(10);
 		EmailTextField.setBounds(122, 263, 217, 33);
 		signupPanel.add(EmailTextField);
 
-		passwordField = new JPasswordField();
+		JPasswordField passwordField = new JPasswordField();
 		passwordField.setBounds(122, 307, 185, 33);
 		signupPanel.add(passwordField);
 
