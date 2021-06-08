@@ -265,6 +265,6 @@ Project Link: [https://github.com/MetinUsta/KitHub](https://github.com/MetinUsta
 [stars-url]: https://github.com/MetinUsta/KitHub/stargazers
 [issues-shield]: https://img.shields.io/github/issues/MetinUsta/KitHub.svg?style=for-the-badge
 [issues-url]: https://github.com/MetinUsta/KitHub/issues
-[license-shield]: https://img.shields.io/github/license/MetinUsta/KitHub.svg?style=for-the-badge
+[license-shield]: https://img.shields.io/github/license/MetinUsta/KitHub?label=license&style=for-the-badge
 [license-url]: https://github.com/MetinUsta/KitHub/blob/main/LICENSE
 
